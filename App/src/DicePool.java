@@ -34,4 +34,10 @@ public class DicePool {
 		}
 		coloredDicePool.remove(toBeRemoved);
 	}
+
+	public void throwAllDice() {
+		for (Die die : coloredDicePool) {
+			die.throwDie();
+		}
+	}
 }

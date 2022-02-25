@@ -8,4 +8,8 @@ public class GameSession {
 		this.player = player;
 		this.cpu = cpu;
 	}
+
+	public void startGame() {
+
+	}
 }

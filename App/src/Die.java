@@ -17,8 +17,8 @@ public class Die {
 		return color;
 	}
 
-	public int throwDie() {
-		return random.nextInt(MAX_DIE_VALUE) + 1;
+	public void throwDie() {
+		value = random.nextInt(MAX_DIE_VALUE) + 1;
 	}
 
 }

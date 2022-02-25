@@ -6,6 +6,6 @@ public class Game {
 
 		GameSession gameSession = new GameSession(new Player(ui.askForName()), new Player("Skynet"));
 
-
+		gameSession.startGame();
 	}
 }
