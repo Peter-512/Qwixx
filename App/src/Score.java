@@ -1,7 +1,7 @@
 package App.src;
 
 public class Score {
-	private int points;
+	public int points;
 	private int totalDuration;
 	private int totalAmountOfCrosses;
 	private int totalScore;

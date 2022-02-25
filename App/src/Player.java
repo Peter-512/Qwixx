@@ -10,7 +10,7 @@ public class Player extends Score{
 		this.name = name;
 		amountOfPenalties = 0;
 		Score storage = new Score();
-		Row rowValue = new Row();
+		//Row rowValue = new Row();
 
 		String[] colors = { "red", "yellow", "green", "blue" };
 		boolean[] ascendingOrder = { true, true, false, false };
