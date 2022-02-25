@@ -4,14 +4,12 @@ public class Score {
 	public int points;
 	private int totalDuration;
 	private int totalAmountOfCrosses;
-	private int totalScore;
 	private int penalties;
 
 	public Score() {
 		points = 0;
 		totalDuration = 0;
 		totalAmountOfCrosses = 0;
-		totalScore = 0;
 		penalties = 0;
 	}
 

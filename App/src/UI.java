@@ -1,14 +1,15 @@
 package App.src;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.Scanner;
 
+/**
+ This class is only for testing and Terminal output purposes for the time being
+ */
 public class UI {
+	static Scanner scanner = new Scanner(System.in);
+
 	public static String askForName() {
 		System.out.print("Please enter your name: ");
-		Scanner scanner = new Scanner(System.in);
 		return scanner.nextLine();
 	}
 
@@ -40,14 +41,13 @@ public class UI {
 		}
 	}
 
-	public static void showOptions(Player player, DicePool dicePool) {
-		HashMap<String, LinkedList<NumberField>> options = player.possibleNumbers(dicePool);
-		System.out.println();
-		for (Map.Entry<String, LinkedList<NumberField>> row : options.entrySet()) {
-			System.out.printf("%s row - ", row.getKey());
-			for (NumberField numberField : row.getValue()) {
-				System.out.printf("%d\n", numberField.getValue());
-			}
-		}
+	public static void printOptions(String color, NumberField numberField) {
+		System.out.printf("%s row - value: %d\n", color, numberField.getValue());
 	}
+
+	public static int askForNumber() {
+		System.out.print("Choose an index: ");
+		return scanner.nextInt();
+	}
+
 }

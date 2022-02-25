@@ -1,6 +1,5 @@
 package App.src;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Row {
@@ -57,5 +56,9 @@ public class Row {
 
 	public LinkedHashMap<Integer, NumberField> getNumberFields() {
 		return numberFields;
+	}
+
+	public NumberField getOption(int value) {
+		return numberFields.get(value);
 	}
 }

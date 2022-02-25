@@ -51,15 +51,11 @@ public class Player {
 		return score.getTotalScore();
 	}
 
-	public HashMap<String, LinkedList<NumberField>> possibleNumbers(DicePool dicePool) {
-		HashMap<String, LinkedList<NumberField>> options = new HashMap<>();
+	public void getPossibleNumbers(DicePool dicePool) {
 		int publicValue = dicePool.getPublicValue();
 		for (Row row : rows) {
-			if (!options.containsKey(row.getColor())) {
-				options.put(row.getColor(), new LinkedList<>());
-			}
-			options.get(row.getColor()).add(row.getNumberField(publicValue));
+			UI.printOptions(row.getColor(), row.getOption(publicValue));
 		}
-		return options;
 	}
+
 }
