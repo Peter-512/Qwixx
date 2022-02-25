@@ -5,5 +5,7 @@ public class Game {
 		UI ui = new UI();
 
 		GameSession gameSession = new GameSession(new Player(ui.askForName()), new Player("Skynet"));
+
+
 	}
 }
