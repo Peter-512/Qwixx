@@ -16,6 +16,5 @@ public class GameSession {
 		UI.printDieValues(dicePool);
 		UI.printScoreCard(player);
 		player.getPossibleNumbers(dicePool);
-		int numberInput = UI.askForNumber();
 	}
 }
