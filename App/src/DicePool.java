@@ -43,4 +43,12 @@ public class DicePool {
 			die.throwDie();
 		}
 	}
+
+	public int getPublicValue() {
+		int total = 0;
+		for (Die die : publicDice) {
+			total += die.getValue();
+		}
+		return total;
+	}
 }

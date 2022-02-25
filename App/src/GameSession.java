@@ -15,5 +15,6 @@ public class GameSession {
 		dicePool.throwAllDice();
 		UI.printDieValues(dicePool);
 		UI.printScoreCard(player);
+		UI.showOptions(player, dicePool);
 	}
 }
