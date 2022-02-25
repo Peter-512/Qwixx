@@ -1,5 +1,8 @@
 package App.src;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 public class Player {
 	private String name;
 	private int amountOfPenalties;
@@ -40,15 +43,23 @@ public class Player {
 		return rows;
 	}
 
-	public int getTotalPoints() {
-		int totalPoints = 0;
-		for (Row row : rows) {
-			totalPoints += row.getRowScore();
-		}
-		return totalPoints;
+	public Score getScore() {
+		return score;
 	}
 
-	//	public int getRowScore(String[] colors, Row[] rows, Score points){
-	//		return rowScore;
-	//	}
+	public int getTotalPoints() {
+		return score.getTotalScore();
+	}
+
+	public HashMap<String, LinkedList<NumberField>> possibleNumbers(DicePool dicePool) {
+		HashMap<String, LinkedList<NumberField>> options = new HashMap<>();
+		int publicValue = dicePool.getPublicValue();
+		for (Row row : rows) {
+			if (!options.containsKey(row.getColor())) {
+				options.put(row.getColor(), new LinkedList<>());
+			}
+			options.get(row.getColor()).add(row.getNumberField(publicValue));
+		}
+		return options;
+	}
 }

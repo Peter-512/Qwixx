@@ -14,5 +14,7 @@ public class GameSession {
 	public void startGame() {
 		dicePool.throwAllDice();
 		UI.printDieValues(dicePool);
+		UI.printScoreCard(player);
+		UI.showOptions(player, dicePool);
 	}
 }
