@@ -1,13 +1,15 @@
-package App.src;
 
-public class Player {
+public class Player extends Score{
 	private String name;
 	private int amountOfPenalties;
 	private Row[] rows = new Row[4];
 
+
 	public Player(String name) {
 		this.name = name;
 		amountOfPenalties = 0;
+		Score storage = new Score();
+		Row rowValue = new Row();
 
 		String[] colors = { "red", "yellow", "green", "blue" };
 		boolean[] ascendingOrder = { true, true, false, false };
@@ -40,4 +42,12 @@ public class Player {
 	public void setRows(Row[] rows) {
 		this.rows = rows;
 	}
+
+	public int getPoints() {
+		return points;
+	}
+	
+//	public int getRowScore(String[] colors, Row[] rows, Score points){
+//		return rowScore;
+//	}
 }
