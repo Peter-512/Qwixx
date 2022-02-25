@@ -5,53 +5,49 @@ public class Score {
 	private int totalDuration;
 	private int totalAmountOfCrosses;
 	private int totalScore;
-	private int penaltyPoints;
+	private int penalties;
 
 	public Score() {
 		points = 0;
 		totalDuration = 0;
 		totalAmountOfCrosses = 0;
 		totalScore = 0;
-		penaltyPoints = 0;
+		penalties = 0;
 	}
 
 	public int getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
-		this.points = points;
+	public void addPoints(int points) {
+		this.points += points;
 	}
 
 	public int getTotalDuration() {
 		return totalDuration;
 	}
 
-	public void setTotalDuration(int totalDuration) {
-		this.totalDuration = totalDuration;
+	public void addTotalDuration(int duration) {
+		this.totalDuration += duration;
 	}
 
 	public int getTotalAmountOfCrosses() {
 		return totalAmountOfCrosses;
 	}
 
-	public void setTotalAmountOfCrosses(int totalAmountOfCrosses) {
-		this.totalAmountOfCrosses = totalAmountOfCrosses;
+	public void incrementTotalAmountOfCrosses() {
+		totalAmountOfCrosses++;
 	}
 
 	public int getTotalScore() {
-		return totalScore;
-	}
-
-	public void setTotalScore(int totalScore) {
-		this.totalScore = totalScore;
+		return getPoints() - getPenaltyPoints();
 	}
 
 	public int getPenaltyPoints() {
-		return penaltyPoints;
+		return penalties * 5;
 	}
 
-	public void setPenaltyPoints(int penaltyPoints) {
-		this.penaltyPoints = penaltyPoints;
+	public void addPenalty() {
+		penalties++;
 	}
 }
