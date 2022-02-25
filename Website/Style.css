@@ -1,55 +1,58 @@
-* {
-    font-family: sans-serif;
-    margin: 0;
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: lightgoldenrodyellow;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+a {
+    color: papayawhip;
 }
 
-main {
-    margin: 20px;
+a:hover {
+    color: #dbeaff;
 }
 
-h1,h2{
-    text-align: center;
-    padding: 25px;
+li {
+    margin: 15px 10px;
+    display:inline;
 }
 
-p{
-    text-align: center;
+.logo{
+    height: 150px;
+    width:150px;
+    border-radius: 20px;
+    padding:10px;
+    margin:auto;
 }
-
-footer{
-    text-align: center;
-    color: silver;
-}
-/*Everything above this line belongs to the main class*/
-#logo {
-    margin: auto;
-    display: block;
-    border-bottom: darkgray solid 1px;
-}
-
-nav ul {
+ul{
     list-style-type: none;
+    text-transform: uppercase;
+    font-size:20px;
+    margin: fill;
+    padding:93px;
+    font-weight: bold;
     display: flex;
-    padding: 25px 0;
-    margin: auto;
-    justify-content: space-around;
-    border-bottom: coral solid 1px;
-    width: 95%;
-    max-width: 1900px;
+    flex-wrap: wrap;
+    align-items: center;
+
 }
 
-nav a {
-    padding: 15px;
-    border-radius: 50% 10% / 100%;
+nav{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top:auto ;
+    background-image: url("Resources/CubicColors.gif");
+    background-repeat:no-repeat;
+    background-size: cover;
 }
 
-nav a:hover {
-    color: red;
+/*This is the footer stuff*/
+footer{
+    color: oldlace;
+    margin:120px;
+    text-align: center;
+    font-family: "American Typewriter", serif;
+    background-color: navy;
 }
-
-/*This belongs to the navigation bar*/
