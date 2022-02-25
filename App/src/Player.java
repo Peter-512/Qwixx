@@ -1,3 +1,4 @@
+package App.src;
 
 public class Player extends Score{
 	private String name;
