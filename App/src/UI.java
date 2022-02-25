@@ -26,7 +26,7 @@ public class UI {
 	public static void printScoreCard(Player player) {
 		System.out.println();
 		System.out.printf("%s's Scorecard\n", player.getName());
-		for (Row row : player.getRows()) {
+		for (Row row : player.getRows().values()) {
 			System.out.printf("%10s row: ", row.getColor());
 			for (NumberField numberField : row.getNumberFields().values()) {
 				if (!numberField.isDisabled()) {

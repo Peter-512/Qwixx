@@ -59,6 +59,8 @@ public class Row {
 	}
 
 	public NumberField getOption(int value) {
-		return numberFields.get(value);
+		if (!numberFields.get(value).isDisabled())
+			return numberFields.get(value);
+		else return null;
 	}
 }

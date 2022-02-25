@@ -15,6 +15,8 @@ public class GameSession {
 		dicePool.throwAllDice();
 		UI.printDieValues(dicePool);
 		UI.printScoreCard(player);
-		player.getPossibleNumbers(dicePool);
+		player.getPossiblePublicNumbers(dicePool);
+		System.out.println();
+		player.getPossibleColoredNumbers(dicePool);
 	}
 }
