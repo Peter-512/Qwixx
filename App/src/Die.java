@@ -21,5 +21,8 @@ public class Die {
 		value = random.nextInt(MAX_DIE_VALUE) + 1;
 	}
 
+	public int getValue() {
+		return value;
+	}
 }
 //comment comment

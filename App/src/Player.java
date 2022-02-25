@@ -40,11 +40,12 @@ public class Player {
 		return rows;
 	}
 
-	public void getTotalPoints() {
+	public int getTotalPoints() {
 		int totalPoints = 0;
 		for (Row row : rows) {
 			totalPoints += row.getRowScore();
 		}
+		return totalPoints;
 	}
 
 	//	public int getRowScore(String[] colors, Row[] rows, Score points){
