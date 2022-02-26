@@ -15,11 +15,11 @@ public class UI {
 
 	public static void printDieValues(DicePool pool) {
 		System.out.println();
-		for (Die die : pool.getColoredDice()) {
+		for (ColoredDie die : pool.getColoredDice()) {
 			System.out.printf("%6s die - %d\n", die.getColor(), die.getValue());
 		}
 		for (Die die : pool.getPublicDice()) {
-			System.out.printf("%6s die - %d\n", die.getColor(), die.getValue());
+			System.out.printf("%6s die - %d\n", "white", die.getValue());
 		}
 	}
 
@@ -41,7 +41,7 @@ public class UI {
 		}
 	}
 
-	public static void printOptions(String color, NumberField numberField) {
+	public static void printOptions(Color color, NumberField numberField) {
 		System.out.printf("%s row - value: %d\n", color, numberField.getValue());
 	}
 

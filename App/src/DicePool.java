@@ -3,21 +3,22 @@ package App.src;
 import java.util.ArrayList;
 
 public class DicePool {
-	private ArrayList<Die> coloredDice = new ArrayList<>();
+	private ArrayList<ColoredDie> coloredDice = new ArrayList<>();
 	private Die[] publicDice = new Die[2];
+
 
 	public DicePool() {
 		String[] colors = { "red", "yellow", "green", "blue" };
-		for (String color : colors) {
-			coloredDice.add(new Die(color));
+		for (Color color : Color.values()) {
+			coloredDice.add(new ColoredDie(color));
 		}
 
 		for (int i = 0; i < 2; i++) {
-			publicDice[i] = new Die("white");
+			publicDice[i] = new Die();
 		}
 	}
 
-	public ArrayList<Die> getColoredDice() {
+	public ArrayList<ColoredDie> getColoredDice() {
 		return coloredDice;
 	}
 
@@ -25,9 +26,9 @@ public class DicePool {
 		return publicDice;
 	}
 
-	public void removeDie(String color) {
-		Die toBeRemoved = null;
-		for (Die die : coloredDice) {
+	public void removeDie(Color color) {
+		ColoredDie toBeRemoved = null;
+		for (ColoredDie die : coloredDice) {
 			if (color.equals(die.getColor())) {
 				toBeRemoved = die;
 			}

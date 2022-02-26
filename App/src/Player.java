@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 public class Player {
 	private String name;
 	private int amountOfPenalties;
-	private final LinkedHashMap<String, Row> rows = new LinkedHashMap<>();
+	private final LinkedHashMap<Color, Row> rows = new LinkedHashMap<>();
 	Score score;
 
 
@@ -15,11 +15,9 @@ public class Player {
 		amountOfPenalties = 0;
 		score = new Score();
 
-		String[] colors = { "red", "yellow", "green", "blue" };
-		boolean[] ascendingOrder = { true, true, false, false };
-
-		for (int i = 0; i < 4; i++) {
-			rows.put(colors[i], new Row(colors[i], ascendingOrder[i]));
+		for (Color color : Color.values()) {
+			rows.put(color, new Row(color, color.ordinal() > 1));
+			System.out.println(color.ordinal());
 		}
 	}
 
@@ -39,7 +37,7 @@ public class Player {
 		amountOfPenalties++;
 	}
 
-	public LinkedHashMap<String, Row> getRows() {
+	public LinkedHashMap<Color, Row> getRows() {
 		return rows;
 	}
 
@@ -59,9 +57,9 @@ public class Player {
 	}
 
 	public void getPossibleColoredNumbers(DicePool dicePool) {
-		ArrayList<Die> coloredDice = dicePool.getColoredDice();
+		ArrayList<ColoredDie> coloredDice = dicePool.getColoredDice();
 		Die[] publicDice = dicePool.getPublicDice();
-		for (Die colDie : coloredDice) {
+		for (ColoredDie colDie : coloredDice) {
 			int colDieVal = colDie.getValue();
 			for (Die pubDie : publicDice) {
 				int total = colDieVal + pubDie.getValue();

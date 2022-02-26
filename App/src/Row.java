@@ -3,13 +3,13 @@ package App.src;
 import java.util.LinkedHashMap;
 
 public class Row {
-	private String color;
+	private Color color;
 	private boolean isAscending;
 	private boolean isLocked;
 	private int rowScore;
 	private final LinkedHashMap<Integer, NumberField> numberFields = new LinkedHashMap<>();
 
-	public Row(String color, boolean isAscending) {
+	public Row(Color color, boolean isAscending) {
 		this.color = color;
 		this.isAscending = isAscending;
 		this.isLocked = false;
@@ -26,7 +26,7 @@ public class Row {
 		}
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
