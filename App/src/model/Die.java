@@ -3,12 +3,18 @@ package App.src.model;
 import java.util.Random;
 
 public class Die {
+	private final String color;
 	private int value;
 	private final Random random;
 	private final int MAX_DIE_VALUE = 6;
 
-	public Die() {
+	public Die(String color) {
+		this.color = color;
 		this.random = new Random();
+	}
+
+	public String getColor() {
+		return color;
 	}
 
 	public void throwDie() {
@@ -19,3 +25,4 @@ public class Die {
 		return value;
 	}
 }
+
