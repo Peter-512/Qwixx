@@ -1,4 +1,4 @@
-package App.src;
+package App.src.model;
 
 public class Game {
 	public static void main(String[] args) {

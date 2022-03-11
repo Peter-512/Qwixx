@@ -1,4 +1,4 @@
-package App.src;
+package App.src.model;
 
 public class ColoredDie extends Die{
 	private final Color color;
