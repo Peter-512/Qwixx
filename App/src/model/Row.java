@@ -1,64 +1,66 @@
 package App.src.model;
 
+import java.util.LinkedHashMap;
+
 public class Row {
-	private String color;
+	private Color color;
 	private boolean isAscending;
 	private boolean isLocked;
 	private int rowScore;
-	private final NumberField[] numberFields = new NumberField[11];
+	private final LinkedHashMap<Integer, NumberField> numberFields = new LinkedHashMap<>();
 
-	public Row(String color, boolean isAscending) {
+	public Row(Color color, boolean isAscending) {
 		this.color = color;
 		this.isAscending = isAscending;
 		this.isLocked = false;
 		this.rowScore = 0;
 
 		if (isAscending) {
-			int index = 0;
 			for (int i = 2; i < 13; i++) {
-				numberFields[index++] = new NumberField(i);
+				numberFields.put(i, new NumberField(i));
 			}
 		} else {
-			int index = 0;
 			for (int i = 12; i > 1; i--) {
-				numberFields[index++] = new NumberField(i);
+				numberFields.put(i, new NumberField(i));
 			}
 		}
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public boolean isAscending() {
 		return isAscending;
 	}
 
-	public void setAscending(boolean ascending) {
-		isAscending = ascending;
-	}
-
 	public boolean isLocked() {
 		return isLocked;
 	}
 
-	public void setLocked(boolean locked) {
-		isLocked = locked;
+	public void setLocked() {
+		isLocked = true;
 	}
 
 	public int getRowScore() {
 		return rowScore;
 	}
 
-	public void setRowScore(int rowScore) {
-		this.rowScore = rowScore;
+	public void setRowScore() {
+		//TODO implement table for amount of points per cross
 	}
 
-	public NumberField[] getNumberFields() {
+	public NumberField getNumberField(int value) {
+		return numberFields.get(value);
+	}
+
+	public LinkedHashMap<Integer, NumberField> getNumberFields() {
 		return numberFields;
+	}
+
+	public NumberField getOption(int value) {
+		if (!numberFields.get(value).isDisabled())
+			return numberFields.get(value);
+		else return null;
 	}
 }

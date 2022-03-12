@@ -10,11 +10,20 @@ public class UI {
 	}
 
 	public static void printDieValues(DicePool pool) {
-		for (Die die : pool.getColoredDice()) {
-			System.out.printf("%s die - %d\n", die.getColor(), die.getValue());
-		}
-		for (Die die : pool.getPublicDice()) {
-			System.out.printf("%s die - %d\n", die.getColor(), die.getValue());
+		if (pool.isPublic()) {
+			for (Die die : pool.getDice()) {
+				System.out.printf("%s die - %d\n", "WHITE", die.getValue());
+			}
+		} else {
+			for (Die die : pool.getDice()) {
+				ColoredDie coloredDie = (ColoredDie) die;
+				System.out.printf("%s die - %d\n", coloredDie.getColor(), coloredDie.getValue());
+			}
 		}
 	}
+
+	public static void printOptions(Color color, NumberField numberField) {
+		System.out.printf("%s row - value: %d\n", color, numberField.getValue());
+	}
+
 }

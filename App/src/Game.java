@@ -1,4 +1,8 @@
-package App.src.model;
+package App.src;
+
+import App.src.model.GameSession;
+import App.src.model.Player;
+import App.src.model.UI;
 
 public class Game {
 	public static void main(String[] args) {
