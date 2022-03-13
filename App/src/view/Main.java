@@ -1,4 +1,4 @@
-package App.src.UI;
+package App.src.view;
 
 import javafx.application.Application;
 import javafx.scene.Cursor;
