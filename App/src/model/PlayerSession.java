@@ -19,7 +19,7 @@ public class PlayerSession {
 		return actions.getLast();
 	}
 
-	public void addAction(Action action) {
-		actions.add(action);
+	public void addAction() {
+		actions.add(new Action());
 	}
 }

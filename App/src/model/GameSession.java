@@ -1,5 +1,7 @@
 package App.src.model;
 
+import java.util.LinkedList;
+
 public class GameSession {
 	private Player player;
 	private PlayerSession playerSession;
@@ -7,6 +9,7 @@ public class GameSession {
 	private PlayerSession cpuSession;
 	private DicePool coloredDicePool;
 	private DicePool publicDicePool;
+	private LinkedList<Turn> turns;
 
 	public GameSession(Player player, Player cpu) {
 		this.player = player;
@@ -15,6 +18,7 @@ public class GameSession {
 		cpuSession = new PlayerSession();
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
+		turns = new LinkedList<>();
 	}
 
 	public void startGame() {
@@ -51,4 +55,11 @@ public class GameSession {
 		}
 	}
 
+	public LinkedList<Turn> getTurns() {
+		return turns;
+	}
+
+	public void newTurn() {
+		turns.add(new Turn(turns.size() + 1));
+	}
 }
