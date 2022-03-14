@@ -1,18 +1,18 @@
-package App.src;
+package App.src.model;
 
 public class Score {
 	public int points;
-	private int totalDuration;
 	private int totalAmountOfCrosses;
 	private int totalScore;
-	private int penalties;
+	private int penaltyPoints;
+	private ScoreCard scoreCard;
 
-	public Score() {
+	public Score(ScoreCard scoreCard) {
 		points = 0;
-		totalDuration = 0;
 		totalAmountOfCrosses = 0;
 		totalScore = 0;
-		penalties = 0;
+		penaltyPoints = 0;
+		this.scoreCard = scoreCard;
 	}
 
 	public int getPoints() {
@@ -21,14 +21,6 @@ public class Score {
 
 	public void addPoints(int points) {
 		this.points += points;
-	}
-
-	public int getTotalDuration() {
-		return totalDuration;
-	}
-
-	public void addTotalDuration(int duration) {
-		this.totalDuration += duration;
 	}
 
 	public int getTotalAmountOfCrosses() {
@@ -44,10 +36,7 @@ public class Score {
 	}
 
 	public int getPenaltyPoints() {
-		return penalties * 5;
+		return scoreCard.getAmountOfPenalties() * 5;
 	}
 
-	public void addPenalty() {
-		penalties++;
-	}
 }
