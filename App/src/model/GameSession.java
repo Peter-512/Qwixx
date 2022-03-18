@@ -62,4 +62,28 @@ public class GameSession {
 	public void newTurn() {
 		turns.add(new Turn(turns.size() + 1));
 	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public PlayerSession getPlayerSession() {
+		return playerSession;
+	}
+
+	public Player getCpu() {
+		return cpu;
+	}
+
+	public PlayerSession getCpuSession() {
+		return cpuSession;
+	}
+
+	public DicePool getColoredDicePool() {
+		return coloredDicePool;
+	}
+
+	public DicePool getPublicDicePool() {
+		return publicDicePool;
+	}
 }
