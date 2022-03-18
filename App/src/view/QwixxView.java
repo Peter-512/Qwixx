@@ -21,12 +21,20 @@ public class QwixxView extends BorderPane {
 
 		for (int i = 0; i < numberFields.length; i++) {
 			for (int j = 0; j < numberFields[i].length; j++) {
-				scoreCard.add(new Button("help"), i, j);
+				scoreCard.add(new Button("help"), j, i);
 			}
 		}
 	}
 
 	private void layoutNodes() {
 		setCenter(scoreCard);
+	}
+
+	GridPane getScoreCard() {
+		return scoreCard;
+	}
+
+	Button[][] getNumberFields() {
+		return numberFields;
 	}
 }
