@@ -1,7 +1,7 @@
 package App.src.model;
 
 public class NumberField {
-	private int value;
+	private final int value;
 	private boolean isCrossed;
 	private boolean isDisabled;
 
