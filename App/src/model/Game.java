@@ -8,4 +8,7 @@ public class Game {
 		gameSession.startGame();
 	}
 
+	public GameSession getGameSession() {
+		return gameSession;
+	}
 }

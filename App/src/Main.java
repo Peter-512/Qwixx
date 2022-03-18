@@ -71,7 +71,7 @@ public class Main extends Application {
 		QwixxView view = new QwixxView();
 		Game model = new Game();
 
-		new QwixxPresenter(model, view);
+		QwixxPresenter presenter = new QwixxPresenter(model, view);
 		stage.setScene(new Scene(view));
 		stage.show();
 

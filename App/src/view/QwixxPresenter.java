@@ -23,7 +23,13 @@ public class QwixxPresenter {
 		Button[][] numberFields = view.getNumberFields();
 		for (int i = 0; i < numberFields.length; i++) {
 			for (int j = 0; j < numberFields[i].length; j++) {
-//				numberFields[i][j].setText(model.);
+				//				numberFields[i][j].setText(Integer.toString(model.getGameSession()
+				//				                                                 .getPlayerSession()
+				//				                                                 .getScoreCard()
+				//				                                                 .getRow(Color.values()[i])
+				//				                                                 .getNumberField(j + 2)
+				//				                                                 .getValue()));
+				numberFields[i][j].setText("fuck" + i + j);
 			}
 		}
 	}
