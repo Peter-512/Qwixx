@@ -3,8 +3,8 @@ package App.src.model;
 import java.util.LinkedHashMap;
 
 public class Row {
-	private Color color;
-	private boolean isAscending;
+	private final Color color;
+	private final boolean isAscending;
 	private boolean isLocked;
 	private int rowScore;
 	private final LinkedHashMap<Integer, NumberField> numberFields = new LinkedHashMap<>();
