@@ -1,11 +1,15 @@
 package App.src.view;
-
+import App.src.Main;
+import App.src.view.QwixxPresenter;
 import App.src.model.Game;
+import App.src.view.QwixxView;
+
 import javafx.scene.control.Button;
 
-public class QwixxPresenter {
+public class QwixxPresenter extends Main {
 	private Game model;
 	private QwixxView view;
+
 
 	public QwixxPresenter(Game model, QwixxView view) {
 		this.model = model;
@@ -16,22 +20,21 @@ public class QwixxPresenter {
 	}
 
 	private void addEventHandlers() {
+		view.getNewGame().setOnAction(e -> setGameView()) ;
+
+
+	}
+
+	private void setGameView() {
+		QwixxView gameView = new QwixxView();
+		QwixxPresenter gamePresenter = new QwixxPresenter(model, gameView);
+		view.getScene().setRoot(gameView);
+		gameView.getScene().getWindow().sizeToScene();
 
 	}
 
 	private void updateView() {
-		Button[][] numberFields = view.getNumberFields();
-		for (int i = 0; i < numberFields.length; i++) {
-			for (int j = 0; j < numberFields[i].length; j++) {
-				//				numberFields[i][j].setText(Integer.toString(model.getGameSession()
-				//				                                                 .getPlayerSession()
-				//				                                                 .getScoreCard()
-				//				                                                 .getRow(Color.values()[i])
-				//				                                                 .getNumberField(j + 2)
-				//				                                                 .getValue()));
-				numberFields[i][j].setText("fuck" + i + j);
-			}
-		}
+
 	}
 
 

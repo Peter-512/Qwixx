@@ -1,40 +1,70 @@
 package App.src.view;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 public class QwixxView extends BorderPane {
-	private static final int CONTROL_MIN_SIZE = 35;
-	private static final int PADDING = 10;
-	private GridPane scoreCard;
-	private Button[][] numberFields = new Button[4][11];
+	private QwixxView view;
+	private Button newGame;
+	private Button LeaderBoard;
+	private Button rules;
+
 
 
 	public QwixxView() {
 		initializeNodes();
 		layoutNodes();
+
+
 	}
 
-	private void initializeNodes() {
-		scoreCard = new GridPane();
+	private void addEventHandlers(){
+//		newGame.setOnAction(event ->{
+//			Text newGame = new Text();
+//			newGame.setText("New Game");
+//		});
+	}
 
-		for (int i = 0; i < numberFields.length; i++) {
-			for (int j = 0; j < numberFields[i].length; j++) {
-				scoreCard.add(new Button("help"), j, i);
-			}
-		}
+
+
+	private void initializeNodes() {
+
+
+		this.newGame = new Button("New Game");
+		newGame.setFont(new Font(20));
+		this.LeaderBoard = new Button("LeaderBoard");
+		LeaderBoard.setFont(new Font(20));
+		this.rules = new Button("Rules");
+		LeaderBoard.setFont(new Font(20));
+
 	}
 
 	private void layoutNodes() {
-		setCenter(scoreCard);
+       this.setTop(this.newGame);
+	   this.setCenter(this.LeaderBoard);
+	   this.setBottom(this.rules);
+
+//		BorderPane.setMargin(this.newGame, new Insets(10));
+//		BorderPane.setMargin(this.LeaderBoard, new Insets(10));
+//		BorderPane.setMargin(this.rules, new Insets(10));
+//		BorderPane.setAlignment(this.LeaderBoard, Pos.CENTER_LEFT);
+
+
+//		setCenter(newGame);
+//		setLeft(LeaderBoard);
+
+
 	}
 
-	GridPane getScoreCard() {
-		return scoreCard;
+	Button getNewGame(){
+		return newGame;
 	}
 
-	Button[][] getNumberFields() {
-		return numberFields;
-	}
+
 }
