@@ -1,15 +1,12 @@
 package App.src;
 
 import App.src.model.Game;
-import App.src.view.QwixxPresenter;
-import App.src.view.QwixxView;
+import App.src.view.mainMenu.MainMenuPresenter;
+import App.src.view.mainMenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
@@ -25,28 +22,14 @@ public class Main extends Application {
 		stage.setHeight(800);
 		stage.setResizable(false);
 
-		QwixxView view = new QwixxView();
+		MainMenuView view = new MainMenuView();
 		Game model = new Game();
-		QwixxPresenter presenter = new QwixxPresenter(model, view);
-		stage.setScene(new Scene(new QwixxView()));
+		MainMenuPresenter presenter = new MainMenuPresenter(model, view);
+
+		Scene scene = new Scene(view);
+		scene.setCursor(Cursor.HAND);
+
+		stage.setScene(scene);
 		stage.show();
-
-
-//		Group root = new Group();
-//		Scene scene = new Scene(root, Color.BLANCHEDALMOND);
-//		stage.setWidth(1200);
-//		stage.setHeight(800);
-//		stage.setResizable(false);
-//		stage.setTitle("Qwixx");
-//		scene.setCursor(Cursor.HAND);
-
-
-
-
-
-
-
-
-
 	}
 }
