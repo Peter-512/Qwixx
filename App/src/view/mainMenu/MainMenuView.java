@@ -27,7 +27,7 @@ public class MainMenuView extends BorderPane {
 
 	private void initializeNodes() {
 		qwixx = new Text("Qwixx");
-		qwixx.setFont(new Font(60));
+		qwixx.setFont(new Font(70));
 		newGame = new Button("New Game");
 		newGame.setFont(new Font(20));
 		statistics = new Button("Statistics");
