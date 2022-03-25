@@ -28,6 +28,7 @@ public class NewGamePresenter {
 	}
 
 	private void startGame(String name) {
+		model.startGameSession(name);
 		GameView gameView = new GameView();
 		GamePresenter gamePresenter = new GamePresenter(model, gameView);
 		view.getScene().setRoot(gameView);

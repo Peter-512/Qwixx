@@ -16,12 +16,13 @@ public class Row {
 		this.rowScore = 0;
 
 		if (isAscending) {
-			for (int i = 2; i < 13; i++) {
-				numberFields.put(i, new NumberField(i));
+			for (int i = 0; i < 11; i++) {
+				numberFields.put(i, new NumberField(i+2));
 			}
 		} else {
-			for (int i = 12; i > 1; i--) {
-				numberFields.put(i, new NumberField(i));
+			int val = 12;
+			for (int i = 0; i < 11; i++) {
+				numberFields.put(i, new NumberField(val--));
 			}
 		}
 	}

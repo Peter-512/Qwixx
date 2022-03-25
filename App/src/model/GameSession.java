@@ -3,27 +3,26 @@ package App.src.model;
 import java.util.LinkedList;
 
 public class GameSession {
-	private Player player;
 	private PlayerSession playerSession;
-	private Player cpu;
 	private PlayerSession cpuSession;
 	private DicePool coloredDicePool;
 	private DicePool publicDicePool;
 	private LinkedList<Turn> turns;
 
 	public GameSession(String name) {
-		player = new Player(name);
-		cpu = new Player("Skynet");
-		playerSession = new PlayerSession();
-		cpuSession = new PlayerSession();
+		playerSession = new PlayerSession(name);
+		cpuSession = new PlayerSession("Skynet");
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
 		turns = new LinkedList<>();
 	}
 
 	public void startGame() {
-		throwAllDice();
-		getPossibleColoredNumbers();
+		while (isRunning()) {
+			throwAllDice();
+			getPossibleColoredNumbers();
+
+		}
 	}
 
 	public void throwAllDice() {
@@ -60,16 +59,8 @@ public class GameSession {
 		turns.add(new Turn(turns.size() + 1));
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
 	public PlayerSession getPlayerSession() {
 		return playerSession;
-	}
-
-	public Player getCpu() {
-		return cpu;
 	}
 
 	public PlayerSession getCpuSession() {
@@ -82,5 +73,17 @@ public class GameSession {
 
 	public DicePool getPublicDicePool() {
 		return publicDicePool;
+	}
+
+	public boolean isRunning() {
+		if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return false;
+		if (cpuSession.getScoreCard().getAmountOfPenalties() == 4) return false;
+		int totalRowsLocked = 0;
+		totalRowsLocked += playerSession.getScoreCard().getAmountOfLockedRows();
+		totalRowsLocked += cpuSession.getScoreCard().getAmountOfLockedRows();
+		if (totalRowsLocked >= 2) {
+			return false;
+		}
+		return true;
 	}
 }
