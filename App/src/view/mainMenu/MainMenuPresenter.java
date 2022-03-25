@@ -20,8 +20,8 @@ public class MainMenuPresenter {
 	}
 
 	private void addEventHandlers() {
-		view.getNewGame().setOnAction(e -> setNewGameView());
-		view.getRules().setOnAction(e-> setRulesView());
+		view.getRulesButton().setOnAction(e-> setRulesView());
+		view.getNewGameButton().setOnAction(e -> setNewGameView());
 	}
 
 	private void setNewGameView() {
