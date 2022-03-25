@@ -3,6 +3,8 @@ package App.src.view.mainMenu;
 import App.src.model.Game;
 import App.src.view.newGame.NewGamePresenter;
 import App.src.view.newGame.NewGameView;
+import App.src.view.rules.RulesPresenter;
+import App.src.view.rules.RulesView;
 
 public class MainMenuPresenter {
 	private Game model;
@@ -18,13 +20,21 @@ public class MainMenuPresenter {
 	}
 
 	private void addEventHandlers() {
-		view.getNewGame().setOnAction(e -> setGameView());
+		view.getNewGame().setOnAction(e -> setNewGameView());
+		view.getRules().setOnAction(e-> setRulesView());
 	}
 
-	private void setGameView() {
+	private void setNewGameView() {
 		NewGameView newGameView = new NewGameView();
 		NewGamePresenter newGamePresenter = new NewGamePresenter(model, newGameView);
 		view.getScene().setRoot(newGameView);
+
+	}
+
+	private void setRulesView(){
+		RulesView rulesView = new RulesView();
+		RulesPresenter rulesPresenter = new RulesPresenter(model,rulesView);
+		view.getScene().setRoot(rulesView);
 	}
 
 	private void updateView() {
