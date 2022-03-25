@@ -9,10 +9,10 @@ import javafx.scene.text.Text;
 
 public class MainMenuView extends BorderPane {
 	private VBox vBox;
-	private Button newGame;
-	private Button statistics;
-	private Button rules;
-	private Text qwixx;
+	private Button newGameButton;
+	private Button statisticsButton;
+	private Button rulesButton;
+	private Text titleText;
 
 
 	public MainMenuView() {
@@ -22,15 +22,15 @@ public class MainMenuView extends BorderPane {
 
 
 	private void initializeNodes() {
-		qwixx = new Text("Qwixx");
-		qwixx.setFont(new Font(70));
-		newGame = new Button("New Game");
-		newGame.setFont(new Font(20));
-		statistics = new Button("Statistics");
-		statistics.setFont(new Font(20));
-		rules = new Button("Rules");
-		rules.setFont(new Font(20));
-		vBox = new VBox(qwixx, newGame, statistics, rules);
+		titleText = new Text("Qwixx");
+		titleText.setFont(new Font(70));
+		newGameButton = new Button("New Game");
+		newGameButton.setFont(new Font(20));
+		statisticsButton = new Button("Statistics");
+		statisticsButton.setFont(new Font(20));
+		rulesButton = new Button("Rules");
+		rulesButton.setFont(new Font(20));
+		vBox = new VBox(titleText, newGameButton, statisticsButton, rulesButton);
 	}
 
 	private void layoutNodes() {
@@ -40,18 +40,18 @@ public class MainMenuView extends BorderPane {
 
 	}
 
-	Button getNewGame() {
-		return newGame;
+	Button getNewGameButton() {
+		return newGameButton;
 	}
 
-	Button getStatistics() {
-		return statistics;
+	Button getStatisticsButton() {
+		return statisticsButton;
 	}
 
-	Button getRules() {
-		return rules;
+	Button getRulesButton() {
+		return rulesButton;
 	}
 
-	Text getQwixx() {return qwixx;}
+	Text getTitleText() {return titleText;}
 
 }
