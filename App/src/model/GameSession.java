@@ -11,9 +11,9 @@ public class GameSession {
 	private DicePool publicDicePool;
 	private LinkedList<Turn> turns;
 
-	public GameSession(Player player, Player cpu) {
-		this.player = player;
-		this.cpu = cpu;
+	public GameSession(String name) {
+		player = new Player(name);
+		cpu = new Player("Skynet");
 		playerSession = new PlayerSession();
 		cpuSession = new PlayerSession();
 		coloredDicePool = new DicePool();
@@ -23,8 +23,6 @@ public class GameSession {
 
 	public void startGame() {
 		throwAllDice();
-		UI.printDieValues(coloredDicePool);
-		UI.printDieValues(publicDicePool);
 		getPossibleColoredNumbers();
 	}
 
@@ -50,7 +48,6 @@ public class GameSession {
 			for (Die pubDie : publicDicePool.getDice()) {
 				int total = colDieVal + pubDie.getValue();
 				Row row = playerSession.getScoreCard().getRow(colDie.getColor());
-				UI.printOptions(colDie.getColor(), row.getNumberField(total));
 			}
 		}
 	}
