@@ -1,6 +1,8 @@
 package App.src.view.rules;
 
 import App.src.model.Game;
+import App.src.view.mainMenu.MainMenuPresenter;
+import App.src.view.mainMenu.MainMenuView;
 
 public class RulesPresenter {
 	private Game model;
@@ -14,7 +16,8 @@ public class RulesPresenter {
 		updateView();
 	}
 
-	private void addEventHandlers() {
+	private void addEventHandlers() {view.getBackButton().setOnAction(actionEvent -> backToMainMenu());
+
 
 	}
 
@@ -22,5 +25,10 @@ public class RulesPresenter {
 
 	}
 
+	private void backToMainMenu(){
+		MainMenuView mainMenuView = new MainMenuView();
+		MainMenuPresenter mainMenuPresenter = new MainMenuPresenter(model,mainMenuView);
+		view.getScene().setRoot(mainMenuView);
+	}
 
 }
