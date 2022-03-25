@@ -1,13 +1,9 @@
 package App.src.view.mainMenu;
 
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -56,6 +52,6 @@ public class MainMenuView extends BorderPane {
 		return rules;
 	}
 
-	Text getQwixx(){ return qwixx; }
+	Text getQwixx() {return qwixx;}
 
 }

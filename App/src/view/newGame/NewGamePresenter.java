@@ -1,6 +1,8 @@
 package App.src.view.newGame;
 
 import App.src.model.Game;
+import App.src.view.game.GamePresenter;
+import App.src.view.game.GameView;
 import App.src.view.mainMenu.MainMenuPresenter;
 import App.src.view.mainMenu.MainMenuView;
 
@@ -18,10 +20,17 @@ public class NewGamePresenter {
 
 	private void addEventHandlers() {
 		view.getBack().setOnAction(actionEvent -> backToMainMenu());
+		view.getStartButton().setOnAction(actionEvent -> startGame(view.getNameTextField().getText()));
 	}
 
 	private void updateView() {
 
+	}
+
+	private void startGame(String name) {
+		GameView gameView = new GameView();
+		GamePresenter gamePresenter = new GamePresenter(model, gameView);
+		view.getScene().setRoot(gameView);
 	}
 
 	private void backToMainMenu() {
