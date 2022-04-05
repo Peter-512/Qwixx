@@ -7,12 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.HashMap;
+
 public class GameView extends BorderPane {
 	private VBox vBox;
-	private HBox redRow;
-	private HBox yellowRow;
-	private HBox greenRow;
-	private HBox blueRow;
+	private HashMap<Color, HBox> rowByColorMap = new HashMap<>();
 	private HBox scoreRow;
 
 
@@ -32,54 +31,34 @@ public class GameView extends BorderPane {
 	}
 
 	private void initializeNodes() {
-		redRow = new HBox();
-		for (int i = 2; i < 13; i++) {
-			redRow.getChildren().add(createButton(i, Color.RED, false));
-		}
-		yellowRow = new HBox();
-		for (int i = 2; i < 13; i++) {
-			yellowRow.getChildren().add(createButton(i, Color.YELLOW, false));
-		}
-		greenRow = new HBox();
-		for (int i = 12; i > 1; i--) {
-			greenRow.getChildren().add(createButton(i, Color.GREEN, true));
-		}
-		blueRow = new HBox();
-		for (int i = 12; i > 1; i--) {
-			blueRow.getChildren().add(createButton(i, Color.BLUE, true));
+		vBox = new VBox();
+
+		for (Color color : Color.values()) {
+			HBox row = new HBox();
+			rowByColorMap.put(color, row);
+			if (color.ordinal() < 2) {
+				for (int i = 2; i < 13; i++) {
+					row.getChildren().add(createButton(i, color, false));
+				}
+			} else {
+				for (int i = 12; i > 1; i--) {
+					row.getChildren().add(createButton(i, color, true));
+				}
+			}
+			vBox.getChildren().add(row);
 		}
 		scoreRow = new HBox();
-		vBox = new VBox(redRow, yellowRow, greenRow, blueRow, scoreRow);
+		vBox.getChildren().add(scoreRow);
 	}
 
 	private void layoutNodes() {
 		setCenter(vBox);
 		vBox.setAlignment(Pos.CENTER);
 		vBox.setSpacing(10);
-		redRow.setAlignment(Pos.CENTER);
-		redRow.setSpacing(10);
-		yellowRow.setAlignment(Pos.CENTER);
-		yellowRow.setSpacing(10);
-		greenRow.setAlignment(Pos.CENTER);
-		greenRow.setSpacing(10);
-		blueRow.setAlignment(Pos.CENTER);
-		blueRow.setSpacing(10);
-	}
-
-	HBox getRedRow() {
-		return redRow;
-	}
-
-	HBox getYellowRow() {
-		return yellowRow;
-	}
-
-	HBox getGreenRow() {
-		return greenRow;
-	}
-
-	HBox getBlueRow() {
-		return blueRow;
+		for (Color color : Color.values()) {
+			getRowByColor(color).setSpacing(10);
+			getRowByColor(color).setAlignment(Pos.CENTER);
+		}
 	}
 
 	HBox getScoreRow() {
@@ -89,4 +68,13 @@ public class GameView extends BorderPane {
 	VBox getvBox() {
 		return vBox;
 	}
+
+	HashMap<Color, HBox> getRowByColorMap() {
+		return rowByColorMap;
+	}
+
+	HBox getRowByColor(Color color) {
+		return rowByColorMap.get(color);
+	}
+
 }
