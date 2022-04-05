@@ -1,18 +1,22 @@
 package App.src.view.game;
 
 import App.src.model.Color;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 
 import java.util.HashMap;
 
 public class GameView extends BorderPane {
-	private VBox vBox;
+	private VBox scoreCards;
 	private HashMap<Color, HBox> rowByColorMap = new HashMap<>();
 	private HBox scoreRow;
+	private VBox dicePools;
+	private HashMap<Color, Label> dieByColorMap = new HashMap<>();
+	private Label[] publicDice = new Label[2];
+	private Button rollDiceButton;
 
 
 	public GameView() {
@@ -31,7 +35,9 @@ public class GameView extends BorderPane {
 	}
 
 	private void initializeNodes() {
-		vBox = new VBox();
+
+		//		Setting up scoreCard
+		scoreCards = new VBox();
 
 		for (Color color : Color.values()) {
 			HBox row = new HBox();
@@ -45,16 +51,46 @@ public class GameView extends BorderPane {
 					row.getChildren().add(createButton(i, color, true));
 				}
 			}
-			vBox.getChildren().add(row);
+			scoreCards.getChildren().add(row);
 		}
 		scoreRow = new HBox();
-		vBox.getChildren().add(scoreRow);
+		scoreCards.getChildren().add(scoreRow);
+
+		//		Setting up dice
+		dicePools = new VBox();
+		for (Color color : Color.values()) {
+			Label die = new Label("1");
+			dieByColorMap.put(color, die);
+			dicePools.getChildren().add(die);
+		}
+		for (int i = 0; i < publicDice.length; i++) {
+			publicDice[i] = new Label("1");
+			dicePools.getChildren().add(publicDice[i]);
+		}
+		rollDiceButton = new Button("Roll dice");
+		dicePools.getChildren().add(rollDiceButton);
 	}
 
 	private void layoutNodes() {
-		setCenter(vBox);
-		vBox.setAlignment(Pos.CENTER);
-		vBox.setSpacing(10);
+
+//		rollDiceButton.setPrefSize(25, 25);
+		for (Label die : publicDice) {
+			die.setPrefSize(50, 50);
+			die.setPadding(new Insets(15));
+			die.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		}
+		dieByColorMap.forEach((color, die) -> {
+			die.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.valueOf(color.name()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+			die.setPadding(new Insets(15));
+			die.setPrefSize(50, 50);
+		});
+		setLeft(dicePools);
+		dicePools.setSpacing(10);
+		dicePools.setAlignment(Pos.CENTER);
+		setMargin(dicePools, new Insets(10));
+		setCenter(scoreCards);
+		scoreCards.setAlignment(Pos.CENTER);
+		scoreCards.setSpacing(10);
 		for (Color color : Color.values()) {
 			getRowByColor(color).setSpacing(10);
 			getRowByColor(color).setAlignment(Pos.CENTER);
@@ -65,8 +101,8 @@ public class GameView extends BorderPane {
 		return scoreRow;
 	}
 
-	VBox getvBox() {
-		return vBox;
+	VBox getScoreCards() {
+		return scoreCards;
 	}
 
 	HashMap<Color, HBox> getRowByColorMap() {
@@ -77,4 +113,23 @@ public class GameView extends BorderPane {
 		return rowByColorMap.get(color);
 	}
 
+	VBox getDicePools() {
+		return dicePools;
+	}
+
+	HashMap<Color, Label> getDieByColorMap() {
+		return dieByColorMap;
+	}
+
+	Label getDieByColor(Color color) {
+		return dieByColorMap.get(color);
+	}
+
+	Label[] getPublicDice() {
+		return publicDice;
+	}
+
+	Button getRollDiceButton() {
+		return rollDiceButton;
+	}
 }
