@@ -13,7 +13,7 @@ public class NewGameView extends BorderPane {
 	private Label nameLabel;
 	private Button startButton;
 	private HBox hBox;
-	private Button back;
+	private Button backButton;
 
 	public NewGameView() {
 		initializeNodes();
@@ -25,21 +25,21 @@ public class NewGameView extends BorderPane {
 		nameLabel = new Label("Name");
 		startButton = new Button("Start");
 		hBox = new HBox(nameLabel, nameTextField, startButton);
-		back = new Button("Back");
+		backButton = new Button("Back");
 	}
 
 	private void layoutNodes() {
 		setCenter(hBox);
 		hBox.setAlignment(Pos.CENTER);
 		hBox.setSpacing(20);
-		setBottom(back);
-		setAlignment(back, Pos.CENTER);
-		setMargin(back, new Insets(10));
+		setBottom(backButton);
+		setAlignment(backButton, Pos.CENTER);
+		setMargin(backButton, new Insets(10));
 
 	}
 
-	Button getBack() {
-		return back;
+	Button getBackButton() {
+		return backButton;
 	}
 
 	TextField getNameTextField() {

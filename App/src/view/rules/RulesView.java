@@ -40,7 +40,7 @@ public class RulesView extends BorderPane {
 
     private void layoutNodes(){
         setBottom(backButton);
-        backButton.setAlignment(Pos.CENTER);
+        setAlignment(backButton, Pos.CENTER);
         setMargin(backButton,new Insets(10));
 
         setCenter(vBox);

@@ -19,7 +19,7 @@ public class NewGamePresenter {
 	}
 
 	private void addEventHandlers() {
-		view.getBack().setOnAction(actionEvent -> backToMainMenu());
+		view.getBackButton().setOnAction(actionEvent -> backToMainMenu());
 		view.getStartButton().setOnAction(actionEvent -> startGame(view.getNameTextField().getText()));
 	}
 
