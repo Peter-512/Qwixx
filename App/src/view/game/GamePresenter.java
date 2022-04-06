@@ -1,9 +1,6 @@
 package App.src.view.game;
 
-import App.src.model.Color;
-import App.src.model.ColoredDie;
-import App.src.model.Game;
-import App.src.model.NumberField;
+import App.src.model.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -23,17 +20,20 @@ public class GamePresenter {
 
 	private void addEventHandlers() {
 		for (Color color : Color.values()) {
-			HBox row = view.getRowByColor(color);
-			for (int i = 0; i < row.getChildren().size(); i++) {
-				Button button = (Button) row.getChildren().get(i);
+			HBox rowView = view.getRowByColor(color);
+			for (int i = 0; i < rowView.getChildren().size(); i++) {
+				Button button = (Button) rowView.getChildren().get(i);
 				int finalI = i;
 				button.setOnAction(actionEvent -> {
-					model.getGameSession()
-					     .getPlayerSession()
-					     .getScoreCard()
-					     .getRow(color).getNumberField(finalI).setCrossed();
-					model.getGameSession().getPlayerSession().getScoreCard().getRow(color).disableNumberFields(finalI);
-					updateView();
+					Row row = model.getGameSession()
+					               .getPlayerSession()
+					               .getScoreCard()
+					               .getRow(color);
+					if (!row.getNumberField(finalI).isDisabled()) {
+						row.getNumberField(finalI).setCrossed();
+						row.disableNumberFields(finalI);
+						updateView();
+					}
 				});
 			}
 		}
