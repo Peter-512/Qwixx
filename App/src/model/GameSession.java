@@ -11,6 +11,7 @@ public class GameSession {
 	private DicePool publicDicePool;
 	private LinkedList<Turn> turns;
 	private boolean isHumanActivePlayer;
+	private long startTime;
 
 	public GameSession(String name, boolean startingPlayer) {
 		playerSession = new PlayerSession(name, startingPlayer);
@@ -19,6 +20,7 @@ public class GameSession {
 		publicDicePool = new DicePool(true);
 		turns = new LinkedList<>();
 		isHumanActivePlayer = startingPlayer;
+		startTime = System.currentTimeMillis();
 	}
 
 	public void throwAllDice() {
@@ -114,6 +116,12 @@ public class GameSession {
 
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
+	}
+
+	public long getStartTime() {
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//		return startTime.format(formatter);
+		return startTime;
 	}
 
 	public boolean isRunning() {

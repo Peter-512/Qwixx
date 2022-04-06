@@ -18,6 +18,7 @@ public class GameView extends BorderPane {
 	private HashMap<Color, Label> dieByColorMap = new HashMap<>();
 	private Label[] publicDice = new Label[2];
 	private Button rollDiceButton;
+	private Label timeLabel;
 
 
 	public GameView() {
@@ -37,6 +38,9 @@ public class GameView extends BorderPane {
 	}
 
 	private void initializeNodes() {
+
+		//		Setting up time
+		timeLabel = new Label("00:00");
 
 		//		Setting up scoreCard
 		playerName = new Label();
@@ -77,16 +81,23 @@ public class GameView extends BorderPane {
 
 	private void layoutNodes() {
 
+		//		Laying out public dice
 		for (Label die : publicDice) {
 			die.setPrefSize(50, 50);
 			die.setPadding(new Insets(15));
 			die.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 		}
+
+		//		Laying out colored dice
 		dieByColorMap.forEach((color, die) -> {
 			die.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.valueOf(color.name()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 			die.setPadding(new Insets(15));
 			die.setPrefSize(50, 50);
 		});
+
+		setRight(timeLabel);
+		setMargin(timeLabel, new Insets(25));
+		timeLabel.setPrefWidth(75);
 		setLeft(dicePools);
 		dicePools.setSpacing(10);
 		dicePools.setAlignment(Pos.CENTER);
@@ -138,5 +149,9 @@ public class GameView extends BorderPane {
 
 	Label getPlayerName() {
 		return playerName;
+	}
+
+	Label getTimeLabel() {
+		return timeLabel;
 	}
 }
