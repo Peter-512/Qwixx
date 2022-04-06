@@ -3,6 +3,7 @@ package App.src.view.newGame;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +15,7 @@ public class NewGameView extends BorderPane {
 	private Button startButton;
 	private HBox hBox;
 	private Button backButton;
+	private CheckBox startingPlayer;
 
 	public NewGameView() {
 		initializeNodes();
@@ -24,7 +26,8 @@ public class NewGameView extends BorderPane {
 		nameTextField = new TextField();
 		nameLabel = new Label("Name");
 		startButton = new Button("Start");
-		hBox = new HBox(nameLabel, nameTextField, startButton);
+		startingPlayer = new CheckBox("Do you want to start?");
+		hBox = new HBox(nameLabel, nameTextField, startButton, startingPlayer);
 		backButton = new Button("Back");
 	}
 
@@ -52,5 +55,9 @@ public class NewGameView extends BorderPane {
 
 	Button getStartButton() {
 		return startButton;
+	}
+
+	CheckBox getStartingPlayer() {
+		return startingPlayer;
 	}
 }

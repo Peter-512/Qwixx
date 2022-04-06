@@ -4,7 +4,7 @@ public class NumberField {
 	private final int value;
 	private boolean isCrossed;
 	private boolean isDisabled;
-	private int index;
+	private final int index;
 
 	public NumberField(int value, int index) {
 		this.value = value;

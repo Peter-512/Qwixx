@@ -35,9 +35,10 @@ public class GamePresenter {
 					               .getRow(color);
 					if (!row.getNumberField(finalI).isDisabled()) {
 						row.getNumberField(finalI).setCrossed();
-						row.disableNumberFields(finalI);
+						row.disableNumberField(finalI);
 						updateView();
 						disableAllNumberFields();
+						enableColoredNumberFields();
 					}
 				});
 			}
@@ -47,6 +48,15 @@ public class GamePresenter {
 		view.getRollDiceButton().setOnAction(actionEvent -> {
 			model.getGameSession().throwAllDice();
 			updateView();
+		});
+	}
+
+	private void enableColoredNumberFields() {
+		HashMap<Color, ArrayList<NumberField>> map = model.getGameSession().getColoredNumberFields();
+		map.forEach((color, numberFields) -> {
+			for (NumberField numberField : numberFields) {
+				view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+			}
 		});
 	}
 

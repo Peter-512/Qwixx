@@ -1,5 +1,6 @@
 package App.src.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -9,13 +10,15 @@ public class GameSession {
 	private DicePool coloredDicePool;
 	private DicePool publicDicePool;
 	private LinkedList<Turn> turns;
+	private boolean isHumanActivePlayer;
 
-	public GameSession(String name) {
-		playerSession = new PlayerSession(name);
-		cpuSession = new PlayerSession("Skynet");
+	public GameSession(String name, boolean startingPlayer) {
+		playerSession = new PlayerSession(name, startingPlayer);
+		cpuSession = new PlayerSession("Skynet", !startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
 		turns = new LinkedList<>();
+		isHumanActivePlayer = startingPlayer;
 	}
 
 	public void throwAllDice() {
@@ -60,6 +63,27 @@ public class GameSession {
 		return map;
 	}
 
+	public HashMap<Color, ArrayList<NumberField>> getColoredNumberFields() {
+		HashMap<Color, ArrayList<NumberField>> map = new HashMap<>();
+		for (Die die : coloredDicePool.getDice()) {
+			ColoredDie colDie = (ColoredDie) die;
+			int colDieVal = colDie.getValue();
+			for (Die pubDie : publicDicePool.getDice()) {
+				int total = colDieVal + pubDie.getValue();
+				Row row = playerSession.getScoreCard().getRow(colDie.getColor());
+				if (!row.isLocked()) {
+					row.getNumberFields().forEach(numberField -> {
+						if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
+							map.computeIfAbsent(colDie.getColor(), k -> new ArrayList<>());
+							map.get(colDie.getColor()).add(numberField);
+						}
+					});
+				}
+			}
+		}
+		return map;
+	}
+
 	public LinkedList<Turn> getTurns() {
 		return turns;
 	}
@@ -82,6 +106,14 @@ public class GameSession {
 
 	public DicePool getPublicDicePool() {
 		return publicDicePool;
+	}
+
+	public boolean isHumanActivePlayer() {
+		return isHumanActivePlayer;
+	}
+
+	public void changeActivePlayer() {
+		isHumanActivePlayer = !isHumanActivePlayer;
 	}
 
 	public boolean isRunning() {

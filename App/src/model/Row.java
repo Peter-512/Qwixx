@@ -51,8 +51,8 @@ public class Row {
 		//TODO implement table for amount of points per cross
 	}
 
-	public NumberField getNumberField(int value) {
-		return numberFields.get(value);
+	public NumberField getNumberField(int index) {
+		return numberFields.get(index);
 	}
 
 	public ArrayList<NumberField> getNumberFields() {
@@ -65,7 +65,7 @@ public class Row {
 		else return null;
 	}
 
-	public void disableNumberFields(int index) {
+	public void disableNumberField(int index) {
 		for (int i = 0; i < index; i++) {
 			if (!numberFields.get(i).isCrossed()) {
 				numberFields.get(i).setDisabled();
