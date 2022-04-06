@@ -1,10 +1,12 @@
 package App.src.view.game;
 
 import App.src.model.*;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GamePresenter {
 	Game model;
@@ -19,6 +21,8 @@ public class GamePresenter {
 	}
 
 	private void addEventHandlers() {
+
+		//		Clicking a numberField on the scoreCard
 		for (Color color : Color.values()) {
 			HBox rowView = view.getRowByColor(color);
 			for (int i = 0; i < rowView.getChildren().size(); i++) {
@@ -33,10 +37,13 @@ public class GamePresenter {
 						row.getNumberField(finalI).setCrossed();
 						row.disableNumberFields(finalI);
 						updateView();
+						disableAllNumberFields();
 					}
 				});
 			}
 		}
+
+		//		Hitting roll dice button
 		view.getRollDiceButton().setOnAction(actionEvent -> {
 			model.getGameSession().throwAllDice();
 			updateView();
@@ -44,6 +51,12 @@ public class GamePresenter {
 	}
 
 	private void updateView() {
+		//		Enabling numberFields based on dice rolls
+		HashMap<Color, NumberField> map = model.getGameSession().getPublicNumberFields();
+		map.forEach((color, numberField) -> {
+			view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+		});
+
 		//		Updating colored dice
 		model.getGameSession().getColoredDicePool().getDice().forEach(d -> {
 			ColoredDie die = (ColoredDie) d;
@@ -59,7 +72,7 @@ public class GamePresenter {
 			                                                    .getValue()));
 		}
 
-		//		Updating crossed out NumberFields
+		//		Updating crossed out and disabled NumberFields
 		for (Color color : Color.values()) {
 			ArrayList<NumberField> numberFields = model.getGameSession()
 			                                           .getPlayerSession()
@@ -84,4 +97,14 @@ public class GamePresenter {
 		view.getPlayerName()
 		    .setText(String.format("%s's Score Card", model.getGameSession().getPlayerSession().getPlayerName()));
 	}
+
+	private void disableAllNumberFields() {
+		for (Color color : Color.values()) {
+			for (Node n : view.getRowByColor(color).getChildren()) {
+				Button button = (Button) n;
+				button.setDisable(true);
+			}
+		}
+	}
+
 }

@@ -4,11 +4,13 @@ public class NumberField {
 	private final int value;
 	private boolean isCrossed;
 	private boolean isDisabled;
+	private int index;
 
-	public NumberField(int value) {
+	public NumberField(int value, int index) {
 		this.value = value;
 		this.isCrossed = false;
 		this.isDisabled = false;
+		this.index = index;
 	}
 
 	public int getValue() {
@@ -29,5 +31,9 @@ public class NumberField {
 
 	public void setDisabled() {
 		isDisabled = true;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }

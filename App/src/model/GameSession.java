@@ -1,5 +1,6 @@
 package App.src.model;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class GameSession {
@@ -41,6 +42,22 @@ public class GameSession {
 				Row row = playerSession.getScoreCard().getRow(colDie.getColor());
 			}
 		}
+	}
+
+	public HashMap<Color, NumberField> getPublicNumberFields() {
+		HashMap<Color, NumberField> map = new HashMap<>();
+		int total = publicDicePool.getDice().get(0).getValue() + publicDicePool.getDice().get(1).getValue();
+		for (Color color : Color.values()) {
+			Row row = playerSession.getScoreCard().getRow(color);
+			if (!row.isLocked()) {
+				row.getNumberFields().forEach(numberField -> {
+					if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
+						map.put(color, numberField);
+					}
+				});
+			}
+		}
+		return map;
 	}
 
 	public LinkedList<Turn> getTurns() {

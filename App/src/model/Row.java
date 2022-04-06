@@ -17,12 +17,12 @@ public class Row {
 
 		if (isAscending) {
 			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(i + 2));
+				numberFields.add(new NumberField(i + 2, i));
 			}
 		} else {
 			int val = 12;
 			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(val--));
+				numberFields.add(new NumberField(val--, i));
 			}
 		}
 	}

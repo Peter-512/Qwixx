@@ -32,6 +32,7 @@ public class GameView extends BorderPane {
 		if (whiteText) {
 			button.setStyle("-fx-background-color: '%s'; -fx-text-fill: white".formatted(color));
 		}
+		button.setDisable(true);
 		return button;
 	}
 

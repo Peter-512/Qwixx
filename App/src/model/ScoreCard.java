@@ -12,7 +12,7 @@ public class ScoreCard {
 		rows = new LinkedHashMap<>();
 
 		for (Color color : Color.values()) {
-			rows.put(color, new Row(color, color.ordinal() > 1));
+			rows.put(color, new Row(color, color.ordinal() < 2));
 		}
 	}
 
