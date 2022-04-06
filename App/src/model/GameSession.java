@@ -17,14 +17,6 @@ public class GameSession {
 		turns = new LinkedList<>();
 	}
 
-	public void startGame() {
-		while (isRunning()) {
-			throwAllDice();
-			getPossibleColoredNumbers();
-
-		}
-	}
-
 	public void throwAllDice() {
 		coloredDicePool.throwDice();
 		publicDicePool.throwDice();

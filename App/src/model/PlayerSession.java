@@ -24,4 +24,12 @@ public class PlayerSession {
 	public void addAction() {
 		actions.add(new Action());
 	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public String getPlayerName() {
+		return player.getName();
+	}
 }

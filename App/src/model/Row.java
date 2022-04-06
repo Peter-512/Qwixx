@@ -1,13 +1,13 @@
 package App.src.model;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 public class Row {
 	private final Color color;
 	private final boolean isAscending;
 	private boolean isLocked;
 	private int rowScore;
-	private final LinkedHashMap<Integer, NumberField> numberFields = new LinkedHashMap<>();
+	private final ArrayList<NumberField> numberFields = new ArrayList<>();
 
 	public Row(Color color, boolean isAscending) {
 		this.color = color;
@@ -17,12 +17,12 @@ public class Row {
 
 		if (isAscending) {
 			for (int i = 0; i < 11; i++) {
-				numberFields.put(i, new NumberField(i+2));
+				numberFields.add(new NumberField(i + 2));
 			}
 		} else {
 			int val = 12;
 			for (int i = 0; i < 11; i++) {
-				numberFields.put(i, new NumberField(val--));
+				numberFields.add(new NumberField(val--));
 			}
 		}
 	}
@@ -55,7 +55,7 @@ public class Row {
 		return numberFields.get(value);
 	}
 
-	public LinkedHashMap<Integer, NumberField> getNumberFields() {
+	public ArrayList<NumberField> getNumberFields() {
 		return numberFields;
 	}
 
@@ -63,5 +63,13 @@ public class Row {
 		if (!numberFields.get(value).isDisabled())
 			return numberFields.get(value);
 		else return null;
+	}
+
+	public void disableNumberFields(int index) {
+		for (int i = 0; i < index; i++) {
+			if (!numberFields.get(i).isCrossed()) {
+				numberFields.get(i).setDisabled();
+			}
+		}
 	}
 }

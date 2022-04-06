@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class GameView extends BorderPane {
 	private VBox scoreCards;
+	private Label playerName;
 	private HashMap<Color, HBox> rowByColorMap = new HashMap<>();
 	private HBox scoreRow;
 	private VBox dicePools;
@@ -37,7 +38,9 @@ public class GameView extends BorderPane {
 	private void initializeNodes() {
 
 		//		Setting up scoreCard
-		scoreCards = new VBox();
+		playerName = new Label();
+		scoreCards = new VBox(playerName);
+
 
 		for (Color color : Color.values()) {
 			HBox row = new HBox();
@@ -73,7 +76,6 @@ public class GameView extends BorderPane {
 
 	private void layoutNodes() {
 
-//		rollDiceButton.setPrefSize(25, 25);
 		for (Label die : publicDice) {
 			die.setPrefSize(50, 50);
 			die.setPadding(new Insets(15));
@@ -131,5 +133,9 @@ public class GameView extends BorderPane {
 
 	Button getRollDiceButton() {
 		return rollDiceButton;
+	}
+
+	Label getPlayerName() {
+		return playerName;
 	}
 }
