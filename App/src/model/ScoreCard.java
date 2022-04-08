@@ -1,5 +1,7 @@
 package App.src.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class ScoreCard {
@@ -38,6 +40,42 @@ public class ScoreCard {
 
 	public LinkedHashMap<Color, Row> getRows() {
 		return rows;
+	}
+
+	public HashMap<Color, NumberField> getPublicNumberFields(int total) {
+		HashMap<Color, NumberField> map = new HashMap<>();
+		for (Color color : Color.values()) {
+			Row row = getRow(color);
+			if (!row.isLocked()) {
+				row.getNumberFields().forEach(numberField -> {
+					if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
+						map.put(color, numberField);
+					}
+				});
+			}
+		}
+		return map;
+	}
+
+	public HashMap<Color, ArrayList<NumberField>> getColoredNumberFields(DicePool coloredDicePool, DicePool publicDicePool) {
+		HashMap<Color, ArrayList<NumberField>> map = new HashMap<>();
+		for (Die die : coloredDicePool.getDice()) {
+			ColoredDie colDie = (ColoredDie) die;
+			int colDieVal = colDie.getValue();
+			for (Die pubDie : publicDicePool.getDice()) {
+				int total = colDieVal + pubDie.getValue();
+				Row row = getRow(colDie.getColor());
+				if (!row.isLocked()) {
+					row.getNumberFields().forEach(numberField -> {
+						if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
+							map.computeIfAbsent(colDie.getColor(), k -> new ArrayList<>());
+							map.get(colDie.getColor()).add(numberField);
+						}
+					});
+				}
+			}
+		}
+		return map;
 	}
 
 
