@@ -38,17 +38,6 @@ public class GameSession {
 		}
 	}
 
-	public void getPossibleColoredNumbers() {
-		for (Die die : coloredDicePool.getDice()) {
-			ColoredDie colDie = (ColoredDie) die;
-			int colDieVal = colDie.getValue();
-			for (Die pubDie : publicDicePool.getDice()) {
-				int total = colDieVal + pubDie.getValue();
-				Row row = playerSession.getScoreCard().getRow(colDie.getColor());
-			}
-		}
-	}
-
 	public HashMap<Color, NumberField> getPublicNumberFields() {
 		HashMap<Color, NumberField> map = new HashMap<>();
 		int total = publicDicePool.getDice().get(0).getValue() + publicDicePool.getDice().get(1).getValue();
