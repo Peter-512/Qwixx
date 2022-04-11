@@ -19,15 +19,19 @@ public class NewGamePresenter {
 	}
 
 	private void addEventHandlers() {
-		view.getBack().setOnAction(actionEvent -> backToMainMenu());
-		view.getStartButton().setOnAction(actionEvent -> startGame(view.getNameTextField().getText()));
+		view.getBackButton().setOnAction(actionEvent -> backToMainMenu());
+		view.getStartButton()
+		    .setOnAction(actionEvent -> {
+			    startGame(view.getNameTextField().getText(), view.getStartingPlayer().isSelected());
+		    });
 	}
 
 	private void updateView() {
 
 	}
 
-	private void startGame(String name) {
+	private void startGame(String name, boolean startingPlayer) {
+		model.startGameSession(name, startingPlayer);
 		GameView gameView = new GameView();
 		GamePresenter gamePresenter = new GamePresenter(model, gameView);
 		view.getScene().setRoot(gameView);

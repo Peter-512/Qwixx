@@ -1,13 +1,13 @@
 package App.src.model;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 public class Row {
 	private final Color color;
 	private final boolean isAscending;
 	private boolean isLocked;
 	private int rowScore;
-	private final LinkedHashMap<Integer, NumberField> numberFields = new LinkedHashMap<>();
+	private final ArrayList<NumberField> numberFields = new ArrayList<>();
 
 	public Row(Color color, boolean isAscending) {
 		this.color = color;
@@ -16,12 +16,13 @@ public class Row {
 		this.rowScore = 0;
 
 		if (isAscending) {
-			for (int i = 2; i < 13; i++) {
-				numberFields.put(i, new NumberField(i));
+			for (int i = 0; i < 11; i++) {
+				numberFields.add(new NumberField(i + 2, i));
 			}
 		} else {
-			for (int i = 12; i > 1; i--) {
-				numberFields.put(i, new NumberField(i));
+			int val = 12;
+			for (int i = 0; i < 11; i++) {
+				numberFields.add(new NumberField(val--, i));
 			}
 		}
 	}
@@ -50,11 +51,11 @@ public class Row {
 		//TODO implement table for amount of points per cross
 	}
 
-	public NumberField getNumberField(int value) {
-		return numberFields.get(value);
+	public NumberField getNumberField(int index) {
+		return numberFields.get(index);
 	}
 
-	public LinkedHashMap<Integer, NumberField> getNumberFields() {
+	public ArrayList<NumberField> getNumberFields() {
 		return numberFields;
 	}
 
@@ -62,5 +63,13 @@ public class Row {
 		if (!numberFields.get(value).isDisabled())
 			return numberFields.get(value);
 		else return null;
+	}
+
+	public void disableNumberField(int index) {
+		for (int i = 0; i < index; i++) {
+			if (!numberFields.get(i).isCrossed()) {
+				numberFields.get(i).setDisabled();
+			}
+		}
 	}
 }

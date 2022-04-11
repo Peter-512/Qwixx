@@ -3,27 +3,22 @@ package App.src.model;
 import java.util.LinkedList;
 
 public class GameSession {
-	private Player player;
-	private PlayerSession playerSession;
-	private Player cpu;
-	private PlayerSession cpuSession;
+	private PlayerSession[] playerSessions;
 	private DicePool coloredDicePool;
 	private DicePool publicDicePool;
 	private LinkedList<Turn> turns;
+	private boolean isHumanActivePlayer;
+	private long startTime;
 
-	public GameSession(String name) {
-		player = new Player(name);
-		cpu = new Player("Skynet");
-		playerSession = new PlayerSession();
-		cpuSession = new PlayerSession();
+	public GameSession(String name, boolean startingPlayer) {
+		playerSessions = new PlayerSession[2];
+		playerSessions[0] = new PlayerSession(name, startingPlayer);
+		playerSessions[1] = new PlayerSession("Skynet", !startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
 		turns = new LinkedList<>();
-	}
-
-	public void startGame() {
-		throwAllDice();
-		getPossibleColoredNumbers();
+		isHumanActivePlayer = startingPlayer;
+		startTime = System.currentTimeMillis();
 	}
 
 	public void throwAllDice() {
@@ -41,15 +36,8 @@ public class GameSession {
 		}
 	}
 
-	public void getPossibleColoredNumbers() {
-		for (Die die : coloredDicePool.getDice()) {
-			ColoredDie colDie = (ColoredDie) die;
-			int colDieVal = colDie.getValue();
-			for (Die pubDie : publicDicePool.getDice()) {
-				int total = colDieVal + pubDie.getValue();
-				Row row = playerSession.getScoreCard().getRow(colDie.getColor());
-			}
-		}
+	public int totalPublicThrow() {
+		return publicDicePool.getDice().get(0).getValue() + publicDicePool.getDice().get(1).getValue();
 	}
 
 	public LinkedList<Turn> getTurns() {
@@ -60,20 +48,8 @@ public class GameSession {
 		turns.add(new Turn(turns.size() + 1));
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
-	public PlayerSession getPlayerSession() {
-		return playerSession;
-	}
-
-	public Player getCpu() {
-		return cpu;
-	}
-
-	public PlayerSession getCpuSession() {
-		return cpuSession;
+	public PlayerSession[] getPlayerSessions() {
+		return playerSessions;
 	}
 
 	public DicePool getColoredDicePool() {
@@ -82,5 +58,31 @@ public class GameSession {
 
 	public DicePool getPublicDicePool() {
 		return publicDicePool;
+	}
+
+	public boolean isHumanActivePlayer() {
+		return isHumanActivePlayer;
+	}
+
+	public void changeActivePlayer() {
+		isHumanActivePlayer = !isHumanActivePlayer;
+	}
+
+	public long getStartTime() {
+		//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		//		return startTime.format(formatter);
+		return startTime;
+	}
+
+	public boolean isRunning() {
+		int totalRowsLocked = 0;
+		for (PlayerSession playerSession : playerSessions) {
+			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return false;
+			totalRowsLocked += playerSession.getScoreCard().getAmountOfLockedRows();
+		}
+		if (totalRowsLocked >= 2) {
+			return false;
+		}
+		return true;
 	}
 }
