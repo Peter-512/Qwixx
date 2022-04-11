@@ -9,6 +9,7 @@ public class GameSession {
 	private LinkedList<Turn> turns;
 	private boolean isHumanActivePlayer;
 	private long startTime;
+	private long endTime;
 
 	public GameSession(String name, boolean startingPlayer) {
 		playerSessions = new PlayerSession[2];
@@ -19,6 +20,7 @@ public class GameSession {
 		turns = new LinkedList<>();
 		isHumanActivePlayer = startingPlayer;
 		startTime = System.currentTimeMillis();
+		endTime = System.currentTimeMillis();
 	}
 
 	public void throwAllDice() {
@@ -72,6 +74,9 @@ public class GameSession {
 		//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		//		return startTime.format(formatter);
 		return startTime;
+	}
+	public long getEndTime(){
+		return endTime = System.currentTimeMillis()-startTime;
 	}
 
 	public boolean isRunning() {
