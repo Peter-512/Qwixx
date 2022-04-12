@@ -55,7 +55,7 @@ public class ScoreCardPresenter {
 		HashMap<Color, ArrayList<NumberField>> map = model.getColoredNumberFields(gameSession.getColoredDicePool(), gameSession.getPublicDicePool());
 		map.forEach((color, numberFields) -> {
 			for (NumberField numberField : numberFields) {
-				view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+				view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 			}
 		});
 	}
@@ -64,7 +64,7 @@ public class ScoreCardPresenter {
 		//		Enabling numberFields based on dice rolls
 		HashMap<Color, NumberField> map = model.getPublicNumberFields(gameSession.totalPublicThrow());
 		map.forEach((color, numberField) -> {
-			view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+			view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 		});
 
 		//		Updating crossed out and disabled NumberFields
@@ -72,14 +72,10 @@ public class ScoreCardPresenter {
 			ArrayList<NumberField> numberFields = model.getRow(color).getNumberFields();
 			for (NumberField numberField : numberFields) {
 				if (numberField.isCrossed()) {
-					Button button = (Button) view.getRowByColor(color)
-					                             .getChildren()
-					                             .get(numberFields.indexOf(numberField));
+					Button button = view.getNumberFieldButton(color, numberField.getIndex());
 					button.setText("✓");
 				} else if (numberField.isDisabled()) {
-					Button button = (Button) view.getRowByColor(color)
-					                             .getChildren()
-					                             .get(numberFields.indexOf(numberField));
+					Button button = view.getNumberFieldButton(color, numberField.getIndex());
 					button.setText("X");
 				}
 			}

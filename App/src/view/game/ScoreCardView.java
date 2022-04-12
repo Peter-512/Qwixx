@@ -74,6 +74,10 @@ public class ScoreCardView extends VBox {
 		return rowByColorMap.get(color);
 	}
 
+	Button getNumberFieldButton(Color color, int index) {
+		return (Button) getRowByColor(color).getChildren().get(index);
+	}
+
 	HBox getScoreRow() {
 		return scoreRow;
 	}
