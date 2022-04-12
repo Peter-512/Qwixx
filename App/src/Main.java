@@ -6,6 +6,7 @@ import App.src.view.mainMenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 
 
