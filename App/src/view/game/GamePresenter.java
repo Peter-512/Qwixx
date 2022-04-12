@@ -5,6 +5,7 @@ import App.src.model.Game;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Alert;
 import javafx.util.Duration;
 
 import java.text.DateFormat;
@@ -29,6 +30,9 @@ public class GamePresenter {
 
 		addEventHandlers();
 		initialViewUpdate();
+		updateDicePools();
+		updateScoreCards();
+		updateView();
 	}
 
 	private void addEventHandlers() {
@@ -37,10 +41,34 @@ public class GamePresenter {
 		view.getRollDiceButton().setOnAction(actionEvent -> {
 			model.getGameSession().throwAllDice();
 			updateDicePools();
-			for (ScoreCardPresenter scoreCardPresenter : scoreCardPresenters) {
-				scoreCardPresenter.updateView();
-			}
+			updateScoreCards();
+			updateView();
 		});
+
+		view.getPenaltyButton().setOnAction(actionEvent -> {
+			model.getGameSession().getActivePlayerSession().getScoreCard().addPenalty();
+			updateScoreCards();
+			updateView();
+		});
+	}
+
+	private void updateView() {
+		//		set current Player Text
+		view.getCurrentPlayer()
+		    .setText(String.format("%s's turn", model.getGameSession().getActivePlayerSession().getPlayerName()));
+
+		if (model.getGameSession().gameOver()) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Game Over");
+			alert.setHeaderText("End condition was reached.");
+			alert.showAndWait();
+		}
+	}
+
+	private void updateScoreCards() {
+		for (ScoreCardPresenter scoreCardPresenter : scoreCardPresenters) {
+			scoreCardPresenter.updateView();
+		}
 	}
 
 	private void updateDicePools() {
@@ -83,4 +111,5 @@ public class GamePresenter {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 	}
+
 }

@@ -31,7 +31,8 @@ public class ScoreCard {
 	}
 
 	public void addPenalty() {
-		amountOfPenalties++;
+		if (amountOfPenalties < 4)
+			amountOfPenalties++;
 	}
 
 	public Row getRow(Color color) {
@@ -49,7 +50,15 @@ public class ScoreCard {
 			if (!row.isLocked()) {
 				row.getNumberFields().forEach(numberField -> {
 					if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
-						map.put(color, numberField);
+						if (color == Color.RED || color == Color.YELLOW) {
+							if (numberField.getValue() < 12 || row.getAmountOfCrossedNumbers() >= 5) {
+								map.put(color, numberField);
+							}
+						} else {
+							if (numberField.getValue() > 2 || row.getAmountOfCrossedNumbers() >= 5) {
+								map.put(color, numberField);
+							}
+						}
 					}
 				});
 			}
@@ -78,5 +87,24 @@ public class ScoreCard {
 		return map;
 	}
 
+	public int getTotalPoints() {
+		int total = 0;
+		for (Color color : Color.values()) {
+			total += rows.get(color).getRowScore();
+		}
+		return total - getTotalPenaltyPoints();
+	}
+
+	public int getTotalAmountOfNumbersCrossed() {
+		int total = 0;
+		for (Color color : Color.values()) {
+			total += rows.get(color).getAmountOfCrossedNumbers();
+		}
+		return total;
+	}
+
+	public int getTotalPenaltyPoints() {
+		return amountOfPenalties * 5;
+	}
 
 }

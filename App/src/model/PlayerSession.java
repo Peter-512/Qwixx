@@ -6,13 +6,13 @@ public class PlayerSession {
 	private Player player;
 	private ScoreCard scoreCard;
 	private LinkedList<Action> actions;
-	private boolean startingPlayer;
+	private boolean activePlayer;
 
 	public PlayerSession(String name, boolean startingPlayer) {
 		player = new Player(name);
 		scoreCard = new ScoreCard();
 		actions = new LinkedList<>();
-		this.startingPlayer = startingPlayer;
+		activePlayer = startingPlayer;
 	}
 
 	public ScoreCard getScoreCard() {
@@ -33,5 +33,13 @@ public class PlayerSession {
 
 	public String getPlayerName() {
 		return player.getName();
+	}
+
+	public boolean isActivePlayer() {
+		return activePlayer;
+	}
+
+	public void changeActivePlayer() {
+		activePlayer = !activePlayer;
 	}
 }
