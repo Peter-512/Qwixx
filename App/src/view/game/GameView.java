@@ -15,7 +15,9 @@ public class GameView extends BorderPane {
 	private HashMap<Color, Label> dieByColorMap = new HashMap<>();
 	private Label[] publicDice = new Label[2];
 	private Button rollDiceButton;
+	private Button penaltyButton;
 	private Label timeLabel;
+	private Label currentPlayer;
 
 
 	public GameView() {
@@ -31,8 +33,7 @@ public class GameView extends BorderPane {
 		//		Setting up scoreCard
 		scoreCards = new VBox();
 		for (int i = 0; i < 2; i++) {
-			ScoreCardView scoreCardView = new ScoreCardView();
-			scoreCards.getChildren().add(scoreCardView);
+			scoreCards.getChildren().add(new ScoreCardView());
 		}
 
 		//		Setting up dice
@@ -46,8 +47,11 @@ public class GameView extends BorderPane {
 			publicDice[i] = new Label();
 			dicePools.getChildren().add(publicDice[i]);
 		}
+
+		currentPlayer = new Label();
+		penaltyButton = new Button("Take penalty");
 		rollDiceButton = new Button("Roll dice");
-		dicePools.getChildren().add(rollDiceButton);
+		dicePools.getChildren().addAll(rollDiceButton, penaltyButton, currentPlayer);
 	}
 
 	private void layoutNodes() {
@@ -77,7 +81,7 @@ public class GameView extends BorderPane {
 
 		setCenter(scoreCards);
 		scoreCards.setAlignment(Pos.CENTER);
-		scoreCards.setSpacing(20);
+		scoreCards.setSpacing(50);
 	}
 
 	VBox getScoreCards() {
@@ -106,6 +110,14 @@ public class GameView extends BorderPane {
 
 	Label getTimeLabel() {
 		return timeLabel;
+	}
+
+	Button getPenaltyButton() {
+		return penaltyButton;
+	}
+
+	Label getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 }

@@ -3,6 +3,7 @@ package App.src.view.game;
 import App.src.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -33,8 +34,8 @@ public class ScoreCardPresenter {
 					if (!row.getNumberField(finalI).isDisabled()) {
 						row.getNumberField(finalI).setCrossed();
 						row.disableNumberField(finalI);
-						updateView();
 						disableAllNumberFields();
+						updateView();
 						enableColoredNumberFields();
 					}
 				});
@@ -55,7 +56,7 @@ public class ScoreCardPresenter {
 		HashMap<Color, ArrayList<NumberField>> map = model.getColoredNumberFields(gameSession.getColoredDicePool(), gameSession.getPublicDicePool());
 		map.forEach((color, numberFields) -> {
 			for (NumberField numberField : numberFields) {
-				view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+				view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 			}
 		});
 	}
@@ -64,7 +65,7 @@ public class ScoreCardPresenter {
 		//		Enabling numberFields based on dice rolls
 		HashMap<Color, NumberField> map = model.getPublicNumberFields(gameSession.totalPublicThrow());
 		map.forEach((color, numberField) -> {
-			view.getRowByColor(color).getChildren().get(numberField.getIndex()).setDisable(false);
+			view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 		});
 
 		//		Updating crossed out and disabled NumberFields
@@ -72,17 +73,22 @@ public class ScoreCardPresenter {
 			ArrayList<NumberField> numberFields = model.getRow(color).getNumberFields();
 			for (NumberField numberField : numberFields) {
 				if (numberField.isCrossed()) {
-					Button button = (Button) view.getRowByColor(color)
-					                             .getChildren()
-					                             .get(numberFields.indexOf(numberField));
+					Button button = view.getNumberFieldButton(color, numberField.getIndex());
 					button.setText("✓");
 				} else if (numberField.isDisabled()) {
-					Button button = (Button) view.getRowByColor(color)
-					                             .getChildren()
-					                             .get(numberFields.indexOf(numberField));
+					Button button = view.getNumberFieldButton(color, numberField.getIndex());
 					button.setText("X");
 				}
 			}
+
+			view.getScore(color).setText(String.valueOf(model.getRow(color).getRowScore()));
+		}
+		view.getPenaltyPoints().setText(String.valueOf(model.getTotalPenaltyPoints()));
+		view.getTotalScore().setText(String.valueOf(model.getTotalPoints()));
+
+		if (model.getTotalPenaltyPoints() > 0) {
+			CheckBox cb = (CheckBox) view.getPenaltyRow().getChildren().get(model.getAmountOfPenalties());
+			cb.setSelected(true);
 		}
 	}
 }

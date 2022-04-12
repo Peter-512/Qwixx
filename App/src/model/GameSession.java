@@ -66,23 +66,31 @@ public class GameSession {
 
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
+		for (PlayerSession playerSession : playerSessions) {
+			playerSession.changeActivePlayer();
+		}
 	}
 
 	public long getStartTime() {
-		//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		//		return startTime.format(formatter);
 		return startTime;
 	}
 
-	public boolean isRunning() {
+	public boolean gameOver() {
 		int totalRowsLocked = 0;
 		for (PlayerSession playerSession : playerSessions) {
-			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return false;
+			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return true;
 			totalRowsLocked += playerSession.getScoreCard().getAmountOfLockedRows();
 		}
 		if (totalRowsLocked >= 2) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
+	}
+
+	public PlayerSession getActivePlayerSession() {
+		for (PlayerSession playerSession : playerSessions) {
+			if (playerSession.isActivePlayer()) return playerSession;
+		}
+		return null;
 	}
 }
