@@ -23,8 +23,16 @@ public class PlayerSession {
 		return actions.getLast();
 	}
 
-	public void addAction() {
-		actions.add(new Action());
+	private void addAction(Action action) {
+		actions.add(action);
+	}
+
+	public void passAction() {
+		addAction(new Action());
+	}
+
+	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
+		addAction(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
 	}
 
 	public Player getPlayer() {
