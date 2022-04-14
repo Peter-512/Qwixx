@@ -1,8 +1,6 @@
 --Username : postgres
 --Password : Student_1234
-CREATE DATABASE Qwixx1;
-
-
+-- CREATE DATABASE Qwixx1;
 
 CREATE TABLE IF NOT EXISTS GameSession
 (
