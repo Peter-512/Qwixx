@@ -3,6 +3,7 @@ package App.src.view.game;
 import App.src.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -33,8 +34,8 @@ public class ScoreCardPresenter {
 					if (!row.getNumberField(finalI).isDisabled()) {
 						row.getNumberField(finalI).setCrossed();
 						row.disableNumberField(finalI);
-						updateView();
 						disableAllNumberFields();
+						updateView();
 						enableColoredNumberFields();
 					}
 				});
@@ -79,6 +80,15 @@ public class ScoreCardPresenter {
 					button.setText("X");
 				}
 			}
+
+			view.getScore(color).setText(String.valueOf(model.getRow(color).getRowScore()));
+		}
+		view.getPenaltyPoints().setText(String.valueOf(model.getTotalPenaltyPoints()));
+		view.getTotalScore().setText(String.valueOf(model.getTotalPoints()));
+
+		if (model.getTotalPenaltyPoints() > 0) {
+			CheckBox cb = (CheckBox) view.getPenaltyRow().getChildren().get(model.getAmountOfPenalties());
+			cb.setSelected(true);
 		}
 	}
 }

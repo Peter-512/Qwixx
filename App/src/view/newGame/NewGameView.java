@@ -42,7 +42,7 @@ public class NewGameView extends BorderPane {
 		setBottom(backButton);
 		setAlignment(backButton, Pos.CENTER);
 		setMargin(backButton, new Insets(10));
-
+		startButton.setDefaultButton(true);
 	}
 
 	Button getBackButton() {

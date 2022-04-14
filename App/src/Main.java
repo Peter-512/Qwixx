@@ -25,7 +25,7 @@ public class Main extends Application {
 
 		MainMenuView view = new MainMenuView();
 		Game model = new Game();
-		MainMenuPresenter presenter = new MainMenuPresenter(model, view);
+		new MainMenuPresenter(model, view);
 
 		Scene scene = new Scene(view);
 		scene.setCursor(Cursor.HAND);

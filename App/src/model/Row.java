@@ -6,14 +6,12 @@ public class Row {
 	private final Color color;
 	private final boolean isAscending;
 	private boolean isLocked;
-	private int rowScore;
 	private final ArrayList<NumberField> numberFields = new ArrayList<>();
 
 	public Row(Color color, boolean isAscending) {
 		this.color = color;
 		this.isAscending = isAscending;
 		this.isLocked = false;
-		this.rowScore = 0;
 
 		if (isAscending) {
 			for (int i = 0; i < 11; i++) {
@@ -44,11 +42,15 @@ public class Row {
 	}
 
 	public int getRowScore() {
-		return rowScore;
-	}
-
-	public void setRowScore() {
-		//TODO implement table for amount of points per cross
+		int amountOfCrosses = 0;
+		int totalScore = 0;
+		for (NumberField numberField : numberFields) {
+			if (numberField.isCrossed()) {
+				amountOfCrosses++;
+				totalScore += amountOfCrosses;
+			}
+		}
+		return totalScore;
 	}
 
 	public NumberField getNumberField(int index) {
@@ -59,9 +61,9 @@ public class Row {
 		return numberFields;
 	}
 
-	public NumberField getOption(int value) {
-		if (!numberFields.get(value).isDisabled())
-			return numberFields.get(value);
+	public NumberField getOption(int i) {
+		if (!(numberFields.get(i).isDisabled() || numberFields.get(i).isCrossed()))
+			return numberFields.get(i);
 		else return null;
 	}
 
@@ -71,5 +73,15 @@ public class Row {
 				numberFields.get(i).setDisabled();
 			}
 		}
+	}
+
+	public int getAmountOfCrossedNumbers() {
+		int total = 0;
+		for (NumberField numberField : numberFields) {
+			if (numberField.isCrossed()) {
+				total++;
+			}
+		}
+		return total;
 	}
 }

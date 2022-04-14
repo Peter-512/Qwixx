@@ -1,11 +1,12 @@
 package App.src.view.game;
 
 import App.src.model.Color;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.HashMap;
 
@@ -13,6 +14,10 @@ public class ScoreCardView extends VBox {
 	private Label playerName;
 	private HashMap<Color, HBox> rowByColorMap;
 	private HBox scoreRow;
+	private HashMap<Color, Label> scoreByColor;
+	private Label penaltyPoints;
+	private Label totalScore;
+	private HBox penaltyRow;
 
 	public ScoreCardView() {
 		initializeNodes();
@@ -36,18 +41,74 @@ public class ScoreCardView extends VBox {
 					row.getChildren().add(createButton(i, color, true));
 				}
 			}
+			Button button = new Button("🔒");
+			button.setPrefSize(35, 35);
+			button.setStyle("-fx-background-color: '%s'".formatted(color));
+			button.setDisable(true);
+			row.getChildren().add(button);
 			getChildren().add(row);
 		}
+
+		//		Setting up penalty boxes
+		Label penaltyLabel = new Label("Penalties");
+		penaltyRow = new HBox(penaltyLabel);
+		for (int i = 0; i < 4; i++) {
+			CheckBox penalty = new CheckBox();
+			penalty.setDisable(true);
+			penaltyRow.getChildren().add(penalty);
+		}
+
+		//		Setting up scoreRow
 		scoreRow = new HBox();
-		getChildren().add(scoreRow);
+		scoreByColor = new HashMap<>();
+		for (Color color : Color.values()) {
+			Label score = new Label();
+			scoreByColor.put(color, score);
+		}
+
+		getChildren().addAll(penaltyRow, scoreRow);
 	}
 
 	private void layoutNodes() {
 		setAlignment(Pos.CENTER);
 		for (Color color : Color.values()) {
-			getRowByColor(color).setSpacing(10);
-			getRowByColor(color).setAlignment(Pos.CENTER);
+			HBox row = getRowByColor(color);
+			row.setSpacing(10);
+			row.setAlignment(Pos.CENTER);
+
+			Label score = getScore(color);
+			score.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.valueOf(color.name()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+			score.setPadding(new Insets(10));
+			score.setPrefSize(50, 50);
+			score.setStyle("-fx-alignment: center");
+			scoreRow.getChildren().add(score);
+			if (color == Color.BLUE) {
+				scoreRow.getChildren().add(new Label("-"));
+			} else {
+				scoreRow.getChildren().add(new Label("+"));
+			}
 		}
+		penaltyPoints = new Label();
+		penaltyPoints.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		penaltyPoints.setPadding(new Insets(10));
+		penaltyPoints.setPrefSize(50, 50);
+		penaltyPoints.setStyle("-fx-alignment: center");
+
+		totalScore = new Label();
+		totalScore.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		totalScore.setPadding(new Insets(10));
+		totalScore.setPrefSize(100, 50);
+		totalScore.setStyle("-fx-alignment: center");
+
+		Label equals = new Label("=");
+
+		scoreRow.getChildren().addAll(penaltyPoints, equals, totalScore);
+
+		penaltyRow.setAlignment(Pos.CENTER);
+		penaltyRow.setSpacing(15);
+
+		scoreRow.setAlignment(Pos.CENTER);
+		scoreRow.setSpacing(15);
 		setSpacing(10);
 	}
 
@@ -80,5 +141,21 @@ public class ScoreCardView extends VBox {
 
 	HBox getScoreRow() {
 		return scoreRow;
+	}
+
+	Label getScore(Color color) {
+		return scoreByColor.get(color);
+	}
+
+	Label getPenaltyPoints() {
+		return penaltyPoints;
+	}
+
+	Label getTotalScore() {
+		return totalScore;
+	}
+
+	public HBox getPenaltyRow() {
+		return penaltyRow;
 	}
 }

@@ -66,11 +66,12 @@ public class GameSession {
 
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
+		for (PlayerSession playerSession : playerSessions) {
+			playerSession.changeActivePlayer();
+		}
 	}
 
 	public long getStartTime() {
-		//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		//		return startTime.format(formatter);
 		return startTime;
 	}
 
@@ -84,5 +85,12 @@ public class GameSession {
 			return true;
 		}
 		return false;
+	}
+
+	public PlayerSession getActivePlayerSession() {
+		for (PlayerSession playerSession : playerSessions) {
+			if (playerSession.isActivePlayer()) return playerSession;
+		}
+		return null;
 	}
 }
