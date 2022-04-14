@@ -76,8 +76,9 @@ public class GameSession {
 	public long getStartTime() {
 		return startTime;
 	}
-	public long getEndTime(){
-		return endTime = System.currentTimeMillis()-startTime;
+
+	public long getEndTime() {
+		return endTime = System.currentTimeMillis() - startTime;
 	}
 
 	public boolean gameOver() {
@@ -97,5 +98,13 @@ public class GameSession {
 			if (playerSession.isActivePlayer()) return playerSession;
 		}
 		return null;
+	}
+
+	public void addAction() {
+		for (PlayerSession playerSession : playerSessions) {
+			Action action = playerSession.getCurrentAction();
+			if (!turns.getLast().getCurrentAction().equals(action))
+				turns.getLast().addAction(action);
+		}
 	}
 }

@@ -28,6 +28,10 @@ public class Turn {
 		turnEndTime = turnEndTime - turnStartTime;
 	}
 
+	public Action getCurrentAction() {
+		return actions.getLast();
+	}
+
 	public long getCurrentTurnDuration() {
 		return System.currentTimeMillis() - turnStartTime;
 	}
