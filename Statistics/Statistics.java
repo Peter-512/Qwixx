@@ -1,7 +1,5 @@
 package Statistics;
 
-import App.src.model.*;
-
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -26,21 +24,21 @@ public class Statistics {
                     "(gameID numeric PRIMARY KEY CONSTRAINT nn_gameID NOT NULL, " +
                     "startTime timestamp(3) CONSTRAINT nn_startTime NOT NULL, " +
                     "endTime timestamp(3) CONSTRAINT nn_endTime NOT NULL);"); // creates table
-            statement.execute("create sequence if not exists id_incr start 1;"); //CREATE SEQUENCE FOR game_id
+            statement.execute("CREATE SEQUENCE IF NOT EXISTS id_incr START 1;"); //CREATE SEQUENCE FOR game_id
             // statement.execute("insert into INT_leaderboard values (nextval('id_incr'),'Debil',5,date_trunc('second', now()));");
             //statement.execute("create sequence if not exists rank start with 1;");
             //statement.execute("alter sequence rank restart with 1;");
 
             statement.execute("CREATE TABLE IF NOT EXISTS player(" +
                     "gameID numeric," +
-                    "CONSTRAINT fk_game_ID FOREIGN KEY (gameID) REFERENCES game_session(gameID),"+
+                    "CONSTRAINT fk_game_ID FOREIGN KEY (gameID) REFERENCES game_session(gameID)," +
                     "nameID varchar(255) PRIMARY KEY," +
                     "score numeric CONSTRAINT nn_score NOT NULL," +
-                    "totalTime timestamp(3) CONSTRAINT nn_totalTime NOT NULL," +
-                    "isWin boolean" +
+                    "TotalTime timestamp(3) CONSTRAINT nn_totalTime NOT NULL," +
+                    "GameOver boolean" +
                     ");");
 
-            statement.execute("CREATE TABLE statistics(" +
+            statement.execute("CREATE TABLE SessionStatistics(" +
                     "gameID numeric PRIMARY KEY," +
                     "averageDuration numeric," +
                     "averageScore numeric," +
@@ -54,11 +52,11 @@ public class Statistics {
                     "       REFERENCES player(nameID)" +
                     ");");
 
-            statement.execute("CREATE TABLE globalStatistics(" +
+            statement.execute("CREATE TABLE GlobalStatistics(" +
                     "gameID numeric PRIMARY KEY," +
-                    "averageTotal numeric,"+
-                    "highestTotal numeric,"+
-                    "lowestTotal numeric,"+
+                    "averageTotal numeric," +
+                    "highestTotal numeric," +
+                    "lowestTotal numeric," +
                     "averageDuration numeric," +
                     "averageScore numeric," +
                     "nameID varchar(255)," +
@@ -79,35 +77,23 @@ public class Statistics {
 
     }
 
-    public void putStatistics(String playerName, long startTime, long endTime, int Score, long turnDuration, int turnNumber, boolean isWin){
-        long totalTime = endTime-startTime;
+    public void putStatistics(String playerName, long startTime, long endTime, int Score, long turnDuration, int turnNumber, boolean gameOver) {
+        long totalTime = endTime - startTime;
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/qwixx",
                     "postgres",
                     "Student_1234");
             Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO game_session (gameid, starttime, endtime) values (nextval('id_incr', "+startTime+","+endTime+")");
-            statement.execute("INSERT INTO player (nameid, score, totaltime, iswin, turn_duration)" + playerName + Score + totalTime + isWin + turnDuration);
+            statement.execute("INSERT INTO game_session (gameid, starttime, endtime) values (nextval('id_incr', " + startTime + "," + endTime + ")");
+            statement.execute("INSERT INTO player (nameid, score, totaltime, iswin, turn_duration)" + playerName + Score + totalTime + gameOver + turnDuration);
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
 
     }
 
 }
-
-//    GameSession;
-//            NumberField; //isCrossed
-//            Player;
-//            Row; //maybe
-//            Score;
-//            ScoreCard;
-//            Turn;
-//
-//
-//            }
