@@ -16,6 +16,7 @@ public class GameView extends BorderPane {
 	private Label[] publicDice = new Label[2];
 	private Button rollDiceButton;
 	private Button penaltyButton;
+	private Button passButton;
 	private Label timeLabel;
 	private Label currentPlayer;
 
@@ -49,9 +50,10 @@ public class GameView extends BorderPane {
 		}
 
 		currentPlayer = new Label();
+		passButton = new Button("Pass");
 		penaltyButton = new Button("Take penalty");
 		rollDiceButton = new Button("Roll dice");
-		dicePools.getChildren().addAll(rollDiceButton, penaltyButton, currentPlayer);
+		dicePools.getChildren().addAll(rollDiceButton, passButton, penaltyButton, currentPlayer);
 
 
 	}
@@ -120,6 +122,10 @@ public class GameView extends BorderPane {
 
 	Label getCurrentPlayer() {
 		return currentPlayer;
+	}
+
+	Button getPassButton() {
+		return passButton;
 	}
 
 }
