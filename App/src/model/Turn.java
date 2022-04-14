@@ -23,9 +23,21 @@ public class Turn {
 		turnEndTime = System.currentTimeMillis();
 	}
 
-	public void setTurnDuration() {
+	public void endTurn() {
 		setTurnEndTime();
-		turnEndTime = turnEndTime - turnStartTime;
+		turnDuration = turnEndTime - turnStartTime;
+	}
+
+	public void passAction() {
+		addAction(new Action());
+	}
+
+	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
+		addAction(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
+	}
+
+	public long getTurnDuration() {
+		return turnDuration;
 	}
 
 	public Action getCurrentAction() {

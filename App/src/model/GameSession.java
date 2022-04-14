@@ -1,12 +1,9 @@
 package App.src.model;
 
-import java.util.LinkedList;
-
 public class GameSession {
 	private PlayerSession[] playerSessions;
 	private DicePool coloredDicePool;
 	private DicePool publicDicePool;
-	private LinkedList<Turn> turns;
 	private boolean isHumanActivePlayer;
 	private long startTime;
 	private long endTime;
@@ -17,7 +14,6 @@ public class GameSession {
 		playerSessions[1] = new PlayerSession("Skynet", !startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
-		turns = new LinkedList<>();
 		isHumanActivePlayer = startingPlayer;
 		startTime = System.currentTimeMillis();
 		endTime = System.currentTimeMillis();
@@ -40,14 +36,6 @@ public class GameSession {
 
 	public int totalPublicThrow() {
 		return publicDicePool.getDice().get(0).getValue() + publicDicePool.getDice().get(1).getValue();
-	}
-
-	public LinkedList<Turn> getTurns() {
-		return turns;
-	}
-
-	public void newTurn() {
-		turns.add(new Turn(turns.size() + 1));
 	}
 
 	public PlayerSession[] getPlayerSessions() {
@@ -98,13 +86,5 @@ public class GameSession {
 			if (playerSession.isActivePlayer()) return playerSession;
 		}
 		return null;
-	}
-
-	public void addAction() {
-		for (PlayerSession playerSession : playerSessions) {
-			Action action = playerSession.getCurrentAction();
-			if (!turns.getLast().getCurrentAction().equals(action))
-				turns.getLast().addAction(action);
-		}
 	}
 }
