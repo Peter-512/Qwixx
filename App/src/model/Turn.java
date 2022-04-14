@@ -1,6 +1,5 @@
 package App.src.model;
 
-import java.util.Date;
 import java.util.LinkedList;
 
 public class Turn {
@@ -12,7 +11,7 @@ public class Turn {
 
 	public Turn(int turnNumber) {
 		this.turnNumber = turnNumber;
-		turnStartTime = new Date().getTime();
+		turnStartTime = System.currentTimeMillis();
 		actions = new LinkedList<>();
 	}
 
@@ -21,16 +20,32 @@ public class Turn {
 	}
 
 	private void setTurnEndTime() {
-		turnEndTime = new Date().getTime();
+		turnEndTime = System.currentTimeMillis();
 	}
 
-	public void setTurnDuration() {
+	public void endTurn() {
 		setTurnEndTime();
-		turnEndTime = turnEndTime - turnStartTime;
+		turnDuration = turnEndTime - turnStartTime;
+	}
+
+	public void passAction() {
+		addAction(new Action());
+	}
+
+	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
+		addAction(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
+	}
+
+	public long getTurnDuration() {
+		return turnDuration;
+	}
+
+	public Action getCurrentAction() {
+		return actions.getLast();
 	}
 
 	public long getCurrentTurnDuration() {
-		return new Date().getTime() - turnStartTime;
+		return System.currentTimeMillis() - turnStartTime;
 	}
 
 	public void addAction(Action action) {

@@ -22,16 +22,14 @@ public class GamePresenter {
 
 		scoreCardPresenters = new ScoreCardPresenter[2];
 		for (int i = 0; i < 2; i++) {
-			scoreCardPresenters[i] = new ScoreCardPresenter(model.getGameSession()
-			                                                     .getPlayerSessions()[i].getScoreCard(),
+			scoreCardPresenters[i] = new ScoreCardPresenter(
+					model.getGameSession().getPlayerSessions()[i].getScoreCard(),
 					(ScoreCardView) view.getScoreCards().getChildren().get(i),
 					model.getGameSession());
 		}
 
 		addEventHandlers();
 		initialViewUpdate();
-		updateDicePools();
-		updateScoreCards();
 		updateView();
 	}
 
@@ -40,14 +38,11 @@ public class GamePresenter {
 		//		Hitting roll dice button
 		view.getRollDiceButton().setOnAction(actionEvent -> {
 			model.getGameSession().throwAllDice();
-			updateDicePools();
-			updateScoreCards();
 			updateView();
 		});
 
 		view.getPenaltyButton().setOnAction(actionEvent -> {
 			model.getGameSession().getActivePlayerSession().getScoreCard().addPenalty();
-			updateScoreCards();
 			updateView();
 		});
 	}
@@ -63,6 +58,9 @@ public class GamePresenter {
 			alert.setHeaderText("End condition was reached.");
 			alert.showAndWait();
 		}
+
+		updateDicePools();
+		updateScoreCards();
 	}
 
 	private void updateScoreCards() {
