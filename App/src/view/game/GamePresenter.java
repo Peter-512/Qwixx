@@ -38,25 +38,29 @@ public class GamePresenter {
 
 		//		Hitting roll dice button
 		view.getRollDiceButton().setOnAction(actionEvent -> {
+			model.getGameSession().changeActivePlayer();
 			for (PlayerSession playerSession : model.getGameSession().getPlayerSessions()) {
 				playerSession.newTurn();
 			}
 			model.getGameSession().throwAllDice();
-			model.getGameSession().getBotSession().takeTurn(model.getGameSession().totalPublicThrow(), model.getGameSession().getColoredDicePool(), model.getGameSession()
-			                                                                                                    .getPublicDicePool());
+			model.getGameSession()
+			     .getBotSession()
+			     .takeTurn(model.getGameSession().totalPublicThrow(), model.getGameSession()
+			                                                               .getColoredDicePool(), model.getGameSession()
+			                                                                                           .getPublicDicePool());
 			updateView();
 		});
 
-//		Hitting the penalty button
+		//		Hitting the penalty button
 		view.getPenaltyButton().setOnAction(actionEvent -> {
-			model.getGameSession().getActivePlayerSession().getScoreCard().addPenalty();
-			model.getGameSession().getActivePlayerSession().getCurrentTurn().takeAction(0,0,-5);
+			model.getGameSession().getHumanSession().getScoreCard().addPenalty();
+			model.getGameSession().getHumanSession().getCurrentTurn().takePenaltyAction();
 			updateView();
 		});
 
-//		Hitting the pass button
+		//		Hitting the pass button
 		view.getPassButton().setOnAction(actionEvent -> {
-			model.getGameSession().getActivePlayerSession().passAction();
+			model.getGameSession().getHumanSession().passAction();
 			updateView();
 		});
 	}
