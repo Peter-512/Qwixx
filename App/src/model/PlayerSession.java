@@ -10,7 +10,7 @@ public class PlayerSession {
 
 	public PlayerSession(String name, boolean startingPlayer) {
 		player = new Player(name);
-		scoreCard = new ScoreCard();
+		scoreCard = new ScoreCard(this);
 		turns = new LinkedList<>();
 		activePlayer = startingPlayer;
 	}

@@ -7,11 +7,13 @@ import java.util.LinkedHashMap;
 public class ScoreCard {
 	private int amountOfPenalties;
 	private final LinkedHashMap<Color, Row> rows;
+	private PlayerSession playerSession;
 
 
-	public ScoreCard() {
+	public ScoreCard(PlayerSession playerSession) {
 		amountOfPenalties = 0;
 		rows = new LinkedHashMap<>();
+		this.playerSession = playerSession;
 
 		for (Color color : Color.values()) {
 			rows.put(color, new Row(color, color.ordinal() < 2));
@@ -41,6 +43,10 @@ public class ScoreCard {
 
 	public LinkedHashMap<Color, Row> getRows() {
 		return rows;
+	}
+
+	public PlayerSession getPlayerSession() {
+		return playerSession;
 	}
 
 	public HashMap<Color, NumberField> getPublicNumberFields(int total) {
