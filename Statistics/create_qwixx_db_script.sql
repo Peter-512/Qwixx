@@ -1,82 +1,74 @@
 --Username : postgres
 --Password : Student_1234
 -- CREATE DATABASE Qwixx1;
+drop DATABASE qwixx1;
 
-CREATE TABLE IF NOT EXISTS GameSession
+create DATABASE qwixx1;
+
+CREATE TABLE IF NOT EXISTS game_session
 (
-    gameID             numeric PRIMARY KEY
-        CONSTRAINT nn_gameID NOT NULL,
-    startTime          time(3)
-        CONSTRAINT nn_startTime NOT NULL,
-    endTime            time(3)
-        CONSTRAINT nn_endTime NOT NULL,
-    amountOfRowsLocked numeric,
-    duration           time
+    game_id               numeric PRIMARY KEY
+        CONSTRAINT
+            nn_game_id NOT NULL,
+    start_time            time(3)
+        CONSTRAINT nn_starttime NOT NULL,
+    end_time              time(3)
+        CONSTRAINT nn_endtime NOT NULL,
+    amount_of_rows_locked numeric,
+    duration              time
         CONSTRAINT nn_duration NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS player
 (
-    nameID varchar(255) PRIMARY KEY,
-    gameID numeric,
+    name_id varchar(255) PRIMARY KEY,
+    game_id numeric,
     CONSTRAINT fk_game_ID
-        FOREIGN KEY (gameID)
-            REFERENCES GameSession (gameID)
+        FOREIGN KEY (game_id)
+            REFERENCES game_session (game_id)
 );
 
 
 CREATE TABLE score
 (
     points                      numeric,
-    totalDuration               time(3)
-        CONSTRAINT nn_totalDuration NOT NULL,
-    totalAmountOfNumbersCrossed numeric,
-    totalScore                  numeric,
-    penaltyPoints               numeric
+    total_duration               time(3)
+        CONSTRAINT nn_total_time NOT NULL,
+    total_amount_of_numbers_crossed numeric,
+    total_score                  numeric,
+    penalty_points               numeric,
+    game_id numeric,
+    CONSTRAINT fk_game_id FOREIGN KEY (game_id) REFERENCES game_session (game_id)
+
 );
 
-CREATE TABLE IF NOT EXISTS SessionStatistics
+CREATE TABLE IF NOT EXISTS session_statistics
 (
-    gameID                      numeric PRIMARY KEY,
-    longestTurn                 numeric,
-    shortestTurn                numeric,
-    averageTurnDuration         numeric,
-    averagePointsEarnedPerTurn  numeric,
-    mostPointsEarnedPerTurn     numeric,
-    averageNumbersMissedPerTurn numeric,
-    mostNumbersMissedPerTurn    numeric,
-    mostValuableTurn            numeric,
-    nameID                      varchar(255),
-    CONSTRAINT fk_game_ID
-        FOREIGN KEY (gameID)
-            REFERENCES GameSession (gameID),
-    CONSTRAINT fk_name_ID
-        FOREIGN KEY (nameID)
-            REFERENCES player (nameID)
+    longest_turn                 numeric,
+    shortest_turn                numeric,
+    average_turn_duration         numeric,
+    average_points_earned_per_turn  numeric,
+    most_points_earned_per_turn     numeric,
+    average_numbers_missed_per_turn numeric,
+    most_numbers_missed_per_turn    numeric,
+    most_valuable_turn            numeric
 );
 
-CREATE TABLE IF NOT EXISTS GlobalStatistics
+CREATE TABLE IF NOT EXISTS global_statistics
 (
-    gameID                      numeric PRIMARY KEY,
-    longestTurn                 numeric,
-    shortestTurn                numeric,
-    averageTurnDuration         numeric,
-    averagePointsEarnedPerTurn  numeric,
-    mostPointsEarnedPerTurn     numeric,
+    longest_turn                 numeric,
+    shortest_turn                numeric,
+    average_turn_duration         numeric,
+    average_numbers_missed_per_turn numeric,
+    most_points_earned_per_turn     numeric,
     averageNumbersMissedPerTurn numeric,
-    mostNumbersMissedPerTurn    numeric,
-    averageTotalPoints          numeric
-        CONSTRAINT nn_averageTotalPoints NOT NULL,
-    mostTotalPoints             numeric
-        CONSTRAINT nn_mostTotalPoints NOT NULL,
-    leastTotalPoints            numeric
-        CONSTRAINT nn_leastTotalPoints NOT NULL,
-    mostValuableTurn            numeric,
-    nameID                      varchar(255),
-    CONSTRAINT fk_game_ID
-        FOREIGN KEY (gameID)
-            REFERENCES GameSession (gameID),
-    CONSTRAINT fk_name_ID
-        FOREIGN KEY (nameID)
-            REFERENCES player (nameID)
-);
+    most_numbers_missed_per_turn    numeric,
+    average_total_points          numeric
+        CONSTRAINT nn_average_total_points NOT NULL,
+    most_total_points             numeric
+        CONSTRAINT nn_most_total_points NOT NULL,
+    least_total_points            numeric
+        CONSTRAINT nn_least_total_points NOT NULL,
+    most_valuable_turn            numeric
+
+)
