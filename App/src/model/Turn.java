@@ -28,6 +28,10 @@ public class Turn {
 		turnDuration = turnEndTime - turnStartTime;
 	}
 
+	private void addAction(Action action) {
+		actions.add(action);
+	}
+
 	public void passAction() {
 		addAction(new Action());
 	}
@@ -36,19 +40,19 @@ public class Turn {
 		addAction(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
 	}
 
+	public int getNumberOfActions() {
+		return actions.size();
+	}
+
 	public long getTurnDuration() {
 		return turnDuration;
 	}
 
-	public Action getCurrentAction() {
+	public Action getLastAction() {
 		return actions.getLast();
 	}
 
 	public long getCurrentTurnDuration() {
 		return System.currentTimeMillis() - turnStartTime;
-	}
-
-	public void addAction(Action action) {
-		actions.add(action);
 	}
 }
