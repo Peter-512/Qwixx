@@ -77,4 +77,11 @@ CREATE TABLE IF NOT EXISTS global_statistics
         CONSTRAINT nn_least_total_points NOT NULL,
     most_valuable_turn              numeric
 
+);
+
+CREATE TABLE IF NOT EXISTS turn (
+    turn_number numeric PRIMARY KEY,
+    turn_start_time numeric,
+    turn_end_time numeric,
+    turn_duration numeric
 )
