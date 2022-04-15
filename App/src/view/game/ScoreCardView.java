@@ -44,7 +44,6 @@ public class ScoreCardView extends VBox {
 			Button button = new Button("🔒");
 			button.setPrefSize(35, 35);
 			button.setStyle("-fx-background-color: '%s'".formatted(color));
-			button.setDisable(true);
 			row.getChildren().add(button);
 			getChildren().add(row);
 		}
@@ -110,6 +109,9 @@ public class ScoreCardView extends VBox {
 		scoreRow.setAlignment(Pos.CENTER);
 		scoreRow.setSpacing(15);
 		setSpacing(10);
+
+		setPadding(new Insets(25));
+		setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 	}
 
 	private Button createButton(int label, Color color, boolean whiteText) {
@@ -119,7 +121,6 @@ public class ScoreCardView extends VBox {
 		if (whiteText) {
 			button.setStyle("-fx-background-color: '%s'; -fx-text-fill: white".formatted(color));
 		}
-		button.setDisable(true);
 		return button;
 	}
 
