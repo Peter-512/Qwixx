@@ -31,6 +31,10 @@ public class PlayerSession {
 		turns.getLast().takeAction(numbersCrossed, numbersMissed, pointsEarned);
 	}
 
+	public void takePenaltyAction() {
+		turns.getLast().takePenaltyAction();
+	}
+
 	public void passAction() {
 		turns.getLast().passAction();
 	}
