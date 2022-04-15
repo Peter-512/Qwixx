@@ -67,7 +67,7 @@ public class Row {
 		else return null;
 	}
 
-	public void disableNumberField(int index) {
+	public void disableNumberFieldsUntil(int index) {
 		for (int i = 0; i < index; i++) {
 			if (!numberFields.get(i).isCrossed()) {
 				numberFields.get(i).setDisabled();

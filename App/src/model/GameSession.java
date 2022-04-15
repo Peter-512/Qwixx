@@ -10,8 +10,8 @@ public class GameSession {
 
 	public GameSession(String name, boolean startingPlayer) {
 		playerSessions = new PlayerSession[2];
-		playerSessions[0] = new PlayerSession(name, startingPlayer);
-		playerSessions[1] = new PlayerSession("Skynet", !startingPlayer);
+		playerSessions[0] = new BotSession("Skynet", !startingPlayer);
+		playerSessions[1] = new PlayerSession(name, startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
 		isHumanActivePlayer = startingPlayer;
@@ -81,10 +81,22 @@ public class GameSession {
 		return false;
 	}
 
+	public BotSession getBotSession() {
+		return (BotSession) playerSessions[0];
+	}
+
+	public PlayerSession getHumanSession() {
+		return playerSessions[1];
+	}
+
 	public PlayerSession getActivePlayerSession() {
 		for (PlayerSession playerSession : playerSessions) {
 			if (playerSession.isActivePlayer()) return playerSession;
 		}
 		return null;
+	}
+
+	public boolean isHumanSession(PlayerSession session) {
+		return session.equals(getHumanSession());
 	}
 }

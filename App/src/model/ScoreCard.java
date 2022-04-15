@@ -7,11 +7,13 @@ import java.util.LinkedHashMap;
 public class ScoreCard {
 	private int amountOfPenalties;
 	private final LinkedHashMap<Color, Row> rows;
+	private PlayerSession playerSession;
 
 
-	public ScoreCard() {
+	public ScoreCard(PlayerSession playerSession) {
 		amountOfPenalties = 0;
 		rows = new LinkedHashMap<>();
+		this.playerSession = playerSession;
 
 		for (Color color : Color.values()) {
 			rows.put(color, new Row(color, color.ordinal() < 2));
@@ -41,6 +43,10 @@ public class ScoreCard {
 
 	public LinkedHashMap<Color, Row> getRows() {
 		return rows;
+	}
+
+	public PlayerSession getPlayerSession() {
+		return playerSession;
 	}
 
 	public HashMap<Color, NumberField> getPublicNumberFields(int total) {
@@ -73,12 +79,22 @@ public class ScoreCard {
 			int colDieVal = colDie.getValue();
 			for (Die pubDie : publicDicePool.getDice()) {
 				int total = colDieVal + pubDie.getValue();
-				Row row = getRow(colDie.getColor());
+				final Color color = colDie.getColor();
+				Row row = getRow(color);
 				if (!row.isLocked()) {
 					row.getNumberFields().forEach(numberField -> {
 						if (numberField.getValue() == total && !numberField.isDisabled() && !numberField.isCrossed()) {
-							map.computeIfAbsent(colDie.getColor(), k -> new ArrayList<>());
-							map.get(colDie.getColor()).add(numberField);
+							if (color == Color.RED || color == Color.YELLOW) {
+								if (numberField.getValue() < 12 || row.getAmountOfCrossedNumbers() >= 5) {
+									map.computeIfAbsent(color, k -> new ArrayList<>());
+									map.get(color).add(numberField);
+								}
+							} else {
+								if (numberField.getValue() > 2 || row.getAmountOfCrossedNumbers() >= 5) {
+									map.computeIfAbsent(color, k -> new ArrayList<>());
+									map.get(color).add(numberField);
+								}
+							}
 						}
 					});
 				}
