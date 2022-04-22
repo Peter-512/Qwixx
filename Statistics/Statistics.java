@@ -72,25 +72,6 @@ public class Statistics {
                         most_valuable_turn              numeric
                     );
                                         
-                    CREATE TABLE IF NOT EXISTS global_statistics
-                    (
-                        longest_turn                    numeric,
-                        shortest_turn                   numeric,
-                        average_turn_duration           numeric,
-                        average_numbers_missed_per_turn numeric,
-                        most_points_earned_per_turn     numeric,
-                        averageNumbersMissedPerTurn     numeric,
-                        most_numbers_missed_per_turn    numeric,
-                        average_total_points            numeric
-                            CONSTRAINT nn_average_total_points NOT NULL,
-                        most_total_points               numeric
-                            CONSTRAINT nn_most_total_points NOT NULL,
-                        least_total_points              numeric
-                            CONSTRAINT nn_least_total_points NOT NULL,
-                        most_valuable_turn              numeric
-                                        
-                    );
-                                        
                     CREATE TABLE IF NOT EXISTS turn (
                         turn_number numeric PRIMARY KEY,
                         turn_start_time numeric,
@@ -105,47 +86,6 @@ public class Statistics {
 
     }
 
-//    public void storePlayer(String name) {
-//		try {
-//			Connection connection = DriverManager.getConnection(
-//					"jdbc:postgresql://localhost:5432/qwixx1",
-//					"postgres",
-//					"Student_1234");
-//			Statement statement = connection.createStatement();
-//			statement.execute("INSERT INTO player values (default,?)" + getName());
-//			connection.close();
-//		} catch (SQLException throwables) {
-//			throwables.printStackTrace();
-//		}
-//	}
-
-    public void storeGameSession(int duration, int game_ID) {
-        try {
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/qwixx1",
-                    "postgres",
-                    "Student_1234");
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO game_session values (?,default)");
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public void storePlayerSession(int player_id, int game_id, int session_id, boolean starting_first) {
-        try {
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/qwixx1",
-                    "postgres",
-                    "Student_1234");
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO player_session values (default,game_id,player_id,?)" );
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 }
 
 

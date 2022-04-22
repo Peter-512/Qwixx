@@ -109,35 +109,12 @@ CREATE TABLE session_statistics
     average_numbers_missed_per_turn INT NOT NULL,
     most_numbers_missed_per_turn    INT NOT NULL
 );
+--Game Session
+--Reason: Not needed/desired as a requirement to demonstrate
+--Removal Site: At Script, in Statistics Class
+--Created Dummy Data in Script
 
-
-
-CREATE TABLE global_statistics
-(
-    most_valuable_turn              INT NOT NULL
-        CONSTRAINT global_statistics_turn_turn_id_fk
-            REFERENCES turn,
-    highest_score                   INT
-        CONSTRAINT global_statistics_score_highest_score_id_fk
-            REFERENCES score,
-    lowest_score                    INT NOT NULL
-        CONSTRAINT global_statistics_score_lowest_score_id_fk
-            REFERENCES score,
-    average_score                   INT NOT NULL
-        CONSTRAINT global_statistics_score_average_score_id_fk
-            REFERENCES score,
-    longest_turn_duration           INT NOT NULL,
-    average_turn_duration           INT NOT NULL,
-    shortest_turn_duration          INT NOT NULL,
-    average_points_per_turn         INT NOT NULL,
-    most_points_per_turn            INT NOT NULL,
-    average_numbers_missed_per_turn INT NOT NULL,
-    most_numbers_missed_per_turn    INT NOT NULL,
-    average_game_duration           INT NOT NULL,
-    longest_game_duration           INT NOT NULL,
-    shortest_game_duration          INT NOT NULL
-);
-
+-- Dummy Data
 insert into action values (1,56,2,True,20);
 insert into action values (2,57,5,False,5);
 insert into action values (3,58,3,True,9);

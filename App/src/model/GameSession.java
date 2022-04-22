@@ -1,5 +1,10 @@
 package App.src.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class GameSession {
 	private PlayerSession[] playerSessions;
 	private DicePool coloredDicePool;
@@ -96,7 +101,34 @@ public class GameSession {
 		return null;
 	}
 
-	public boolean isHumanSession(PlayerSession session) {
-		return session.equals(getHumanSession());
+	public void storeGameSession(int duration, int game_ID) {
+		try {
+			Connection connection = DriverManager.getConnection(
+					"jdbc:postgresql://localhost:5432/qwixx1",
+					"postgres",
+					"Student_1234");
+			Statement statement = connection.createStatement();
+			statement.execute("INSERT INTO game_session values (?,default)");
+			connection.close();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
 	}
-}
+
+	public void storeGameSession2(int duration, int game_ID) {
+		try {
+			Connection connection = DriverManager.getConnection(
+					"jdbc:postgresql://localhost:5432/qwixx1",
+					"postgres",
+					"Student_1234");
+			Statement statement = connection.createStatement();
+			statement.execute("update game_session set duration where duration = ''" + getEndTime());
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+	}
+
+		public boolean isHumanSession (PlayerSession session){
+			return session.equals(getHumanSession());
+		}
+	}
