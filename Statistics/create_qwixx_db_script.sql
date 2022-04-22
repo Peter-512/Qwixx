@@ -1,6 +1,8 @@
 --Username : postgres
 --Password : Student_1234
 
+-- FIXME rename all tables to plural
+
 DROP TABLE IF EXISTS action;
 
 DROP TABLE IF EXISTS session_statistics;
@@ -109,7 +111,6 @@ CREATE TABLE session_statistics
     average_numbers_missed_per_turn INT NOT NULL,
     most_numbers_missed_per_turn    INT NOT NULL
 );
-
 
 
 CREATE TABLE global_statistics
