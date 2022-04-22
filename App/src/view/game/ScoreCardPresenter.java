@@ -4,43 +4,59 @@ import App.src.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ScoreCardPresenter {
-	ScoreCard model;
-	ScoreCardView view;
-	GameSession gameSession;
+	private final ScoreCard model;
+	private final ScoreCardView view;
+	private final GameSession gameSession;
+	private final HashMap<Button, NumberField> buttonByNumberFieldHashMap;
+	private final HashMap<NumberField, Button> numberByFieldButtonHashMap;
 
 	public ScoreCardPresenter(ScoreCard model, ScoreCardView view, GameSession gameSession) {
 		this.model = model;
 		this.view = view;
 		this.gameSession = gameSession;
 
+		numberByFieldButtonHashMap = new HashMap<>();
+		buttonByNumberFieldHashMap = new HashMap<>();
+		fillHashMaps();
+
 		addEventHandlers();
 		updateView();
 	}
 
-	private void addEventHandlers() {
+	private void fillHashMaps() {
 		for (Color color : Color.values()) {
-			HBox rowView = view.getRowByColor(color);
-			for (int i = 0; i < rowView.getChildren().size(); i++) {
-				Button button = (Button) rowView.getChildren().get(i);
-				int finalI = i;
-				button.setOnAction(actionEvent -> {
-					Row row = model.getRow(color);
-					if (!row.getNumberField(finalI).isDisabled()) {
-						row.getNumberField(finalI).setCrossed();
-						row.disableNumberFieldsUntil(finalI);
-						//						TODO pass correct numbers to takeAction
-						model.getPlayerSession().getCurrentTurn().takeAction(0, 0, 0);
-						updateView();
-					}
-				});
+			for (int i = 0; i < view.getRowByColor(color).getChildren().size() - 1; i++) {
+				Button button = (Button) view.getRowByColor(color).getChildren().get(i);
+				NumberField numberField = model.getRow(color).get(i);
+				buttonByNumberFieldHashMap.put(button, numberField);
+				numberByFieldButtonHashMap.put(numberField, button);
 			}
+		}
+	}
+
+	private void addEventHandlers() {
+		for (Map.Entry<Button, NumberField> buttonNumberFieldEntry : buttonByNumberFieldHashMap.entrySet()) {
+			Button button = buttonNumberFieldEntry.getKey();
+			NumberField numberField = buttonNumberFieldEntry.getValue();
+			button.setOnAction(actionEvent -> {
+				if (!numberField.isDisabled()) {
+					numberField.setCrossed();
+					final ListIterator<NumberField> iterator = numberField.getRow()
+					                                                      .listIterator(numberField.getIndex());
+					while (iterator.hasPrevious()) {
+						NumberField n = iterator.previous();
+						if (n.isCrossed()) break;
+						n.setDisabled();
+					}
+					//					TODO pass correct numbers to takeAction
+					model.getPlayerSession().getCurrentTurn().takeAction(0, 0, 0);
+					updateView();
+				}
+			});
 		}
 	}
 
@@ -48,7 +64,8 @@ public class ScoreCardPresenter {
 		disableAllNumberFields();
 		//		Enabling numberFields based on dice rolls
 		//		FIXME find a different way to deal with no turns being active yet
-		//		    null check on getCurrentTurn()?
+		//		    Implement Optional
+		//		    https://www.oracle.com/technical-resources/articles/java/java8-optional.html
 		try {
 			if (model.getPlayerSession().getCurrentTurn().getNumberOfActions() == 0) {
 				HashMap<Color, NumberField> map = model.getPublicNumberFields(gameSession.totalPublicThrow());
@@ -60,8 +77,7 @@ public class ScoreCardPresenter {
 			System.out.println("No turn yet");
 		}
 
-		//		FIXME find a different way to deal with no turns being active yet
-		//		    null check on getCurrentTurn()?
+		//		FIXME find a different way to deal with no turns being active yet like above
 		try {
 			if (gameSession.getActivePlayerSession()
 			               .getScoreCard()
@@ -126,5 +142,13 @@ public class ScoreCardPresenter {
 				view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 			}
 		});
+	}
+
+	public NumberField getNumberFieldByButton(Button button) {
+		return buttonByNumberFieldHashMap.get(button);
+	}
+
+	public Button getButtonByNumberField(NumberField numberField) {
+		return numberByFieldButtonHashMap.get(numberField);
 	}
 }
