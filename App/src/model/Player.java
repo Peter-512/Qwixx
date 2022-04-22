@@ -23,14 +23,14 @@ public class Player {
 	public void storePlayer(int player_id, String name) {
 		try {
 			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
+					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO player values (default,?)" + getName());
 			connection.close();
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 	}
 }

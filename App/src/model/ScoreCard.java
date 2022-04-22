@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 public class ScoreCard {
     private int amountOfPenalties;
     private final LinkedHashMap<Color, Row> rows;
-    private PlayerSession playerSession;
+    private final PlayerSession playerSession;
 
 
     public ScoreCard(PlayerSession playerSession) {
@@ -139,7 +139,7 @@ public class ScoreCard {
                            int green_points) {
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/qwixx1",
+                    "jdbc:postgresql://localhost:5432/qwixx",
                     "postgres",
                     "Student_1234");
             Statement statement = connection.createStatement();
@@ -154,8 +154,8 @@ public class ScoreCard {
                     + getRow(Color.GREEN).getRowScore()
             );
             connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
     }
 
@@ -165,4 +165,3 @@ public class ScoreCard {
     }
 
 }
-

@@ -109,7 +109,7 @@ public class ScoreCardPresenter {
 		//		Updating penalty points
 		view.getPenaltyPoints().setText(String.valueOf(model.getTotalPenaltyPoints()));
 		//		Updating total score
-		view.getTotalScore().setText(String.valueOf(model.getTotalPoints()));
+		view.getTotalScore().setText(String.valueOf(model.getTotalScore()));
 
 		if (model.getTotalPenaltyPoints() > 0) {
 			CheckBox cb = (CheckBox) view.getPenaltyRow().getChildren().get(model.getAmountOfPenalties());

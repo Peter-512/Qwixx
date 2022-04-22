@@ -63,14 +63,14 @@ public class Turn {
 	public void storeTurn(int turn_id,int session_id, int turn_duration) {
 		try {
 			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
+					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO turn values (default,session_id,?)" + getTurnDuration());
 			connection.close();
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 	}
 }

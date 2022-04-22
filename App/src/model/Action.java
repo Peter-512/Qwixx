@@ -42,7 +42,7 @@ public class Action {
 	public void storeAction(int action_id ,int turn_id, int amount_of_numbers_missed, boolean passed_turn, int points_earned) {
 		try {
 			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
+					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
@@ -51,8 +51,8 @@ public class Action {
 					isPassedTurn() +
 					getPointsEarned());
 			connection.close();
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 	}
 }

@@ -104,27 +104,14 @@ public class GameSession {
 	public void storeGameSession(int duration, int game_ID) {
 		try {
 			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
+					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO game_session values (?,default)");
 			connection.close();
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
-		}
-	}
-
-	public void storeGameSession2(int duration, int game_ID) {
-		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
-					"postgres",
-					"Student_1234");
-			Statement statement = connection.createStatement();
-			statement.execute("update game_session set duration where duration = ''" + getEndTime());
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 	}
 

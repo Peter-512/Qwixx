@@ -65,16 +65,15 @@ public class PlayerSession {
 							boolean starting_first) {
 		try {
 			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx1",
+					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO player_session values (default,game_id,player_id,?)" +
 					isActivePlayer());
 			connection.close();
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 	}
 }
-
