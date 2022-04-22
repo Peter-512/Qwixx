@@ -28,6 +28,7 @@ public class ScoreCardView extends VBox {
 		playerName = new Label();
 		getChildren().add(playerName);
 
+		// filling rowByColorMap
 		rowByColorMap = new HashMap<>();
 		for (Color color : Color.values()) {
 			HBox row = new HBox();
