@@ -22,7 +22,7 @@ public class NewGamePresenter {
 		view.getBackButton().setOnAction(actionEvent -> backToMainMenu());
 		view.getStartButton()
 		    .setOnAction(actionEvent -> {
-			    startGame(view.getNameTextField().getText(), view.getStartingPlayer().isSelected());
+			    startGame(view.getNameTextField().getText(), !view.getStartingPlayer().isSelected());
 		    });
 	}
 

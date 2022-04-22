@@ -1,9 +1,11 @@
 --Username : postgres
 --Password : Student_1234
--- CREATE DATABASE Qwixx1;
-DROP DATABASE qwixx1;
 
+
+--ONLY RUN IF DATABASE DOESN'T EXIST YET
 CREATE DATABASE qwixx1;
+
+
 
 CREATE TABLE IF NOT EXISTS game_session
 (
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS player
 );
 
 
-CREATE TABLE score
+CREATE TABLE IF NOT EXISTS score
 (
     points                          numeric,
     total_duration                  time(3)
@@ -77,4 +79,11 @@ CREATE TABLE IF NOT EXISTS global_statistics
         CONSTRAINT nn_least_total_points NOT NULL,
     most_valuable_turn              numeric
 
+);
+
+CREATE TABLE IF NOT EXISTS turn (
+    turn_number numeric PRIMARY KEY,
+    turn_start_time numeric,
+    turn_end_time numeric,
+    turn_duration numeric
 )
