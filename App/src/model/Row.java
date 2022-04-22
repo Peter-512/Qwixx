@@ -1,8 +1,8 @@
 package App.src.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Row {
+public class Row implements List<NumberField> {
 	private final Color color;
 	private final boolean isAscending;
 	private boolean isLocked;
@@ -15,12 +15,12 @@ public class Row {
 
 		if (isAscending) {
 			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(i + 2, i));
+				numberFields.add(new NumberField(i + 2, i, this));
 			}
 		} else {
 			int val = 12;
 			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(val--, i));
+				numberFields.add(new NumberField(val--, i, this));
 			}
 		}
 	}
@@ -53,17 +53,13 @@ public class Row {
 		return totalScore;
 	}
 
-	public NumberField getNumberField(int index) {
-		return numberFields.get(index);
-	}
-
 	public ArrayList<NumberField> getNumberFields() {
 		return numberFields;
 	}
 
 	public NumberField getOption(int i) {
-		if (!(numberFields.get(i).isDisabled() || numberFields.get(i).isCrossed()))
-			return numberFields.get(i);
+		if (!(get(i).isDisabled() || get(i).isCrossed()))
+			return get(i);
 		else return null;
 	}
 
@@ -83,5 +79,120 @@ public class Row {
 			}
 		}
 		return total;
+	}
+
+	@Override
+	public int size() {
+		return numberFields.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return size() > 0;
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return numberFields.contains(o);
+	}
+
+	@Override
+	public Iterator<NumberField> iterator() {
+		return numberFields.iterator();
+	}
+
+	@Override
+	public Object[] toArray() {
+		return numberFields.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return numberFields.toArray(a);
+	}
+
+	@Override
+	public boolean add(NumberField numberField) {
+		return numberFields.add(numberField);
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		return numberFields.remove(o);
+	}
+
+	@Override
+	public boolean addAll(Collection c) {
+		return numberFields.addAll(c);
+	}
+
+	@Override
+	public boolean addAll(int index, Collection c) {
+		return numberFields.addAll(index, c);
+	}
+
+	@Override
+	public void clear() {
+		numberFields.clear();
+	}
+
+	@Override
+	public NumberField get(int index) {
+		return numberFields.get(index);
+	}
+
+	@Override
+	public NumberField set(int index, NumberField element) {
+		return numberFields.set(index, element);
+	}
+
+	@Override
+	public void add(int index, NumberField element) {
+		numberFields.add(index, element);
+	}
+
+	@Override
+	public NumberField remove(int index) {
+		return numberFields.remove(index);
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		return numberFields.indexOf(o);
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return numberFields.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<NumberField> listIterator() {
+		return numberFields.listIterator();
+	}
+
+	@Override
+	public ListIterator<NumberField> listIterator(int index) {
+		return numberFields.listIterator(index);
+	}
+
+	@Override
+	public List<NumberField> subList(int fromIndex, int toIndex) {
+		return numberFields.subList(fromIndex, toIndex);
+	}
+
+	@Override
+	public boolean retainAll(Collection c) {
+		return numberFields.retainAll(c);
+	}
+
+	@Override
+	public boolean removeAll(Collection c) {
+		return numberFields.retainAll(c);
+	}
+
+	@Override
+	public boolean containsAll(Collection c) {
+		return numberFields.containsAll(c);
 	}
 }
