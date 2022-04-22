@@ -1,5 +1,10 @@
 package App.src.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Action {
 	private int amountOfNumbersCrossed;
 	private int amountOfNumbersMissed;
@@ -32,5 +37,22 @@ public class Action {
 
 	public boolean isPassedTurn() {
 		return passedTurn;
+	}
+
+	public void storeAction(int action_id ,int turn_id, int amount_of_numbers_missed, boolean passed_turn, int points_earned) {
+		try {
+			Connection connection = DriverManager.getConnection(
+					"jdbc:postgresql://localhost:5432/qwixx1",
+					"postgres",
+					"Student_1234");
+			Statement statement = connection.createStatement();
+			statement.execute("INSERT INTO action values (default,turn_id,?,?,?)" +
+					getAmountOfNumbersMissed() +
+					isPassedTurn() +
+					getPointsEarned());
+			connection.close();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
 	}
 }
