@@ -29,26 +29,30 @@ public class Turn {
 	}
 
 	public void passAction() {
-		addAction(new Action());
+		actions.add(new Action());
+	}
+
+	public void takePenaltyAction() {
+		takeAction(0, 0, -5);
 	}
 
 	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
-		addAction(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
+		actions.add(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
+	}
+
+	public int getNumberOfActions() {
+		return actions.size();
 	}
 
 	public long getTurnDuration() {
 		return turnDuration;
 	}
 
-	public Action getCurrentAction() {
+	public Action getLastAction() {
 		return actions.getLast();
 	}
 
 	public long getCurrentTurnDuration() {
 		return System.currentTimeMillis() - turnStartTime;
-	}
-
-	public void addAction(Action action) {
-		actions.add(action);
 	}
 }

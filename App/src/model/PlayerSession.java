@@ -10,7 +10,7 @@ public class PlayerSession {
 
 	public PlayerSession(String name, boolean startingPlayer) {
 		player = new Player(name);
-		scoreCard = new ScoreCard();
+		scoreCard = new ScoreCard(this);
 		turns = new LinkedList<>();
 		activePlayer = startingPlayer;
 	}
@@ -29,6 +29,10 @@ public class PlayerSession {
 
 	public void takeAction(int numbersCrossed, int numbersMissed, int pointsEarned) {
 		turns.getLast().takeAction(numbersCrossed, numbersMissed, pointsEarned);
+	}
+
+	public void takePenaltyAction() {
+		turns.getLast().takePenaltyAction();
 	}
 
 	public void passAction() {

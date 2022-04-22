@@ -2,6 +2,7 @@ package App.src.view.game;
 
 import App.src.model.ColoredDie;
 import App.src.model.Game;
+import App.src.model.PlayerSession;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -37,12 +38,29 @@ public class GamePresenter {
 
 		//		Hitting roll dice button
 		view.getRollDiceButton().setOnAction(actionEvent -> {
+			model.getGameSession().changeActivePlayer();
+			for (PlayerSession playerSession : model.getGameSession().getPlayerSessions()) {
+				playerSession.newTurn();
+			}
 			model.getGameSession().throwAllDice();
+			model.getGameSession()
+			     .getBotSession()
+			     .takeTurn(model.getGameSession().totalPublicThrow(), model.getGameSession()
+			                                                               .getColoredDicePool(), model.getGameSession()
+			                                                                                           .getPublicDicePool());
 			updateView();
 		});
 
+		//		Hitting the penalty button
 		view.getPenaltyButton().setOnAction(actionEvent -> {
-			model.getGameSession().getActivePlayerSession().getScoreCard().addPenalty();
+			model.getGameSession().getHumanSession().getScoreCard().addPenalty();
+			model.getGameSession().getHumanSession().getCurrentTurn().takePenaltyAction();
+			updateView();
+		});
+
+		//		Hitting the pass button
+		view.getPassButton().setOnAction(actionEvent -> {
+			model.getGameSession().getHumanSession().passAction();
 			updateView();
 		});
 	}
@@ -52,15 +70,15 @@ public class GamePresenter {
 		view.getCurrentPlayer()
 		    .setText(String.format("%s's turn", model.getGameSession().getActivePlayerSession().getPlayerName()));
 
+		updateDicePools();
+		updateScoreCards();
+
 		if (model.getGameSession().gameOver()) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Game Over");
 			alert.setHeaderText("End condition was reached.");
 			alert.showAndWait();
 		}
-
-		updateDicePools();
-		updateScoreCards();
 	}
 
 	private void updateScoreCards() {
