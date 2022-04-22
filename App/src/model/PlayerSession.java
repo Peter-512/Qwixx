@@ -59,7 +59,10 @@ public class PlayerSession {
 		activePlayer = !activePlayer;
 	}
 
-	public void storeAction(int session_id, int game_id, int player_id, boolean starting_first) {
+	public void storePlayerSession(int session_id,
+							int game_id,
+							int player_id,
+							boolean starting_first) {
 		try {
 			Connection connection = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/qwixx1",

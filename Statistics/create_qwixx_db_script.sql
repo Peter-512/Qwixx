@@ -137,3 +137,24 @@ CREATE TABLE global_statistics
     longest_game_duration           INT NOT NULL,
     shortest_game_duration          INT NOT NULL
 );
+
+insert into action values (1,56,2,True,20);
+insert into action values (2,57,5,False,5);
+insert into action values (3,58,3,True,9);
+insert into action values (4,59,1,False,1);
+insert into action values (5,60,6,True,2);
+insert into action values (6,61,2,False,7);
+insert into action values (7,62,4,True,11);
+insert into action values (8,63,1,False,4);
+
+insert into game_session values (420, default);
+
+insert into player values (default,'Testing Shark');
+
+insert into player_session values (default, game_id, player_id, True);
+
+insert into score values(default, session_id, 35, 120, 40, 80, 50, 30, 60, 40);
+
+insert into session_statistics values (game_id,59,420,5555,666,15,30,15,40);
+
+insert into turn values (default, session_id, 500);
