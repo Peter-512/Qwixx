@@ -1,89 +1,139 @@
 --Username : postgres
 --Password : Student_1234
 
+DROP TABLE IF EXISTS action;
 
---ONLY RUN IF DATABASE DOESN'T EXIST YET
-CREATE DATABASE qwixx1;
+DROP TABLE IF EXISTS session_statistics;
+
+DROP TABLE IF EXISTS global_statistics;
+
+DROP TABLE IF EXISTS turn;
+
+DROP TABLE IF EXISTS score;
+
+DROP TABLE IF EXISTS player_session;
+
+DROP TABLE IF EXISTS game_session;
+
+DROP TABLE IF EXISTS player;
 
 
-
-CREATE TABLE IF NOT EXISTS game_session
+CREATE TABLE game_session
 (
-    game_id               numeric PRIMARY KEY
-        CONSTRAINT
-            nn_game_id NOT NULL,
-    start_time            time(3)
-        CONSTRAINT nn_starttime NOT NULL,
-    end_time              time(3)
-        CONSTRAINT nn_endtime NOT NULL,
-    amount_of_rows_locked numeric,
-    duration              time
-        CONSTRAINT nn_duration NOT NULL
-);        CREATE SEQUENCE IF NOT EXISTS id_incr START 1;
+    duration INT NOT NULL,
+    game_id  INT GENERATED ALWAYS AS IDENTITY
+        CONSTRAINT game_session_pk
+            PRIMARY KEY
+);
 
-
-CREATE SEQUENCE IF NOT EXISTS rank START WITH 1;
-ALTER SEQUENCE rank RESTART WITH 1;
-
-
-
-CREATE TABLE IF NOT EXISTS player
+CREATE TABLE player
 (
-    name_id varchar(255) PRIMARY KEY,
-    game_id numeric,
-    CONSTRAINT fk_game_ID
-        FOREIGN KEY (game_id)
-            REFERENCES game_session (game_id)
+    player_id SERIAL
+        CONSTRAINT player_pk
+            PRIMARY KEY,
+    name      VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE player_session
+(
+    session_id     SERIAL
+        CONSTRAINT player_session_pk
+            PRIMARY KEY,
+    game_id        INT
+        CONSTRAINT player_session_game_session_game_id_fk
+            REFERENCES game_session,
+    player_id      INT
+        CONSTRAINT player_session_player_player_id_fk
+            REFERENCES player,
+    starting_first BOOL NOT NULL
+);
+
+CREATE TABLE turn
+(
+    turn_id       SERIAL
+        CONSTRAINT turn_pk
+            PRIMARY KEY,
+    session_id    INT
+        CONSTRAINT turn_player_session_session_id_fk
+            REFERENCES player_session ( session_id ),
+    turn_duration INT NOT NULL
+);
+
+CREATE TABLE action
+(
+    action_id                SERIAL
+        CONSTRAINT action_pk
+            PRIMARY KEY,
+    turn_id                  INT
+        CONSTRAINT action_turn_turn_id_fk
+            REFERENCES turn,
+    amount_of_numbers_missed INT NOT NULL,
+    passed_turn              BOOL,
+    points_earned            INT
 );
 
 
-CREATE TABLE IF NOT EXISTS score
+CREATE TABLE score
 (
-    points                          numeric,
-    total_duration                  time(3)
-        CONSTRAINT nn_total_time NOT NULL,
-    total_amount_of_numbers_crossed numeric,
-    total_score                     numeric,
-    penalty_points                  numeric,
-    game_id                         numeric,
-    CONSTRAINT fk_game_id FOREIGN KEY (game_id) REFERENCES game_session (game_id)
+    score_id                        SERIAL
+        CONSTRAINT score_pk
+            PRIMARY KEY,
+    session_id                      INT
+        CONSTRAINT score_player_session_session_id_fk
+            REFERENCES player_session ( session_id ),
+    total_amount_of_numbers_crossed INT NOT NULL,
+    total_points                    INT NOT NULL,
+    penalty_points                  INT NOT NULL,
+    total_score                     INT NOT NULL,
+    red_points                      INT NOT NULL,
+    yellow_points                   INT NOT NULL,
+    blue_points                     INT NOT NULL,
+    green_points                    INT NOT NULL
+);
+COMMENT ON COLUMN score.total_points IS 'All points excluding penalty points';
+COMMENT ON COLUMN score.total_score IS 'total_points - penalty_points';
 
+CREATE TABLE session_statistics
+(
+    game_id                         INT
+        CONSTRAINT session_statistics_pk
+            PRIMARY KEY,
+    most_valuable_turn              INT NOT NULL
+        CONSTRAINT session_statistics_turn_turn_id_fk
+            REFERENCES turn,
+    average_turn_duration           INT NOT NULL,
+    longest_turn_duration           INT NOT NULL,
+    shortest_turn_duration          INT NOT NULL,
+    average_points_per_turn         INT NOT NULL,
+    most_points_per_turn            INT NOT NULL,
+    average_numbers_missed_per_turn INT NOT NULL,
+    most_numbers_missed_per_turn    INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS session_statistics
+
+
+CREATE TABLE global_statistics
 (
-    longest_turn                    numeric,
-    shortest_turn                   numeric,
-    average_turn_duration           numeric,
-    average_points_earned_per_turn  numeric,
-    most_points_earned_per_turn     numeric,
-    average_numbers_missed_per_turn numeric,
-    most_numbers_missed_per_turn    numeric,
-    most_valuable_turn              numeric
+    most_valuable_turn              INT NOT NULL
+        CONSTRAINT global_statistics_turn_turn_id_fk
+            REFERENCES turn,
+    highest_score                   INT
+        CONSTRAINT global_statistics_score_highest_score_id_fk
+            REFERENCES score,
+    lowest_score                    INT NOT NULL
+        CONSTRAINT global_statistics_score_lowest_score_id_fk
+            REFERENCES score,
+    average_score                   INT NOT NULL
+        CONSTRAINT global_statistics_score_average_score_id_fk
+            REFERENCES score,
+    longest_turn_duration           INT NOT NULL,
+    average_turn_duration           INT NOT NULL,
+    shortest_turn_duration          INT NOT NULL,
+    average_points_per_turn         INT NOT NULL,
+    most_points_per_turn            INT NOT NULL,
+    average_numbers_missed_per_turn INT NOT NULL,
+    most_numbers_missed_per_turn    INT NOT NULL,
+    average_game_duration           INT NOT NULL,
+    longest_game_duration           INT NOT NULL,
+    shortest_game_duration          INT NOT NULL
 );
-
-CREATE TABLE IF NOT EXISTS global_statistics
-(
-    longest_turn                    numeric,
-    shortest_turn                   numeric,
-    average_turn_duration           numeric,
-    average_numbers_missed_per_turn numeric,
-    most_points_earned_per_turn     numeric,
-    averageNumbersMissedPerTurn     numeric,
-    most_numbers_missed_per_turn    numeric,
-    average_total_points            numeric
-        CONSTRAINT nn_average_total_points NOT NULL,
-    most_total_points               numeric
-        CONSTRAINT nn_most_total_points NOT NULL,
-    least_total_points              numeric
-        CONSTRAINT nn_least_total_points NOT NULL,
-    most_valuable_turn              numeric
-
-);
-
-CREATE TABLE IF NOT EXISTS turn (
-    turn_number numeric PRIMARY KEY,
-    turn_start_time numeric,
-    turn_end_time numeric,
-    turn_duration numeric
-)
