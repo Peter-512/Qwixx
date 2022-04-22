@@ -1,5 +1,9 @@
 package App.src.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 public class PlayerSession {
@@ -54,4 +58,20 @@ public class PlayerSession {
 	public void changeActivePlayer() {
 		activePlayer = !activePlayer;
 	}
+
+	public void storeAction(int session_id, int game_id, int player_id, boolean starting_first) {
+		try {
+			Connection connection = DriverManager.getConnection(
+					"jdbc:postgresql://localhost:5432/qwixx1",
+					"postgres",
+					"Student_1234");
+			Statement statement = connection.createStatement();
+			statement.execute("INSERT INTO player_session values (default,game_id,player_id,?)" +
+					isActivePlayer());
+			connection.close();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+	}
 }
+

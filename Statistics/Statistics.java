@@ -8,7 +8,6 @@ import java.sql.Statement;
 public class Statistics {
 
 
-
     public static void main(String[] args) {
 
         try {
@@ -106,23 +105,47 @@ public class Statistics {
 
     }
 
-//    public void putStatistics(String playerName, long startTime, long endTime, int Score, long turnDuration, int turnNumber, boolean gameOver) {
-//        long totalTime = endTime - startTime;
-//
-//        try {
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:postgresql://localhost:5432/qwixx",
-//                    "postgres",
-//                    "Student_1234");
-//            Statement statement = connection.createStatement();
-//            statement.execute("INSERT INTO game_session (gameid, starttime, endtime) values (nextval('id_incr', " + startTime + "," + endTime + ")");
-//            statement.execute("INSERT INTO player (nameid, score, totaltime, iswin, turn_duration)" + playerName + Score + totalTime + gameOver + turnDuration);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+//    public void storePlayer(String name) {
+//		try {
+//			Connection connection = DriverManager.getConnection(
+//					"jdbc:postgresql://localhost:5432/qwixx1",
+//					"postgres",
+//					"Student_1234");
+//			Statement statement = connection.createStatement();
+//			statement.execute("INSERT INTO player values (default,?)" + getName());
+//			connection.close();
+//		} catch (SQLException throwables) {
+//			throwables.printStackTrace();
+//		}
+//	}
 
+    public void storeGameSession(int duration, int game_ID) {
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/qwixx1",
+                    "postgres",
+                    "Student_1234");
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO game_session values (?,default)");
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
+    public void storePlayerSession(int player_id, int game_id, int session_id, boolean starting_first) {
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/qwixx1",
+                    "postgres",
+                    "Student_1234");
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO player_session values (default,game_id,player_id,?)" );
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
 
 
