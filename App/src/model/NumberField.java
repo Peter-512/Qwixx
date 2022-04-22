@@ -5,12 +5,18 @@ public class NumberField {
 	private boolean isCrossed;
 	private boolean isDisabled;
 	private final int index;
+	private final Row row;
 
-	public NumberField(int value, int index) {
+	public NumberField(int value, int index, Row row) {
 		this.value = value;
+		this.row = row;
 		this.isCrossed = false;
 		this.isDisabled = false;
 		this.index = index;
+	}
+
+	public Row getRow() {
+		return row;
 	}
 
 	public int getValue() {
@@ -36,4 +42,5 @@ public class NumberField {
 	public int getIndex() {
 		return index;
 	}
+
 }
