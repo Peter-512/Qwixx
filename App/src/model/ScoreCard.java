@@ -127,21 +127,8 @@ public class ScoreCard {
         return total;
     }
 
-    public void storeScore(int score_id,
-                           int session_id,
-                           int total_amount_of_numbers_crossed,
-                           int total_points,
-                           int penalty_points,
-                           int total_score,
-                           int red_points,
-                           int yellow_points,
-                           int blue_points,
-                           int green_points) {
+    public void save(Connection connection) {
         try {
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/qwixx",
-                    "postgres",
-                    "Student_1234");
             Statement statement = connection.createStatement();
             statement.execute("INSERT INTO score values (default,session_id,?,?,?,?,?,?,?,?)"
                     + getTotalAmountOfNumbersCrossed()
