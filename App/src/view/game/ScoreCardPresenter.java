@@ -45,13 +45,7 @@ public class ScoreCardPresenter {
 			button.setOnAction(actionEvent -> {
 				if (!numberField.isDisabled()) {
 					numberField.setCrossed();
-					final ListIterator<NumberField> iterator = numberField.getRow()
-					                                                      .listIterator(numberField.getIndex());
-					while (iterator.hasPrevious()) {
-						NumberField n = iterator.previous();
-						if (n.isCrossed()) break;
-						n.setDisabled();
-					}
+					numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
 					//					TODO pass correct numbers to takeAction
 					model.getPlayerSession().getCurrentTurn().takeAction(0, 0, 0);
 					updateView();
