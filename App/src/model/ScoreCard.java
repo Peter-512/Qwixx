@@ -58,7 +58,7 @@ public class ScoreCard {
 			Row row = getRow(color);
 			if (!row.isLocked()) {
 				NumberField numberField = row.getNumberFieldByValue(total);
-				if (!numberField.isDisabled() && !numberField.isCrossed()) {
+				if (numberField.isAvailable()) {
 					if ((row.isAscending() ? numberField.getValue() < 12 : numberField.getValue() > 2) || row.getAmountOfCrossedNumbers() >= 5) {
 						list.add(numberField);
 					}
@@ -79,7 +79,7 @@ public class ScoreCard {
 				Row row = getRow(color);
 				if (!row.isLocked()) {
 					final NumberField numberField = row.getNumberFieldByValue(total);
-					if (!numberField.isDisabled() && !numberField.isCrossed()) {
+					if (numberField.isAvailable()) {
 						if ((row.isAscending() ? numberField.getValue() < 12 : numberField.getValue() > 2) || row.getAmountOfCrossedNumbers() >= 5) {
 							list.add(numberField);
 						}

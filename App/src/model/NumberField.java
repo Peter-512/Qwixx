@@ -15,6 +15,10 @@ public class NumberField {
 		this.index = index;
 	}
 
+	public boolean isAvailable() {
+		return !(isDisabled() || isCrossed());
+	}
+
 	public Row getRow() {
 		return row;
 	}

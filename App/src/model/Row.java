@@ -59,10 +59,6 @@ public class Row implements List<NumberField> {
 		return numberFields;
 	}
 
-	public boolean isAvailable(int i) {
-		return !(get(i).isDisabled() || get(i).isCrossed());
-	}
-
 	public void disableNumberFieldsBefore(int index) {
 		final ListIterator<NumberField> iterator = listIterator(index);
 		while (iterator.hasPrevious()) {
