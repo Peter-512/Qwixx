@@ -20,14 +20,11 @@ public class Player {
 		this.name = name;
 	}
 
-	public void storePlayer(int player_id, String name) {
+	public void save(Connection connection) {
 		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx",
-					"postgres",
-					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO player values (default,?)" + getName());
+
 			connection.close();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();

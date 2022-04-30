@@ -115,6 +115,21 @@ public class GameSession {
 			sqlException.printStackTrace();
 		}
 	}
+    public void save(){
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/qwixx",
+                    "postgres",
+                    "Student_1234");
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO game_session values (duration,default)");
+            for (PlayerSession playerSession : playerSessions) {
+                playerSession.save(connection);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	public boolean isHumanSession(PlayerSession session) {
 		return session.equals(getHumanSession());

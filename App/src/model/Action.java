@@ -39,12 +39,8 @@ public class Action {
 		return passedTurn;
 	}
 
-	public void storeAction(int action_id ,int turn_id, int amount_of_numbers_missed, boolean passed_turn, int points_earned) {
+	public void save(Connection connection) {
 		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx",
-					"postgres",
-					"Student_1234");
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO action values (default,turn_id,?,?,?)" +
 					getAmountOfNumbersMissed() +
