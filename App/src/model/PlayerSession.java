@@ -24,6 +24,9 @@ public class PlayerSession {
 	}
 
 	public Turn getCurrentTurn() {
+		if (turns.isEmpty()) {
+			return null;
+		}
 		return turns.getLast();
 	}
 
@@ -60,9 +63,9 @@ public class PlayerSession {
 	}
 
 	public void storePlayerSession(int session_id,
-							int game_id,
-							int player_id,
-							boolean starting_first) {
+			int game_id,
+			int player_id,
+			boolean starting_first) {
 		try {
 			Connection connection = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/qwixx",

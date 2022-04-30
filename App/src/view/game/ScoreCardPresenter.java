@@ -63,10 +63,7 @@ public class ScoreCardPresenter {
 	void updateView() {
 		disableAllNumberFields();
 		//		Enabling numberFields based on dice rolls
-		//		FIXME find a different way to deal with no turns being active yet
-		//		    Implement Optional
-		//		    https://www.oracle.com/technical-resources/articles/java/java8-optional.html
-		try {
+		if (model.getPlayerSession().getCurrentTurn() != null) {
 			if (model.getPlayerSession().getCurrentTurn().getNumberOfActions() == 0) {
 				HashMap<Color, NumberField> map = model.getPublicNumberFields(gameSession.totalPublicThrow());
 				map.forEach((color, numberField) -> {
