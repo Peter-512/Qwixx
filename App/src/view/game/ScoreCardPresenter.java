@@ -70,12 +70,6 @@ public class ScoreCardPresenter {
 					view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
 				});
 			}
-		} catch (NoSuchElementException e) {
-			System.out.println("No turn yet");
-		}
-
-		//		FIXME find a different way to deal with no turns being active yet like above
-		try {
 			if (gameSession.getActivePlayerSession()
 			               .getScoreCard()
 			               .equals(model) && gameSession.getActivePlayerSession()
@@ -83,8 +77,6 @@ public class ScoreCardPresenter {
 			                                            .getNumberOfActions() == 1) {
 				enableColoredNumberFields();
 			}
-		} catch (NoSuchElementException e) {
-			System.out.println("No turn yet");
 		}
 
 		//		Updating crossed out and disabled NumberFields
@@ -99,7 +91,6 @@ public class ScoreCardPresenter {
 					button.setText("X");
 				}
 			}
-
 			//			Updating row scores
 			view.getScore(color).setText(String.valueOf(model.getRow(color).getRowScore()));
 		}
