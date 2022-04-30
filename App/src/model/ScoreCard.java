@@ -1,7 +1,6 @@
 package App.src.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -110,24 +109,24 @@ public class ScoreCard {
 		return total;
 	}
 
-    public void save(Connection connection) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO score values (default,session_id,?,?,?,?,?,?,?,?)"
-                    + getTotalAmountOfNumbersCrossed()
-                    + getTotalPoints()
-                    + getTotalPenaltyPoints()
-                    + getTotalScore()
-                    + getRow(Color.RED).getRowScore()
-                    + getRow(Color.YELLOW).getRowScore()
-                    + getRow(Color.BLUE).getRowScore()
-                    + getRow(Color.GREEN).getRowScore()
-            );
-            connection.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-    }
+	public void save(Connection connection) {
+		try {
+			Statement statement = connection.createStatement();
+			statement.execute("INSERT INTO score values (default,session_id,?,?,?,?,?,?,?,?)"
+					+ getTotalAmountOfNumbersCrossed()
+					+ getTotalPoints()
+					+ getTotalPenaltyPoints()
+					+ getTotalScore()
+					+ getRow(Color.RED).getRowScore()
+					+ getRow(Color.YELLOW).getRowScore()
+					+ getRow(Color.BLUE).getRowScore()
+					+ getRow(Color.GREEN).getRowScore()
+			);
+			connection.close();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+	}
 
 
 	public int getTotalPenaltyPoints() {
