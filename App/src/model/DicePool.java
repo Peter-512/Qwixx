@@ -28,6 +28,10 @@ public class DicePool {
 		return dice;
 	}
 
+	public Die getDie(int index) {
+		return dice.get(index);
+	}
+
 	public void throwDice() {
 		for (Die die : dice) {
 			die.throwDie();
