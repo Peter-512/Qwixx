@@ -10,7 +10,7 @@ public class BotSession extends PlayerSession {
 
 	private NumberField chooseColoredNumber(DicePool coloredDicePool, DicePool publicDicePool) {
 		Random random = new Random();
-		final ArrayList<NumberField> numberFields = getScoreCard().getColoredNumberFieldList(coloredDicePool, publicDicePool);
+		final ArrayList<NumberField> numberFields = getScoreCard().getColoredNumberFields(coloredDicePool, publicDicePool);
 		if (numberFields.isEmpty()) {
 			return null;
 		}
@@ -21,7 +21,7 @@ public class BotSession extends PlayerSession {
 
 	private NumberField choosePublicNumber(int total) {
 		Random random = new Random();
-		final ArrayList<NumberField> publicNumberFields = getScoreCard().getPublicNumberFieldList(total);
+		final ArrayList<NumberField> publicNumberFields = getScoreCard().getPublicNumberFields(total);
 		if (publicNumberFields.isEmpty()) {
 			return null;
 		}
