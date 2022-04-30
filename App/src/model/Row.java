@@ -7,6 +7,7 @@ public class Row implements List<NumberField> {
 	private final boolean isAscending;
 	private boolean isLocked;
 	private final ArrayList<NumberField> numberFields = new ArrayList<>();
+	private final HashMap<Integer, NumberField> numberFieldHashByValueMap = new HashMap<>();
 
 	public Row(Color color, boolean isAscending) {
 		this.color = color;
