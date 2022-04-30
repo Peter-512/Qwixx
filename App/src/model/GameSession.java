@@ -21,7 +21,6 @@ public class GameSession {
 		publicDicePool = new DicePool(true);
 		isHumanActivePlayer = startingPlayer;
 		startTime = System.currentTimeMillis();
-		endTime = System.currentTimeMillis();
 	}
 
 	public void throwAllDice() {
@@ -40,7 +39,9 @@ public class GameSession {
 	}
 
 	public int totalPublicThrow() {
-		return publicDicePool.getDice().get(0).getValue() + publicDicePool.getDice().get(1).getValue();
+		return publicDicePool.getDice().stream().reduce(0, (subtotal, die) ->
+				subtotal + die.getValue(), Integer::sum
+		);
 	}
 
 	public PlayerSession[] getPlayerSessions() {
@@ -108,14 +109,14 @@ public class GameSession {
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO game_session values (?,default)");
+			statement.execute("INSERT INTO game_session VALUES (?,default)");
 			connection.close();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
 	}
 
-		public boolean isHumanSession (PlayerSession session){
-			return session.equals(getHumanSession());
-		}
+	public boolean isHumanSession(PlayerSession session) {
+		return session.equals(getHumanSession());
 	}
+}
