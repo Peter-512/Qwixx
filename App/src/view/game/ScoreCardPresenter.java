@@ -12,14 +12,14 @@ public class ScoreCardPresenter {
 	private final ScoreCardView view;
 	private final GameSession gameSession;
 	private final HashMap<Button, NumberField> buttonByNumberFieldHashMap;
-	private final HashMap<NumberField, Button> numberByFieldButtonHashMap;
+	private final HashMap<NumberField, Button> numberFieldByButtonHashMap;
 
 	public ScoreCardPresenter(ScoreCard model, ScoreCardView view, GameSession gameSession) {
 		this.model = model;
 		this.view = view;
 		this.gameSession = gameSession;
 
-		numberByFieldButtonHashMap = new HashMap<>();
+		numberFieldByButtonHashMap = new HashMap<>();
 		buttonByNumberFieldHashMap = new HashMap<>();
 		fillHashMaps();
 
@@ -33,7 +33,7 @@ public class ScoreCardPresenter {
 				Button button = (Button) view.getRowByColor(color).getChildren().get(i);
 				NumberField numberField = model.getRow(color).get(i);
 				buttonByNumberFieldHashMap.put(button, numberField);
-				numberByFieldButtonHashMap.put(numberField, button);
+				numberFieldByButtonHashMap.put(numberField, button);
 			}
 		}
 	}
@@ -146,6 +146,6 @@ public class ScoreCardPresenter {
 	}
 
 	public Button getButtonByNumberField(NumberField numberField) {
-		return numberByFieldButtonHashMap.get(numberField);
+		return numberFieldByButtonHashMap.get(numberField);
 	}
 }
