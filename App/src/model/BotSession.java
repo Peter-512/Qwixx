@@ -1,42 +1,33 @@
 package App.src.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class BotSession extends PlayerSession {
-
 	public BotSession(String name, boolean startingPlayer) {
 		super(name, startingPlayer);
 	}
 
 	private NumberField chooseColoredNumber(DicePool coloredDicePool, DicePool publicDicePool) {
 		Random random = new Random();
-		final HashMap<Color, ArrayList<NumberField>> coloredNumberFields = getScoreCard().getColoredNumberFields(coloredDicePool, publicDicePool);
-		if (!coloredNumberFields.keySet().isEmpty()) {
-			final Color color = (Color) coloredNumberFields.keySet()
-			                                               .toArray()[random.nextInt(coloredNumberFields.keySet()
-			                                                                                            .toArray().length)];
-			final ArrayList<NumberField> numberFields = coloredNumberFields.get(color);
-			NumberField numberField = numberFields.get(random.nextInt(numberFields.size()));
-			getScoreCard().getRow(color).disableNumberFieldsUntil(numberField.getIndex());
-			return numberField;
+		final ArrayList<NumberField> numberFields = getScoreCard().getColoredNumberFieldList(coloredDicePool, publicDicePool);
+		if (numberFields.isEmpty()) {
+			return null;
 		}
-		return null;
+		final NumberField numberField = numberFields.get(random.nextInt(numberFields.size()));
+		numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+		return numberField;
 	}
-
 
 	private NumberField choosePublicNumber(int total) {
 		Random random = new Random();
-		final HashMap<Color, NumberField> publicNumberFields = getScoreCard().getPublicNumberFields(total);
-		if (!publicNumberFields.keySet().isEmpty()) {
-			final Color color = (Color) publicNumberFields.keySet().toArray()[random.nextInt(publicNumberFields.keySet()
-			                                                                                       .toArray().length)];
-			NumberField numberField = publicNumberFields.get(color);
-			getScoreCard().getRow(color).disableNumberFieldsUntil(numberField.getIndex());
-			return numberField;
+		final ArrayList<NumberField> publicNumberFields = getScoreCard().getPublicNumberFieldList(total);
+		if (publicNumberFields.isEmpty()) {
+			return null;
 		}
-		return null;
+		NumberField numberField = publicNumberFields.get(random.nextInt(publicNumberFields.size()));
+		numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+		return numberField;
 	}
 
 	public void takeTurn(int total, DicePool coloredDicePool, DicePool publicDicePool) {
