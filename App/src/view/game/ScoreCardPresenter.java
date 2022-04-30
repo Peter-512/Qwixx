@@ -59,10 +59,10 @@ public class ScoreCardPresenter {
 		//		Enabling numberFields based on dice rolls
 		if (model.getPlayerSession().getCurrentTurn() != null) {
 			if (model.getPlayerSession().getCurrentTurn().getNumberOfActions() == 0) {
-				HashMap<Color, NumberField> map = model.getPublicNumberFields(gameSession.totalPublicThrow());
-				map.forEach((color, numberField) -> {
-					view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
-				});
+				ArrayList<NumberField> list = model.getPublicNumberFields(gameSession.totalPublicThrow());
+				for (NumberField numberField : list) {
+					getButtonByNumberField(numberField).setDisable(false);
+				}
 			}
 			if (gameSession.getActivePlayerSession()
 			               .getScoreCard()
@@ -118,12 +118,10 @@ public class ScoreCardPresenter {
 	}
 
 	private void enableColoredNumberFields() {
-		HashMap<Color, ArrayList<NumberField>> map = model.getColoredNumberFields(gameSession.getColoredDicePool(), gameSession.getPublicDicePool());
-		map.forEach((color, numberFields) -> {
-			for (NumberField numberField : numberFields) {
-				view.getNumberFieldButton(color, numberField.getIndex()).setDisable(false);
-			}
-		});
+		ArrayList<NumberField> list = model.getColoredNumberFields(gameSession.getColoredDicePool(), gameSession.getPublicDicePool());
+		for (NumberField numberField : list) {
+			getButtonByNumberField(numberField).setDisable(false);
+		}
 	}
 
 	public NumberField getNumberFieldByButton(Button button) {
