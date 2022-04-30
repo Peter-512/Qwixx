@@ -14,16 +14,17 @@ public class Row implements List<NumberField> {
 		this.isAscending = isAscending;
 		this.isLocked = false;
 
-		if (isAscending) {
-			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(i + 2, i, this));
-			}
-		} else {
-			int val = 12;
-			for (int i = 0; i < 11; i++) {
-				numberFields.add(new NumberField(val--, i, this));
-			}
+		int val = 13;
+		for (int i = 0; i < 11; i++) {
+			val = isAscending ? i + 2 : val - 1;
+			NumberField numberField = new NumberField(val, i, this);
+			numberFields.add(numberField);
+			numberFieldHashByValueMap.put(val, numberField);
 		}
+	}
+
+	public NumberField getNumberFieldByValue(int value) {
+		return numberFieldHashByValueMap.get(value);
 	}
 
 	public Color getColor() {
