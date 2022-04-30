@@ -63,11 +63,12 @@ public class Row implements List<NumberField> {
 		return !(get(i).isDisabled() || get(i).isCrossed());
 	}
 
-	public void disableNumberFieldsUntil(int index) {
-		for (int i = 0; i < index; i++) {
-			if (!numberFields.get(i).isCrossed()) {
-				numberFields.get(i).setDisabled();
-			}
+	public void disableNumberFieldsBefore(int index) {
+		final ListIterator<NumberField> iterator = listIterator(index);
+		while (iterator.hasPrevious()) {
+			NumberField n = iterator.previous();
+			if (n.isCrossed()) break;
+			n.setDisabled();
 		}
 	}
 
