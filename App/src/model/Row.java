@@ -59,10 +59,8 @@ public class Row implements List<NumberField> {
 		return numberFields;
 	}
 
-	public NumberField getOption(int i) {
-		if (!(get(i).isDisabled() || get(i).isCrossed()))
-			return get(i);
-		else return null;
+	public boolean isAvailable(int i) {
+		return !(get(i).isDisabled() || get(i).isCrossed());
 	}
 
 	public void disableNumberFieldsUntil(int index) {
