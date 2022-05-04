@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Action {
+
+
 	private int amountOfNumbersCrossed;
 	private int amountOfNumbersMissed;
 	private int pointsEarned;

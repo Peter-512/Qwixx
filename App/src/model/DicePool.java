@@ -42,3 +42,4 @@ public class DicePool {
 		return isPublic;
 	}
 }
+
