@@ -127,7 +127,6 @@ public class ScoreCard {
         return total;
     }
 
-
     public void storeScore(int score_id,
                            int session_id,
                            int total_amount_of_numbers_crossed,

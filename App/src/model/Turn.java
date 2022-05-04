@@ -1,7 +1,6 @@
 package App.src.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
@@ -60,14 +59,14 @@ public class Turn {
 		return System.currentTimeMillis() - turnStartTime;
 	}
 
-	public void storeTurn(int turn_id,int session_id, int turn_duration) {
+	public void save(Connection connection) {
 		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx",
-					"postgres",
-					"Student_1234");
+
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO turn values (default,session_id,?)" + getTurnDuration());
+			for (Action action : actions) {
+				action.save(connection);
+			}
 			connection.close();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
