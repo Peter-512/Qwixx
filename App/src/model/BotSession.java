@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class BotSession extends PlayerSession {
-	AI ai;
+//	AI ai;
 
 	public BotSession(String name, boolean startingPlayer) {
 
