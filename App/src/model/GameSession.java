@@ -13,6 +13,7 @@ public class GameSession {
 	private long startTime;
 	private long endTime;
 
+
 	public GameSession(String name, boolean startingPlayer) {
 		playerSessions = new PlayerSession[2];
 		playerSessions[0] = new BotSession("Skynet", !startingPlayer);
@@ -118,4 +119,7 @@ public class GameSession {
 		public boolean isHumanSession (PlayerSession session){
 			return session.equals(getHumanSession());
 		}
+
+
 	}
+

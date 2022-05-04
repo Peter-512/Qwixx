@@ -23,9 +23,7 @@ public class NumberField {
 		return value;
 	}
 
-	public boolean isCrossed() {
-		return isCrossed;
-	}
+	public boolean isCrossed() {return isCrossed;}
 
 	public void setCrossed() {
 		isCrossed = true;
@@ -43,4 +41,5 @@ public class NumberField {
 		return index;
 	}
 
-}
+	}
+
