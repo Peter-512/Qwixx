@@ -5,36 +5,29 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class AI {
-    private  LinkedHashMap<Color, Row> rows;
-    private  NumberField index;
-    private final ArrayList<NumberField> numberFields = new ArrayList<>();
+	private LinkedHashMap<Color, Row> rows;
+	private NumberField index;
+	private final ArrayList<NumberField> numberFields = new ArrayList<>();
 
-    public NumberField getIndex() {return index;}
-    public Row getRow(Color color) {return rows.get(color);}
+	public NumberField getIndex() {return index;}
 
-    public ArrayList<NumberField> getNumberFields() {
-        return numberFields;
-    }
+	public Row getRow(Color color) {return rows.get(color);}
 
-    public HashMap<Color,NumberField> getPublicNumberFields(int total){
-        HashMap<Color, NumberField> map = new HashMap<>();
+	public ArrayList<NumberField> getNumberFields() {
+		return numberFields;
+	}
 
-        for (Color color : Color.values()) {
-            Row row = getRow(color);
+	public HashMap<Color, NumberField> getPublicNumberFields(int total) {
+		HashMap<Color, NumberField> map = new HashMap<>();
 
-            for(int index = 0; index<=2; index++){
+		for (Color color : Color.values()) {
+			Row row = getRow(color);
 
-
-            }
+			for (int index = 0; index <= 2; index++) {
 
 
-        }
-
-
-
-        return map;
-    }
-
+			}
+		}
+		return map;
+	}
 }
-
-
