@@ -6,7 +6,6 @@ import App.src.view.mainMenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 
 
@@ -17,7 +16,7 @@ public class Main extends Application {
 
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		stage.setTitle("Qwixx");
 		stage.setWidth(1200);
 		stage.setHeight(800);
