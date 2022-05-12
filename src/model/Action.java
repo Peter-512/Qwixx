@@ -5,13 +5,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Action {
-
-
 	private int amountOfNumbersCrossed;
 	private int amountOfNumbersMissed;
 	private int pointsEarned;
 	private boolean passedTurn;
 
+	/**
+	 @param amountOfNumbersCrossed
+	 @param amountOfNumbersMissed
+	 @param pointsEarned
+	 */
 	public Action(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
 		this.amountOfNumbersCrossed = amountOfNumbersCrossed;
 		this.amountOfNumbersMissed = amountOfNumbersMissed;
@@ -19,6 +22,9 @@ public class Action {
 		passedTurn = false;
 	}
 
+	/**
+	 Constructor for passed turns
+	 */
 	public Action() {
 		this(0, 0, 0);
 		passedTurn = true;
