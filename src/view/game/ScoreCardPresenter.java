@@ -10,13 +10,15 @@ import java.util.*;
 public class ScoreCardPresenter {
 	private final ScoreCard model;
 	private final ScoreCardView view;
+	private final GamePresenter parentPresenter;
 	private final GameSession gameSession;
 	private final HashMap<Button, NumberField> buttonByNumberFieldHashMap;
 	private final HashMap<NumberField, Button> numberFieldByButtonHashMap;
 
-	public ScoreCardPresenter(ScoreCard model, ScoreCardView view, GameSession gameSession) {
+	public ScoreCardPresenter(ScoreCard model, ScoreCardView view, GamePresenter parentPresenter, GameSession gameSession) {
 		this.model = model;
 		this.view = view;
+		this.parentPresenter = parentPresenter;
 		this.gameSession = gameSession;
 
 		numberFieldByButtonHashMap = new HashMap<>();
@@ -47,8 +49,9 @@ public class ScoreCardPresenter {
 					numberField.setCrossed();
 					numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
 					//					TODO pass correct numbers to takeAction
-					model.getPlayerSession().getCurrentTurn().takeAction(0, 0, 0);
+					model.getPlayerSession().takeAction(1, 0, 0);
 					updateView();
+					parentPresenter.updateView();
 				}
 			});
 		}
