@@ -1,13 +1,15 @@
 package src.view.game;
 
-import src.model.ColoredDie;
-import src.model.Game;
-import src.model.PlayerSession;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.util.Duration;
+import src.model.ColoredDie;
+import src.model.Game;
+import src.model.PlayerSession;
+import src.model.Turn;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,7 @@ public class GamePresenter {
 			scoreCardPresenters[i] = new ScoreCardPresenter(
 					model.getGameSession().getPlayerSessions()[i].getScoreCard(),
 					(ScoreCardView) view.getScoreCards().getChildren().get(i),
+					this,
 					model.getGameSession());
 		}
 
@@ -38,6 +41,7 @@ public class GamePresenter {
 
 		//		Hitting roll dice button
 		view.getRollDiceButton().setOnAction(actionEvent -> {
+			view.getRollDiceButton().setDisable(true);
 			model.getGameSession().changeActivePlayer();
 			for (PlayerSession playerSession : model.getGameSession().getPlayerSessions()) {
 				playerSession.newTurn();
@@ -53,19 +57,20 @@ public class GamePresenter {
 
 		//		Hitting the penalty button
 		view.getPenaltyButton().setOnAction(actionEvent -> {
-			model.getGameSession().getHumanSession().getScoreCard().addPenalty();
-			model.getGameSession().getHumanSession().getCurrentTurn().takePenaltyAction();
+			model.getGameSession().getHumanSession().takePenaltyAction();
+			view.getPenaltyButton().setDisable(true);
 			updateView();
 		});
 
 		//		Hitting the pass button
 		view.getPassButton().setOnAction(actionEvent -> {
+			view.getPassButton().setDisable(true);
 			model.getGameSession().getHumanSession().passAction();
 			updateView();
 		});
 	}
 
-	private void updateView() {
+	void updateView() {
 		//		set current Player Text
 		view.getCurrentPlayer()
 		    .setText(String.format("%s's turn", model.getGameSession().getActivePlayerSession().getPlayerName()));
@@ -73,11 +78,42 @@ public class GamePresenter {
 		updateDicePools();
 		updateScoreCards();
 
+		setButtonsRight();
+
 		if (model.getGameSession().gameOver()) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Game Over");
 			alert.setHeaderText("End condition was reached.");
 			alert.showAndWait();
+		}
+	}
+
+	private void setButtonsRight() {
+		final PlayerSession humanSession = model.getGameSession().getHumanSession();
+		final Button rollDiceButton = view.getRollDiceButton();
+		final Button penaltyButton = view.getPenaltyButton();
+		final Button passButton = view.getPassButton();
+		final Turn turn = humanSession.getCurrentTurn();
+		final int numberOfActions = turn != null ? turn.getNumberOfActions() : -1;
+
+		rollDiceButton.setDisable(true);
+		penaltyButton.setDisable(true);
+		passButton.setDisable(true);
+
+		if (humanSession.isActivePlayer()) {
+			switch (numberOfActions) {
+				case 0 -> passButton.setDisable(false);
+				case 1 -> {
+					if (turn.getLastAction().isPassedTurn()) penaltyButton.setDisable(false);
+					else passButton.setDisable(false);
+				}
+				case 2, -1 -> rollDiceButton.setDisable(false); // -1 for start of game (no turn has started yet)
+			}
+		} else {
+			switch (numberOfActions) {
+				case 0 -> passButton.setDisable(false);
+				case 1 -> rollDiceButton.setDisable(false);
+			}
 		}
 	}
 
@@ -115,15 +151,10 @@ public class GamePresenter {
 
 		//		Displaying the time
 		DateFormat timeFormat = new SimpleDateFormat("mm:ss");
-		final Timeline timeline = new Timeline(
-				new KeyFrame(
-						Duration.millis(1000),
-						event -> {
-							final long diff = System.currentTimeMillis() - model.getGameSession().getStartTime();
-							view.getTimeLabel().setText(timeFormat.format(diff));
-						}
-				)
-		);
+		final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+			final long diff = System.currentTimeMillis() - model.getGameSession().getStartTime();
+			view.getTimeLabel().setText(timeFormat.format(diff));
+		}));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 	}
