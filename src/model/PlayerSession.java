@@ -39,6 +39,7 @@ public class PlayerSession {
 
 	public void takePenaltyAction() {
 		turns.getLast().takePenaltyAction();
+		scoreCard.addPenalty();
 	}
 
 	public void passAction() {
