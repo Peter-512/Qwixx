@@ -50,6 +50,8 @@ public class BotSession extends PlayerSession {
 			} else {
 				if (getCurrentTurn().getLastAction().isPassedTurn()) {
 					takePenaltyAction();
+				} else {
+					passAction();
 				}
 			}
 		}
