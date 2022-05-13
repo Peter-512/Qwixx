@@ -18,6 +18,9 @@ public class BotSession extends PlayerSession {
 		}
 		final NumberField numberField = numberFields.get(random.nextInt(numberFields.size()));
 		numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+		if (numberField == numberField.getRow().getLast()) {
+			numberField.getRow().setLocked();
+		}
 		return numberField;
 	}
 
@@ -29,6 +32,9 @@ public class BotSession extends PlayerSession {
 		}
 		NumberField numberField = publicNumberFields.get(random.nextInt(publicNumberFields.size()));
 		numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+		if (numberField == numberField.getRow().getLast()) {
+			numberField.getRow().setLocked();
+		}
 		return numberField;
 	}
 
