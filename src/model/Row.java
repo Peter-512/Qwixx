@@ -8,6 +8,7 @@ public class Row implements List<NumberField> {
 	private boolean isLocked;
 	private final ArrayList<NumberField> numberFields = new ArrayList<>();
 	private final HashMap<Integer, NumberField> numberFieldHashByValueMap = new HashMap<>();
+	private static final int ROW_LENGTH = 11;
 
 	public Row(Color color, boolean isAscending) {
 		this.color = color;
@@ -21,6 +22,10 @@ public class Row implements List<NumberField> {
 			numberFields.add(numberField);
 			numberFieldHashByValueMap.put(val, numberField);
 		}
+	}
+
+	public NumberField getLast() {
+		return get(ROW_LENGTH - 1);
 	}
 
 	public NumberField getNumberFieldByValue(int value) {
