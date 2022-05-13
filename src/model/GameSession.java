@@ -123,7 +123,7 @@ public class GameSession {
 					"postgres",
 					"Student_1234");
 			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO game_session values (duration,default)");
+			statement.execute("INSERT INTO game_session VALUES (duration,default)");
 			for (PlayerSession playerSession : playerSessions) {
 				playerSession.save(connection);
 			}
