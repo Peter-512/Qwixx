@@ -1,12 +1,12 @@
 package src;
 
-import src.model.Game;
-import src.view.mainMenu.MainMenuPresenter;
-import src.view.mainMenu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import src.model.Game;
+import src.view.mainMenu.MainMenuPresenter;
+import src.view.mainMenu.MainMenuView;
 
 
 public class Main extends Application {

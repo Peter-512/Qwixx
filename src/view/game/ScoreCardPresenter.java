@@ -1,12 +1,17 @@
 package src.view.game;
 
-import javafx.scene.control.Label;
-import src.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import src.model.Color;
+import src.model.GameSession;
+import src.model.NumberField;
+import src.model.ScoreCard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScoreCardPresenter {
 	private final ScoreCard model;
