@@ -3,13 +3,14 @@ package src.view.game;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
 import src.model.ColoredDie;
 import src.model.Game;
 import src.model.PlayerSession;
 import src.model.Turn;
+import src.view.endScreen.EndScreenPresenter;
+import src.view.endScreen.EndScreenView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -81,10 +82,12 @@ public class GamePresenter {
 		setButtonsRight();
 
 		if (model.getGameSession().gameOver()) {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Game Over");
-			alert.setHeaderText("End condition was reached.");
-			alert.showAndWait();
+			final int botScore = model.getGameSession().getPlayerSessions()[0].getScoreCard().getTotalScore();
+			final int playerScore = model.getGameSession().getPlayerSessions()[1].getScoreCard().getTotalScore();
+			boolean playerWon = playerScore > botScore;
+			EndScreenView endScreenView = new EndScreenView(playerWon);
+			EndScreenPresenter endScreenPresenter = new EndScreenPresenter(model, endScreenView);
+			view.getScene().setRoot(endScreenView);
 		}
 	}
 
