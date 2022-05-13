@@ -1,5 +1,6 @@
 package src.view.game;
 
+import javafx.scene.control.Label;
 import src.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -48,6 +49,10 @@ public class ScoreCardPresenter {
 				if (!numberField.isDisabled()) {
 					numberField.setCrossed();
 					numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+					if (numberField == numberField.getRow().getLast()) {
+						numberField.getRow().setLocked();
+					}
+
 					//					TODO pass correct numbers to takeAction
 					model.getPlayerSession().takeAction(1, 0, 0);
 					updateView();
@@ -99,6 +104,16 @@ public class ScoreCardPresenter {
 		if (model.getTotalPenaltyPoints() > 0) {
 			CheckBox cb = (CheckBox) view.getPenaltyRow().getChildren().get(model.getAmountOfPenalties());
 			cb.setSelected(true);
+		}
+
+		//		Updating available dice based on locked rows
+		for (Color color : Color.values()) {
+			if (model.getRow(color).isLocked()) {
+				gameSession.removeDie(color);
+				final Label die = parentPresenter.view.getDieByColor(color);
+				parentPresenter.view.getDicePools().getChildren().remove(die);
+				parentPresenter.view.getDieByColorMap().remove(color);
+			}
 		}
 	}
 
