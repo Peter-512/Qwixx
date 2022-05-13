@@ -94,7 +94,7 @@ public class GamePresenter {
 		final Button penaltyButton = view.getPenaltyButton();
 		final Button passButton = view.getPassButton();
 		final Turn turn = humanSession.getCurrentTurn();
-		final int numberOfActions = turn != null ? turn.getNumberOfActions() : -1;
+		final int numberOfActions = turn != null ? turn.getNumberOfActions() : -1; // -1 for start of game (no turn has started yet)
 
 		rollDiceButton.setDisable(true);
 		penaltyButton.setDisable(true);
@@ -107,12 +107,12 @@ public class GamePresenter {
 					if (turn.getLastAction().isPassedTurn()) penaltyButton.setDisable(false);
 					else passButton.setDisable(false);
 				}
-				case 2, -1 -> rollDiceButton.setDisable(false); // -1 for start of game (no turn has started yet)
+				case 2, -1 -> rollDiceButton.setDisable(false);
 			}
 		} else {
 			switch (numberOfActions) {
 				case 0 -> passButton.setDisable(false);
-				case 1 -> rollDiceButton.setDisable(false);
+				case 1, -1 -> rollDiceButton.setDisable(false);
 			}
 		}
 	}
