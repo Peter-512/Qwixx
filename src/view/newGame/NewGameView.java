@@ -8,14 +8,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class NewGameView extends BorderPane {
 	private TextField nameTextField;
 	private Label nameLabel;
 	private Button startButton;
-	private HBox hBox;
+	HBox hBox;
+	HBox options;
+	private VBox vbox;
 	private Button backButton;
 	private CheckBox startingPlayer;
+	private CheckBox hardMode;
 
 	public NewGameView() {
 		initializeNodes();
@@ -27,15 +31,22 @@ public class NewGameView extends BorderPane {
 		nameLabel = new Label("Name");
 		startButton = new Button("Start");
 		startingPlayer = new CheckBox("Do you want to be the starting player?");
-		hBox = new HBox(nameLabel, nameTextField, startButton, startingPlayer);
+		hardMode = new CheckBox("Hard Mode");
+		hBox = new HBox(nameLabel, nameTextField, startButton);
+		options = new HBox(startingPlayer, hardMode);
+		vbox = new VBox(hBox, options);
 		backButton = new Button("Back");
 	}
 
 	private void layoutNodes() {
 
-		setCenter(hBox);
+		setCenter(vbox);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setSpacing(20);
 		hBox.setAlignment(Pos.CENTER);
 		hBox.setSpacing(20);
+		options.setAlignment(Pos.CENTER);
+		options.setSpacing(20);
 		setBottom(backButton);
 		setAlignment(backButton, Pos.CENTER);
 		setMargin(backButton, new Insets(10));
@@ -60,6 +71,10 @@ public class NewGameView extends BorderPane {
 
 	CheckBox getStartingPlayer() {
 		return startingPlayer;
+	}
+
+	CheckBox getHardMode() {
+		return hardMode;
 	}
 
 }
