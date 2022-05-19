@@ -73,6 +73,19 @@ public class Row implements List<NumberField> {
 		}
 	}
 
+	public int getAmountOfNumberFieldsBefore(int index) {
+		int amount = 0;
+		final ListIterator<NumberField> iterator = listIterator(index);
+		while (iterator.hasPrevious()) {
+			NumberField nf = iterator.previous();
+			if (nf.isCrossed()) {
+				return amount;
+			}
+			amount++;
+		}
+		return amount;
+	}
+
 	public int getAmountOfCrossedNumbers() {
 		int total = 0;
 		for (NumberField numberField : numberFields) {
