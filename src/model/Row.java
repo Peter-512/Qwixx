@@ -57,6 +57,10 @@ public class Row implements List<NumberField> {
 				totalScore += amountOfCrosses;
 			}
 		}
+		if (getLast().isCrossed()) {
+			amountOfCrosses++;
+			totalScore += amountOfCrosses;
+		}
 		return totalScore;
 	}
 
