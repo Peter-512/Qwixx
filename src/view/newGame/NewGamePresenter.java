@@ -22,7 +22,8 @@ public class NewGamePresenter {
 		view.getBackButton().setOnAction(actionEvent -> backToMainMenu());
 		view.getStartButton()
 		    .setOnAction(actionEvent -> {
-			    startGame(view.getNameTextField().getText(), !view.getStartingPlayer().isSelected());
+			    startGame(view.getNameTextField().getText(), !view.getStartingPlayer().isSelected(), view.getHardMode()
+			                                                                                             .isSelected());
 		    });
 	}
 
@@ -30,8 +31,8 @@ public class NewGamePresenter {
 
 	}
 
-	private void startGame(String name, boolean startingPlayer) {
-		model.startGameSession(name, startingPlayer);
+	private void startGame(String name, boolean startingPlayer, boolean hardMode) {
+		model.startGameSession(name, startingPlayer, hardMode);
 		GameView gameView = new GameView();
 		GamePresenter gamePresenter = new GamePresenter(model, gameView);
 		view.getScene().setRoot(gameView);
