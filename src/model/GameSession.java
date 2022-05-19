@@ -13,9 +13,13 @@ public class GameSession {
 	private long startTime;
 	private long endTime;
 
-	public GameSession(String name, boolean startingPlayer) {
+	public GameSession(String name, boolean startingPlayer, boolean hardMode) {
 		playerSessions = new PlayerSession[2];
-		playerSessions[0] = new BotSession("Skynet", !startingPlayer);
+		if (hardMode) {
+			playerSessions[0] = new AI(name, !startingPlayer);
+		} else {
+			playerSessions[0] = new BotSession("Skynet", !startingPlayer);
+		}
 		playerSessions[1] = new PlayerSession(name, startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
