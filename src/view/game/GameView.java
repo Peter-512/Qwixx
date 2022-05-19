@@ -80,6 +80,7 @@ public class GameView extends BorderPane {
 
 		setLeft(dicePools);
 		dicePools.setSpacing(10);
+		dicePools.setPrefWidth(150);
 		dicePools.setAlignment(Pos.CENTER);
 		setMargin(dicePools, new Insets(10));
 
