@@ -7,8 +7,8 @@ public class Game {
 		return gameSession;
 	}
 
-	public void startGameSession(String name, boolean startingPlayer) {
-		gameSession = new GameSession(name, startingPlayer);
+	public void startGameSession(String name, boolean startingPlayer, boolean hardMode) {
+		gameSession = new GameSession(name, startingPlayer, hardMode);
 	}
 
 
