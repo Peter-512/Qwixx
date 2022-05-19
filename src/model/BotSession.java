@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BotSession extends PlayerSession {
-	//	AI ai;
-
 	public BotSession(String name, boolean startingPlayer) {
 		super(name, startingPlayer);
 	}
 
-	private NumberField chooseColoredNumber(DicePool coloredDicePool, DicePool publicDicePool) {
+	NumberField chooseColoredNumber(DicePool coloredDicePool, DicePool publicDicePool) {
 		Random random = new Random();
 		final ArrayList<NumberField> numberFields = getScoreCard().getColoredNumberFields(coloredDicePool, publicDicePool);
 		if (numberFields.isEmpty()) {
@@ -24,7 +22,7 @@ public class BotSession extends PlayerSession {
 		return numberField;
 	}
 
-	private NumberField choosePublicNumber(int total) {
+	NumberField choosePublicNumber(int total) {
 		Random random = new Random();
 		final ArrayList<NumberField> publicNumberFields = getScoreCard().getPublicNumberFields(total);
 		if (publicNumberFields.isEmpty()) {
