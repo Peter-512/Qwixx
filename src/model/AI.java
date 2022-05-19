@@ -30,7 +30,11 @@ public class AI extends BotSession {
 		// if min bigger than 2, return null
 		// else return numberField
 		if (getScoreCard().getAmountOfPenalties() < 3 && minDist < 3) {
-			numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+			Row row = numberField.getRow();
+			row.disableNumberFieldsBefore(numberField.getIndex());
+			if (numberField == row.getLast()) {
+				row.setLocked();
+			}
 			return numberField;
 		} else return null;
 	}
@@ -57,7 +61,11 @@ public class AI extends BotSession {
 		// if min bigger than 2, return null
 		// else return numberField
 		if (minDist < 3) {
-			numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+			Row row = numberField.getRow();
+			row.disableNumberFieldsBefore(numberField.getIndex());
+			if (numberField == row.getLast()) {
+				row.setLocked();
+			}
 			return numberField;
 		}
 		return null;
