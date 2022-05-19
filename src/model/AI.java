@@ -1,33 +1,66 @@
 package src.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
-public class AI {
-	private LinkedHashMap<Color, Row> rows;
-	private NumberField index;
-	private final ArrayList<NumberField> numberFields = new ArrayList<>();
+public class AI extends BotSession {
 
-	public NumberField getIndex() {return index;}
-
-	public Row getRow(Color color) {return rows.get(color);}
-
-	public ArrayList<NumberField> getNumberFields() {
-		return numberFields;
+	public AI(String name, boolean startingPlayer) {
+		super(name, startingPlayer);
 	}
 
-	public HashMap<Color, NumberField> getPublicNumberFields(int total) {
-		HashMap<Color, NumberField> map = new HashMap<>();
-
-		for (Color color : Color.values()) {
-			Row row = getRow(color);
-
-			for (int index = 0; index <= 2; index++) {
-
-
+	@Override
+	NumberField chooseColoredNumber(DicePool coloredDicePool, DicePool publicDicePool) {
+		final ArrayList<NumberField> numberFields = getScoreCard().getColoredNumberFields(coloredDicePool, publicDicePool);
+		if (numberFields.isEmpty()) {
+			return null;
+		}
+		NumberField numberField = numberFields.get(0);
+		// compute distance to previous crossed out nf and save in variable min
+		int minDist = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
+		for (NumberField nf : numberFields) {
+			// compute distance to previous crossed out nf
+			int dist = nf.getRow().getAmountOfNumberFieldsBefore(nf.getIndex());
+			// check if it's lower than min
+			if (dist < minDist) {
+				// if it is, set numberField to nf
+				minDist = dist;
+				numberField = nf;
 			}
 		}
-		return map;
+		// if min bigger than 2, return null
+		// else return numberField
+		if (getScoreCard().getAmountOfPenalties() < 3 && minDist < 3) {
+			numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+			return numberField;
+		} else return null;
 	}
+
+	@Override
+	NumberField choosePublicNumber(int total) {
+		final ArrayList<NumberField> publicNumberFields = getScoreCard().getPublicNumberFields(total);
+		if (publicNumberFields.isEmpty()) {
+			return null;
+		}
+		NumberField numberField = publicNumberFields.get(0);
+		// compute distance to previous crossed out nf and save in variable min
+		int minDist = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
+		for (NumberField nf : publicNumberFields) {
+			// compute distance to previous crossed out nf
+			int dist = nf.getRow().getAmountOfNumberFieldsBefore(nf.getIndex());
+			// check if it's lower than min
+			if (dist < minDist) {
+				// if it is, set numberField to nf
+				minDist = dist;
+				numberField = nf;
+			}
+		}
+		// if min bigger than 2, return null
+		// else return numberField
+		if (minDist < 3) {
+			numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
+			return numberField;
+		}
+		return null;
+	}
+
 }
