@@ -73,8 +73,11 @@ public class GamePresenter {
 
 	void updateView() {
 		//		set current Player Text
-		view.getCurrentPlayer()
-		    .setText(String.format("%s's turn", model.getGameSession().getActivePlayerSession().getPlayerName()));
+		if (model.getGameSession().getActivePlayerSession().getCurrentTurn() != null)
+			view.getCurrentPlayer().setText(String.format("%s's turn", model.getGameSession()
+			                                                                .getActivePlayerSession()
+			                                                                .getPlayerName()));
+		else view.getCurrentPlayer().setText("Start by throwing the dice");
 
 		updateDicePools();
 		updateScoreCards();
