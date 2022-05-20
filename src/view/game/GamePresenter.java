@@ -88,6 +88,7 @@ public class GamePresenter {
 			final int botScore = model.getGameSession().getPlayerSessions()[0].getScoreCard().getTotalScore();
 			final int playerScore = model.getGameSession().getPlayerSessions()[1].getScoreCard().getTotalScore();
 			boolean playerWon = playerScore > botScore;
+			model.getGameSession().save();
 			EndScreenView endScreenView = new EndScreenView(playerWon);
 			EndScreenPresenter endScreenPresenter = new EndScreenPresenter(model, endScreenView);
 			view.getScene().setRoot(endScreenView);
@@ -113,12 +114,18 @@ public class GamePresenter {
 					if (turn.getLastAction().isPassedTurn()) penaltyButton.setDisable(false);
 					else passButton.setDisable(false);
 				}
-				case 2, -1 -> rollDiceButton.setDisable(false);
+				case 2, -1 -> {
+					rollDiceButton.setDisable(false);
+					rollDiceButton.requestFocus();
+				}
 			}
 		} else {
 			switch (numberOfActions) {
 				case 0 -> passButton.setDisable(false);
-				case 1, -1 -> rollDiceButton.setDisable(false);
+				case 1, -1 -> {
+					rollDiceButton.setDisable(false);
+					rollDiceButton.requestFocus();
+				}
 			}
 		}
 	}
