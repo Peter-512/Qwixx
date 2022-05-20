@@ -2,8 +2,7 @@ package src.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 public class GameSession {
 	private PlayerSession[] playerSessions;
@@ -16,15 +15,16 @@ public class GameSession {
 	public GameSession(String name, boolean startingPlayer, boolean hardMode) {
 		playerSessions = new PlayerSession[2];
 		if (hardMode) {
-			playerSessions[0] = new AI(name, !startingPlayer);
+			playerSessions[0] = new AI("Skynet", !startingPlayer);
 		} else {
-			playerSessions[0] = new BotSession("Skynet", !startingPlayer);
+			playerSessions[0] = new BotSession("Jef", !startingPlayer);
 		}
 		playerSessions[1] = new PlayerSession(name, startingPlayer);
 		coloredDicePool = new DicePool();
 		publicDicePool = new DicePool(true);
 		isHumanActivePlayer = startingPlayer;
 		startTime = System.currentTimeMillis();
+		endTime = 0;
 	}
 
 	public void throwAllDice() {
@@ -75,8 +75,19 @@ public class GameSession {
 		return startTime;
 	}
 
+	public void setEndTime() {
+		endTime = System.currentTimeMillis();
+	}
+
 	public long getEndTime() {
-		return endTime = System.currentTimeMillis() - startTime;
+		if (endTime == 0) {
+			setEndTime();
+		}
+		return endTime;
+	}
+
+	public int getDuration() {
+		return (int) (getEndTime() - getStartTime());
 	}
 
 	public boolean gameOver() {
@@ -106,28 +117,15 @@ public class GameSession {
 		return null;
 	}
 
-	public void storeGameSession(int duration, int game_ID) {
-		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx",
-					"postgres",
-					"Student_1234");
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO game_session VALUES (?,default)");
-			connection.close();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
-	}
-
 	public void save() {
 		try {
 			Connection connection = DriverManager.getConnection(
 					"jdbc:postgresql://localhost:5432/qwixx",
 					"postgres",
-					"Student_1234");
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO game_session VALUES (duration,default)");
+					"anubis512");
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO game_session(duration) VALUES (?)");
+			statement.setInt(1, getDuration());
+			statement.execute();
 			for (PlayerSession playerSession : playerSessions) {
 				playerSession.save(connection);
 			}
