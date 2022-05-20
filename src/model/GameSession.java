@@ -32,14 +32,8 @@ public class GameSession {
 		publicDicePool.throwDice();
 	}
 
-	public void removeDie(Color color) {
-		for (Die die : coloredDicePool.getDice()) {
-			ColoredDie coloredDie = (ColoredDie) die;
-			if (color.equals(coloredDie.getColor())) {
-				coloredDicePool.remove(coloredDie);
-				return;
-			}
-		}
+	public void removeDie(Die die) {
+		getColoredDicePool().remove(die);
 	}
 
 	public int totalPublicThrow() {
