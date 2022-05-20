@@ -4,10 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import src.model.Color;
-import src.model.GameSession;
-import src.model.NumberField;
-import src.model.ScoreCard;
+import src.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +53,14 @@ public class ScoreCardPresenter {
 					numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
 					if (numberField == numberField.getRow().getLast()) {
 						numberField.getRow().setLocked();
+						final Color color = numberField.getRow().getColor();
+						final Label dieLabel = parentPresenter.view.getDieByColor(color);
+						final Die die = gameSession.getColoredDicePool().get(color);
+						if (die != null) {
+							gameSession.getColoredDicePool().remove(die);
+						}
+						parentPresenter.view.getDicePools().getChildren().remove(dieLabel);
+						parentPresenter.view.getDieByColorMap().remove(color);
 					}
 
 					//					TODO pass correct numbers to takeAction
@@ -109,16 +114,6 @@ public class ScoreCardPresenter {
 		if (model.getTotalPenaltyPoints() > 0) {
 			CheckBox cb = (CheckBox) view.getPenaltyRow().getChildren().get(model.getAmountOfPenalties());
 			cb.setSelected(true);
-		}
-
-		//		Updating available dice based on locked rows
-		for (Color color : Color.values()) {
-			if (model.getRow(color).isLocked()) {
-				gameSession.removeDie(color);
-				final Label die = parentPresenter.view.getDieByColor(color);
-				parentPresenter.view.getDicePools().getChildren().remove(die);
-				parentPresenter.view.getDieByColorMap().remove(color);
-			}
 		}
 	}
 
