@@ -109,10 +109,18 @@ public class GamePresenter {
 
 		if (humanSession.isActivePlayer()) {
 			switch (numberOfActions) {
-				case 0 -> passButton.setDisable(false);
+				case 0 -> {
+					passButton.setDisable(false);
+					passButton.requestFocus();
+				}
 				case 1 -> {
-					if (turn.getLastAction().isPassedTurn()) penaltyButton.setDisable(false);
-					else passButton.setDisable(false);
+					if (turn.getLastAction().isPassedTurn()) {
+						penaltyButton.setDisable(false);
+						penaltyButton.requestFocus();
+					} else {
+						passButton.setDisable(false);
+						passButton.requestFocus();
+					}
 				}
 				case 2, -1 -> {
 					rollDiceButton.setDisable(false);
@@ -121,7 +129,10 @@ public class GamePresenter {
 			}
 		} else {
 			switch (numberOfActions) {
-				case 0 -> passButton.setDisable(false);
+				case 0 -> {
+					passButton.setDisable(false);
+					passButton.requestFocus();
+				}
 				case 1, -1 -> {
 					rollDiceButton.setDisable(false);
 					rollDiceButton.requestFocus();
