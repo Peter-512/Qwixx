@@ -61,7 +61,6 @@ public class Turn {
 
 	public void save(Connection connection) {
 		try {
-
 			Statement statement = connection.createStatement();
 			statement.execute("INSERT INTO turn values (default,session_id,?)" + getTurnDuration());
 			for (Action action : actions) {
