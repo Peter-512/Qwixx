@@ -60,6 +60,9 @@ public class GameSession {
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
 		for (PlayerSession playerSession : playerSessions) {
+			if (playerSession.getCurrentTurn() != null) {
+				playerSession.getCurrentTurn().endTurn();
+			}
 			playerSession.changeActivePlayer();
 		}
 	}
