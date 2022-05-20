@@ -38,8 +38,7 @@ public class GameSession {
 
 	public int totalPublicThrow() {
 		return publicDicePool.getDice().stream().reduce(0, (subtotal, die) ->
-				subtotal + die.getValue(), Integer::sum
-		);
+				subtotal + die.getValue(), Integer::sum);
 	}
 
 	public PlayerSession[] getPlayerSessions() {
