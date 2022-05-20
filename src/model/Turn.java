@@ -1,15 +1,15 @@
 package src.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 public class Turn {
 	private final int turnNumber;
 	private final long turnStartTime;
 	private long turnEndTime;
-	private long turnDuration;
+	private int turnDuration;
 	private LinkedList<Action> actions;
 
 	public Turn(int turnNumber) {
@@ -28,7 +28,7 @@ public class Turn {
 
 	public void endTurn() {
 		setTurnEndTime();
-		turnDuration = turnEndTime - turnStartTime;
+		turnDuration = (int) (turnEndTime - turnStartTime);
 	}
 
 	public void passAction() {
@@ -47,7 +47,7 @@ public class Turn {
 		return actions.size();
 	}
 
-	public long getTurnDuration() {
+	public int getTurnDuration() {
 		return turnDuration;
 	}
 
@@ -61,12 +61,15 @@ public class Turn {
 
 	public void save(Connection connection) {
 		try {
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO turn values (default,session_id,?)" + getTurnDuration());
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO turn (session_id, turn_duration)
+					VALUES (CURRVAL('player_session_session_id_seq'),?)
+					""");
+			statement.setInt(1, getTurnDuration());
+			statement.executeUpdate();
 			for (Action action : actions) {
 				action.save(connection);
 			}
-			connection.close();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}

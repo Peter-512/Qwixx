@@ -1,8 +1,8 @@
 package src.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Action {
 	private int amountOfNumbersCrossed;
@@ -48,12 +48,14 @@ public class Action {
 
 	public void save(Connection connection) {
 		try {
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO action values (default,turn_id,?,?,?)" +
-					getAmountOfNumbersMissed() +
-					isPassedTurn() +
-					getPointsEarned());
-			connection.close();
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO action (turn_id, amount_of_numbers_missed, passed_turn, points_earned)
+					VALUES (CURRVAL('turn_turn_id_seq'),?,?,?)
+					""");
+			statement.setInt(1, getAmountOfNumbersMissed());
+			statement.setBoolean(2, isPassedTurn());
+			statement.setInt(3, getPointsEarned());
+			statement.executeUpdate();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}

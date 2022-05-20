@@ -1,8 +1,8 @@
 package src.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Player {
 	private String name;
@@ -21,10 +21,11 @@ public class Player {
 
 	public void save(Connection connection) {
 		try {
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO player values (default,?)" + getName());
-
-			connection.close();
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO player (name) VALUES (?)
+					""");
+			statement.setString(1, getName());
+			statement.executeUpdate();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}

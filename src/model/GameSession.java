@@ -114,14 +114,15 @@ public class GameSession {
 	}
 
 	public void save() {
-		try {
-			Connection connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/qwixx",
-					"postgres",
-					"anubis512");
-			PreparedStatement statement = connection.prepareStatement("INSERT INTO game_session(duration) VALUES (?)");
+		try (Connection connection = DriverManager.getConnection(
+				"jdbc:postgresql://localhost:5432/qwixx",
+				"postgres",
+				"anubis512")) {
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO game_session(duration) VALUES (?)
+					""");
 			statement.setInt(1, getDuration());
-			statement.execute();
+			statement.executeUpdate();
 			for (PlayerSession playerSession : playerSessions) {
 				playerSession.save(connection);
 			}

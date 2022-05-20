@@ -1,8 +1,8 @@
 package src.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -111,18 +111,19 @@ public class ScoreCard {
 
 	public void save(Connection connection) {
 		try {
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO score values (default,session_id,?,?,?,?,?,?,?,?)"
-					+ getTotalAmountOfNumbersCrossed()
-					+ getTotalPoints()
-					+ getTotalPenaltyPoints()
-					+ getTotalScore()
-					+ getRow(Color.RED).getRowScore()
-					+ getRow(Color.YELLOW).getRowScore()
-					+ getRow(Color.BLUE).getRowScore()
-					+ getRow(Color.GREEN).getRowScore()
-			);
-			connection.close();
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO score (session_id, total_amount_of_numbers_crossed, total_points, penalty_points, total_score, red_points, yellow_points, blue_points, green_points) 
+					VALUES (CURRVAL('player_session_session_id_seq'),?,?,?,?,?,?,?,?)
+					""");
+			statement.setInt(1, getTotalAmountOfNumbersCrossed());
+			statement.setInt(2, getTotalPoints());
+			statement.setInt(3, getTotalPenaltyPoints());
+			statement.setInt(4, getTotalScore());
+			statement.setInt(5, getRow(Color.RED).getRowScore());
+			statement.setInt(6, getRow(Color.YELLOW).getRowScore());
+			statement.setInt(7, getRow(Color.GREEN).getRowScore());
+			statement.setInt(8, getRow(Color.BLUE).getRowScore());
+			statement.executeUpdate();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}

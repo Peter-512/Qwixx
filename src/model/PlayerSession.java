@@ -1,8 +1,8 @@
 package src.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 public class PlayerSession {
@@ -64,15 +64,18 @@ public class PlayerSession {
 
 	public void save(Connection connection) {
 		try {
-			Statement statement = connection.createStatement();
-			statement.execute("INSERT INTO player_session values (default,game_id,player_id,?)" +
-					isActivePlayer());
 			player.save(connection);
+			PreparedStatement statement = connection.prepareStatement("""
+					INSERT INTO player_session (game_id, player_id, starting_first)
+					VALUES (CURRVAL('game_session_game_id_seq'), CURRVAL('player_player_id_seq'), ?)
+					""");
+			boolean startingPlayer = (turns.size() % 2 == 1) != activePlayer;
+			statement.setBoolean(1, startingPlayer);
+			statement.executeUpdate();
 			scoreCard.save(connection);
 			for (Turn turn : turns) {
 				turn.save(connection);
 			}
-			connection.close();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
 		}
