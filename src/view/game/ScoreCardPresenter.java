@@ -67,7 +67,7 @@ public class ScoreCardPresenter {
 					}
 
 					//					TODO check if working
-					model.getPlayerSession().takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
+					model.getPlayerSession().takeAction(numbersMissed, rowScoreAfter - rowScoreBefore);
 					updateView();
 					parentPresenter.updateView();
 				}

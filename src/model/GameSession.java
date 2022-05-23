@@ -5,14 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class GameSession {
-	private PlayerSession[] playerSessions;
-	private DicePool coloredDicePool;
-	private DicePool publicDicePool;
+	private final PlayerSession[] playerSessions;
+	private final DicePool coloredDicePool;
+	private final DicePool publicDicePool;
 	private boolean isHumanActivePlayer;
-	private long startTime;
+	private final long startTime;
 	private long endTime;
 
 	public GameSession(String name, boolean startingPlayer, boolean hardMode) {
@@ -35,10 +34,6 @@ public class GameSession {
 		publicDicePool.throwDice();
 	}
 
-	public void removeDie(Die die) {
-		getColoredDicePool().remove(die);
-	}
-
 	public int totalPublicThrow() {
 		return publicDicePool.getDice().stream().reduce(0, (subtotal, die) ->
 				subtotal + die.getValue(), Integer::sum);
@@ -55,11 +50,7 @@ public class GameSession {
 	public DicePool getPublicDicePool() {
 		return publicDicePool;
 	}
-
-	public boolean isHumanActivePlayer() {
-		return isHumanActivePlayer;
-	}
-
+	
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
 		for (PlayerSession playerSession : playerSessions) {

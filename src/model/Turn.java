@@ -10,7 +10,7 @@ public class Turn {
 	private final long turnStartTime;
 	private long turnEndTime;
 	private int turnDuration;
-	private LinkedList<Action> actions;
+	private final LinkedList<Action> actions;
 
 	public Turn(int turnNumber) {
 		this.turnNumber = turnNumber;
@@ -36,11 +36,11 @@ public class Turn {
 	}
 
 	public void takePenaltyAction() {
-		takeAction(0, 0, -5);
+		takeAction(0, -5);
 	}
 
-	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
-		actions.add(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned, actions.size() + 1));
+	public void takeAction(int amountOfNumbersMissed, int pointsEarned) {
+		actions.add(new Action(amountOfNumbersMissed, pointsEarned, actions.size() + 1));
 	}
 
 	public int getNumberOfActions() {
@@ -53,10 +53,6 @@ public class Turn {
 
 	public Action getLastAction() {
 		return actions.getLast();
-	}
-
-	public long getCurrentTurnDuration() {
-		return System.currentTimeMillis() - turnStartTime;
 	}
 
 	public void save(Connection connection) {

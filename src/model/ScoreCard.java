@@ -22,14 +22,6 @@ public class ScoreCard {
 		}
 	}
 
-	public int getAmountOfLockedRows() {
-		int total = 0;
-		for (Color color : Color.values()) {
-			if (rows.get(color).isLocked()) total++;
-		}
-		return total;
-	}
-
 	public int getAmountOfPenalties() {
 		return amountOfPenalties;
 	}
@@ -128,7 +120,6 @@ public class ScoreCard {
 			sqlException.printStackTrace();
 		}
 	}
-
 
 	public int getTotalPenaltyPoints() {
 		return amountOfPenalties * 5;

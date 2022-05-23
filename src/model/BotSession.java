@@ -44,7 +44,7 @@ public class BotSession extends PlayerSession {
 			numberField.setCrossed();
 			int rowScoreAfter = numberField.getRow().getRowScore();
 			//			TODO check if working
-			takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
+			takeAction(numbersMissed, rowScoreAfter - rowScoreBefore);
 		} else {
 			passAction();
 		}
@@ -56,7 +56,7 @@ public class BotSession extends PlayerSession {
 				numberField.setCrossed();
 				int rowScoreAfter = numberField.getRow().getRowScore();
 				//				TODO check if working
-				takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
+				takeAction(numbersMissed, rowScoreAfter - rowScoreBefore);
 			} else {
 				if (getCurrentTurn().getLastAction().isPassedTurn()) {
 					takePenaltyAction();

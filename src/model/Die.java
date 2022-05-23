@@ -5,7 +5,7 @@ import java.util.Random;
 public class Die {
 	private int value;
 	private final Random random;
-	private final int MAX_DIE_VALUE = 6;
+	private final static int MAX_DIE_VALUE = 6;
 
 	public Die() {
 		this.random = new Random();

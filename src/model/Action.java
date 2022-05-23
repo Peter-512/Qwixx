@@ -5,15 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Action {
-	private final int amountOfNumbersCrossed;
 	private final int amountOfNumbersMissed;
 	private final int pointsEarned;
 	private boolean passedTurn;
 	private final int actionNumber;
 
 
-	public Action(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned, int actionNumber) {
-		this.amountOfNumbersCrossed = amountOfNumbersCrossed;
+	public Action(int amountOfNumbersMissed, int pointsEarned, int actionNumber) {
 		this.amountOfNumbersMissed = amountOfNumbersMissed;
 		this.pointsEarned = pointsEarned;
 		this.actionNumber = actionNumber;
@@ -24,12 +22,8 @@ public class Action {
 	 Constructor for passed turns
 	 */
 	public Action(int actionNumber) {
-		this(0, 0, 0, actionNumber);
+		this(0, 0, actionNumber);
 		passedTurn = true;
-	}
-
-	public int getAmountOfNumbersCrossed() {
-		return amountOfNumbersCrossed;
 	}
 
 	public int getAmountOfNumbersMissed() {
@@ -54,8 +48,8 @@ public class Action {
 					INSERT INTO action (turn_id, action_number, amount_of_numbers_missed, passed_turn, points_earned)
 					VALUES (CURRVAL('turn_turn_id_seq'),?,?,?,?)
 					""");
-			statement.setInt(1, getAmountOfNumbersMissed());
-			statement.setInt(2, getActionNumber());
+			statement.setInt(1, getActionNumber());
+			statement.setInt(2, getAmountOfNumbersMissed());
 			statement.setBoolean(3, isPassedTurn());
 			statement.setInt(4, getPointsEarned());
 			statement.executeUpdate();
