@@ -58,6 +58,7 @@ CREATE TABLE turn
     session_id    INT
         CONSTRAINT turn_player_session_session_id_fk
             REFERENCES player_session ( session_id ),
+    turn_number   INT NOT NULL,
     turn_duration INT NOT NULL
 );
 
@@ -69,6 +70,7 @@ CREATE TABLE action
     turn_id                  INT
         CONSTRAINT action_turn_turn_id_fk
             REFERENCES turn,
+    action_number            INT NOT NULL,
     amount_of_numbers_missed INT NOT NULL,
     passed_turn              BOOL,
     points_earned            INT
