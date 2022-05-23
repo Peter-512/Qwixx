@@ -5,28 +5,26 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Action {
-	private int amountOfNumbersCrossed;
-	private int amountOfNumbersMissed;
-	private int pointsEarned;
+	private final int amountOfNumbersCrossed;
+	private final int amountOfNumbersMissed;
+	private final int pointsEarned;
 	private boolean passedTurn;
+	private final int actionNumber;
 
-	/**
-	 @param amountOfNumbersCrossed
-	 @param amountOfNumbersMissed
-	 @param pointsEarned
-	 */
-	public Action(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
+
+	public Action(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned, int actionNumber) {
 		this.amountOfNumbersCrossed = amountOfNumbersCrossed;
 		this.amountOfNumbersMissed = amountOfNumbersMissed;
 		this.pointsEarned = pointsEarned;
+		this.actionNumber = actionNumber;
 		passedTurn = false;
 	}
 
 	/**
 	 Constructor for passed turns
 	 */
-	public Action() {
-		this(0, 0, 0);
+	public Action(int actionNumber) {
+		this(0, 0, 0, actionNumber);
 		passedTurn = true;
 	}
 
@@ -46,15 +44,20 @@ public class Action {
 		return passedTurn;
 	}
 
+	public int getActionNumber() {
+		return actionNumber;
+	}
+
 	public void save(Connection connection) {
 		try {
 			PreparedStatement statement = connection.prepareStatement("""
-					INSERT INTO action (turn_id, amount_of_numbers_missed, passed_turn, points_earned)
-					VALUES (CURRVAL('turn_turn_id_seq'),?,?,?)
+					INSERT INTO action (turn_id, action_number, amount_of_numbers_missed, passed_turn, points_earned)
+					VALUES (CURRVAL('turn_turn_id_seq'),?,?,?,?)
 					""");
 			statement.setInt(1, getAmountOfNumbersMissed());
-			statement.setBoolean(2, isPassedTurn());
-			statement.setInt(3, getPointsEarned());
+			statement.setInt(2, getActionNumber());
+			statement.setBoolean(3, isPassedTurn());
+			statement.setInt(4, getPointsEarned());
 			statement.executeUpdate();
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();

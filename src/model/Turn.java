@@ -32,7 +32,7 @@ public class Turn {
 	}
 
 	public void passAction() {
-		actions.add(new Action());
+		actions.add(new Action(actions.size() + 1));
 	}
 
 	public void takePenaltyAction() {
@@ -40,7 +40,7 @@ public class Turn {
 	}
 
 	public void takeAction(int amountOfNumbersCrossed, int amountOfNumbersMissed, int pointsEarned) {
-		actions.add(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned));
+		actions.add(new Action(amountOfNumbersCrossed, amountOfNumbersMissed, pointsEarned, actions.size() + 1));
 	}
 
 	public int getNumberOfActions() {
@@ -62,10 +62,11 @@ public class Turn {
 	public void save(Connection connection) {
 		try {
 			PreparedStatement statement = connection.prepareStatement("""
-					INSERT INTO turn (session_id, turn_duration)
-					VALUES (CURRVAL('player_session_session_id_seq'),?)
+					INSERT INTO turn (session_id,turn_number, turn_duration)
+					VALUES (CURRVAL('player_session_session_id_seq'),?,?)
 					""");
-			statement.setInt(1, getTurnDuration());
+			statement.setInt(1, getTurnNumber());
+			statement.setInt(2, getTurnDuration());
 			statement.executeUpdate();
 			for (Action action : actions) {
 				action.save(connection);
