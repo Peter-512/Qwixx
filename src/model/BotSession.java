@@ -39,18 +39,24 @@ public class BotSession extends PlayerSession {
 	public void takeTurn(int total, DicePool coloredDicePool, DicePool publicDicePool) {
 		NumberField numberField = choosePublicNumber(total);
 		if (numberField != null) {
+			int rowScoreBefore = numberField.getRow().getRowScore();
+			int numbersMissed = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
 			numberField.setCrossed();
-			//			TODO pass correct arguments
-			takeAction(0, 0, 0);
+			int rowScoreAfter = numberField.getRow().getRowScore();
+			//			TODO check if working
+			takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
 		} else {
 			passAction();
 		}
 		if (isActivePlayer()) {
 			numberField = chooseColoredNumber(coloredDicePool, publicDicePool);
 			if (numberField != null) {
+				int rowScoreBefore = numberField.getRow().getRowScore();
+				int numbersMissed = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
 				numberField.setCrossed();
-				//				TODO pass correct arguments
-				takeAction(0, 0, 0);
+				int rowScoreAfter = numberField.getRow().getRowScore();
+				//				TODO check if working
+				takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
 			} else {
 				if (getCurrentTurn().getLastAction().isPassedTurn()) {
 					takePenaltyAction();

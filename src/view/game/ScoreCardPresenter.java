@@ -49,7 +49,10 @@ public class ScoreCardPresenter {
 			NumberField numberField = buttonNumberFieldEntry.getValue();
 			button.setOnAction(actionEvent -> {
 				if (!numberField.isDisabled()) {
+					int rowScoreBefore = numberField.getRow().getRowScore();
+					int numbersMissed = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
 					numberField.setCrossed();
+					int rowScoreAfter = numberField.getRow().getRowScore();
 					numberField.getRow().disableNumberFieldsBefore(numberField.getIndex());
 					if (numberField == numberField.getRow().getLast()) {
 						numberField.getRow().setLocked();
@@ -63,8 +66,8 @@ public class ScoreCardPresenter {
 						parentPresenter.view.getDieByColorMap().remove(color);
 					}
 
-					//					TODO pass correct numbers to takeAction
-					model.getPlayerSession().takeAction(1, 0, 0);
+					//					TODO check if working
+					model.getPlayerSession().takeAction(1, numbersMissed, rowScoreAfter - rowScoreBefore);
 					updateView();
 					parentPresenter.updateView();
 				}
