@@ -3,6 +3,9 @@ package src.model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class GameSession {
 	private PlayerSession[] playerSessions;
@@ -87,15 +90,16 @@ public class GameSession {
 	}
 
 	public boolean gameOver() {
-		int totalRowsLocked = 0;
+		Set<Color> rowsLocked = new HashSet<>();
 		for (PlayerSession playerSession : playerSessions) {
 			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return true;
-			totalRowsLocked += playerSession.getScoreCard().getAmountOfLockedRows();
+			playerSession.getScoreCard().getRows().forEach((color, row) -> {
+				if (row.isLocked()) {
+					rowsLocked.add(color);
+				}
+			});
 		}
-		if (totalRowsLocked >= 2) {
-			return true;
-		}
-		return false;
+		return rowsLocked.size() >= 2;
 	}
 
 	public BotSession getBotSession() {
