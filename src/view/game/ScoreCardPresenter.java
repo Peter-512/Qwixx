@@ -15,7 +15,6 @@ public class ScoreCardPresenter {
 	private final ScoreCardView view;
 	private final GamePresenter parentPresenter;
 	private final GameSession gameSession;
-	private final HashMap<Button, NumberField> buttonByNumberFieldHashMap;
 	private final HashMap<NumberField, Button> numberFieldByButtonHashMap;
 
 	public ScoreCardPresenter(ScoreCard model, ScoreCardView view, GamePresenter parentPresenter, GameSession gameSession) {
@@ -25,28 +24,26 @@ public class ScoreCardPresenter {
 		this.gameSession = gameSession;
 
 		numberFieldByButtonHashMap = new HashMap<>();
-		buttonByNumberFieldHashMap = new HashMap<>();
-		fillHashMaps();
+		fillHashMap();
 
 		addEventHandlers();
 		updateView();
 	}
 
-	private void fillHashMaps() {
+	private void fillHashMap() {
 		for (Color color : Color.values()) {
 			for (int i = 0; i < view.getRowByColor(color).getChildren().size() - 1; i++) {
 				Button button = (Button) view.getRowByColor(color).getChildren().get(i);
 				NumberField numberField = model.getRow(color).get(i);
-				buttonByNumberFieldHashMap.put(button, numberField);
 				numberFieldByButtonHashMap.put(numberField, button);
 			}
 		}
 	}
 
 	private void addEventHandlers() {
-		for (Map.Entry<Button, NumberField> buttonNumberFieldEntry : buttonByNumberFieldHashMap.entrySet()) {
-			Button button = buttonNumberFieldEntry.getKey();
-			NumberField numberField = buttonNumberFieldEntry.getValue();
+		for (Map.Entry<NumberField, Button> numberFieldButtonEntry : numberFieldByButtonHashMap.entrySet()) {
+			Button button = numberFieldButtonEntry.getValue();
+			NumberField numberField = numberFieldButtonEntry.getKey();
 			button.setOnAction(actionEvent -> {
 				if (!numberField.isDisabled()) {
 					int rowScoreBefore = numberField.getRow().getRowScore();
@@ -66,7 +63,6 @@ public class ScoreCardPresenter {
 						parentPresenter.view.getDieByColorMap().remove(color);
 					}
 
-					//					TODO check if working
 					model.getPlayerSession().takeAction(numbersMissed, rowScoreAfter - rowScoreBefore);
 					updateView();
 					parentPresenter.updateView();
@@ -143,10 +139,6 @@ public class ScoreCardPresenter {
 		for (NumberField numberField : list) {
 			getButtonByNumberField(numberField).setDisable(false);
 		}
-	}
-
-	public NumberField getNumberFieldByButton(Button button) {
-		return buttonByNumberFieldHashMap.get(button);
 	}
 
 	public Button getButtonByNumberField(NumberField numberField) {

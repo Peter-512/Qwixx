@@ -129,20 +129,12 @@ public class ScoreCardView extends VBox {
 		return playerName;
 	}
 
-	HashMap<Color, HBox> getRowByColorMap() {
-		return rowByColorMap;
-	}
-
 	HBox getRowByColor(Color color) {
 		return rowByColorMap.get(color);
 	}
 
 	Button getNumberFieldButton(Color color, int index) {
 		return (Button) getRowByColor(color).getChildren().get(index);
-	}
-
-	HBox getScoreRow() {
-		return scoreRow;
 	}
 
 	Label getScore(Color color) {
