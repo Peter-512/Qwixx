@@ -55,6 +55,14 @@ public class Turn {
 		return actions.getLast();
 	}
 
+	public int getTotalPoints() {
+		return actions.stream().reduce(0, (total, next) -> total + next.getPointsEarned(), Integer::sum);
+	}
+
+	public int getTotalMissedNumbers() {
+		return actions.stream().reduce(0, (total, next) -> total + next.getAmountOfNumbersMissed(), Integer::sum);
+	}
+
 	public void save(Connection connection) {
 		try {
 			PreparedStatement statement = connection.prepareStatement("""
