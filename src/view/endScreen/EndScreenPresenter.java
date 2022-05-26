@@ -53,6 +53,13 @@ public class EndScreenPresenter {
 		final int playerScore = model.getGameSession().getPlayerSessions()[1].getScoreCard().getTotalScore();
 		boolean playerWon = playerScore > botScore;
 		view.getWhoWonText().setText(playerWon ? "You won!" : "You lost!");
+
+		String endState = switch (model.getGameSession().getGameState()) {
+			case ROWS -> "Two or more rows were locked";
+			case RUNNING -> null;
+			case PENALTIES -> "Maximum amount of penalties were reached";
+		};
+		view.getEndState().setText(endState);
 	}
 
 
