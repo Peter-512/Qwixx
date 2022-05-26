@@ -50,7 +50,7 @@ public class GameSession {
 	public DicePool getPublicDicePool() {
 		return publicDicePool;
 	}
-	
+
 	public void changeActivePlayer() {
 		isHumanActivePlayer = !isHumanActivePlayer;
 		for (PlayerSession playerSession : playerSessions) {
@@ -80,17 +80,26 @@ public class GameSession {
 		return (int) (getEndTime() - getStartTime());
 	}
 
-	public boolean gameOver() {
+	public enum gameState {
+		RUNNING,
+		PENALTIES,
+		ROWS
+	}
+
+	public gameState gameOver() {
 		Set<Color> rowsLocked = new HashSet<>();
 		for (PlayerSession playerSession : playerSessions) {
-			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return true;
+			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return gameState.PENALTIES;
 			playerSession.getScoreCard().getRows().forEach((color, row) -> {
 				if (row.isLocked()) {
 					rowsLocked.add(color);
 				}
 			});
 		}
-		return rowsLocked.size() >= 2;
+		if (rowsLocked.size() >= 2) {
+			return gameState.ROWS;
+		}
+		return gameState.RUNNING;
 	}
 
 	public BotSession getBotSession() {
