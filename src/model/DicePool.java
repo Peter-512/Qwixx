@@ -3,7 +3,7 @@ package src.model;
 import java.util.*;
 
 public class DicePool implements List<Die> {
-	private ArrayList<Die> dice = new ArrayList<>();
+	private final ArrayList<Die> dice = new ArrayList<>();
 	private final boolean isPublic;
 
 	public DicePool() {
