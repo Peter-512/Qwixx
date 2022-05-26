@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class EndScreenView extends BorderPane {
 	Text whoWonText;
@@ -39,19 +40,20 @@ public class EndScreenView extends BorderPane {
 
 		chart = new LineChart<>(xAxis, yAxis);
 
-		vBox = new VBox(endState, chart);
+		vBox = new VBox(whoWonText, endState);
 
 		button = new Button("Return to main menu");
 	}
 
 	private void layoutNodes() {
-		setTop(whoWonText);
-		setAlignment(whoWonText, Pos.CENTER);
-		setCenter(vBox);
+		setTop(vBox);
+		vBox.setAlignment(Pos.CENTER);
+		setCenter(chart);
 		setBottom(button);
 		setAlignment(button, Pos.CENTER);
 		setMargin(button, new Insets(10));
 		button.setFocusTraversable(false);
+		vBox.setSpacing(20);
 	}
 
 

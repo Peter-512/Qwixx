@@ -45,7 +45,9 @@ public class EndScreenPresenter {
 
 			for (XYChart.Series<Number, Number> s : view.getChart().getData()) {
 				for (XYChart.Data<Number, Number> d : s.getData()) {
-					Tooltip.install(d.getNode(), new Tooltip(d.getYValue().toString()));
+					Tooltip.install(d.getNode(), new Tooltip(String.format("""
+							Turn: %d
+							Points: %d""", ((int) d.getXValue()), ((int) d.getYValue()))));
 				}
 			}
 		}
