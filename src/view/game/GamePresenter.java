@@ -82,12 +82,11 @@ public class GamePresenter {
 
 		setButtonsRight();
 
-		if (model.getGameSession().gameOver()) {
-			final int botScore = model.getGameSession().getPlayerSessions()[0].getScoreCard().getTotalScore();
-			final int playerScore = model.getGameSession().getPlayerSessions()[1].getScoreCard().getTotalScore();
-			boolean playerWon = playerScore > botScore;
+		model.getGameSession().setGameState(model.getGameSession().gameOver());
+		GameState gameState = model.getGameSession().getGameState();
+		if (gameState != GameState.RUNNING) {
 			model.getGameSession().save();
-			EndScreenView endScreenView = new EndScreenView(playerWon);
+			EndScreenView endScreenView = new EndScreenView();
 			EndScreenPresenter endScreenPresenter = new EndScreenPresenter(model, endScreenView);
 			view.getScene().setRoot(endScreenView);
 		}

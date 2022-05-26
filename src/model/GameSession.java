@@ -13,6 +13,7 @@ public class GameSession {
 	private boolean isHumanActivePlayer;
 	private final long startTime;
 	private long endTime;
+	private GameState gameState;
 
 	public GameSession(String name, boolean startingPlayer, boolean hardMode) {
 		playerSessions = new PlayerSession[2];
@@ -27,6 +28,7 @@ public class GameSession {
 		isHumanActivePlayer = startingPlayer;
 		startTime = System.currentTimeMillis();
 		endTime = 0;
+		gameState = GameState.RUNNING;
 	}
 
 	public void throwAllDice() {
@@ -80,16 +82,10 @@ public class GameSession {
 		return (int) (getEndTime() - getStartTime());
 	}
 
-	public enum gameState {
-		RUNNING,
-		PENALTIES,
-		ROWS
-	}
-
-	public gameState gameOver() {
+	public GameState gameOver() {
 		Set<Color> rowsLocked = new HashSet<>();
 		for (PlayerSession playerSession : playerSessions) {
-			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return gameState.PENALTIES;
+			if (playerSession.getScoreCard().getAmountOfPenalties() == 4) return GameState.PENALTIES;
 			playerSession.getScoreCard().getRows().forEach((color, row) -> {
 				if (row.isLocked()) {
 					rowsLocked.add(color);
@@ -97,9 +93,9 @@ public class GameSession {
 			});
 		}
 		if (rowsLocked.size() >= 2) {
-			return gameState.ROWS;
+			return GameState.ROWS;
 		}
-		return gameState.RUNNING;
+		return GameState.RUNNING;
 	}
 
 	public BotSession getBotSession() {
@@ -108,6 +104,14 @@ public class GameSession {
 
 	public PlayerSession getHumanSession() {
 		return playerSessions[1];
+	}
+
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 
 	public PlayerSession getActivePlayerSession() {
