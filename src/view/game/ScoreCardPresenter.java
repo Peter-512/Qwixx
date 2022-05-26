@@ -117,17 +117,12 @@ public class ScoreCardPresenter {
 	}
 
 	private void disableAllNumberFields() {
-		if (gameSession.isHumanSession(model.getPlayerSession())) {
-			for (Color color : Color.values()) {
-				for (Node n : view.getRowByColor(color).getChildren()) {
-					Button button = (Button) n;
+		for (Color color : Color.values()) {
+			for (Node n : view.getRowByColor(color).getChildren()) {
+				Button button = (Button) n;
+				if (gameSession.isHumanSession(model.getPlayerSession())) {
 					button.setDisable(true);
-				}
-			}
-		} else {
-			for (Color color : Color.values()) {
-				for (Node n : view.getRowByColor(color).getChildren()) {
-					Button button = (Button) n;
+				} else {
 					button.setMouseTransparent(true);
 				}
 			}
