@@ -22,6 +22,16 @@ public class ScoreCard {
 		}
 	}
 
+	public ArrayList<Color> getLockedRowColors() {
+		ArrayList<Color> lockedRowColors = new ArrayList<>();
+		for (Color color : Color.values()) {
+			if (rows.get(color).isLocked()) {
+				lockedRowColors.add(color);
+			}
+		}
+		return lockedRowColors;
+	}
+
 	public int getAmountOfPenalties() {
 		return amountOfPenalties;
 	}
