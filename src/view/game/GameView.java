@@ -54,8 +54,6 @@ public class GameView extends BorderPane {
 		penaltyButton = new Button("Take penalty");
 		rollDiceButton = new Button("Roll dice");
 		dicePools.getChildren().addAll(rollDiceButton, passButton, penaltyButton, currentPlayer);
-
-
 	}
 
 	private void layoutNodes() {
