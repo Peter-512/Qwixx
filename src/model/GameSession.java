@@ -3,6 +3,7 @@ package src.model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -127,12 +128,18 @@ public class GameSession {
 				"postgres",
 				"anubis512")) {
 			PreparedStatement statement = connection.prepareStatement("""
-					INSERT INTO game_session(duration) VALUES (?)
+					INSERT INTO game_session(duration, start_time, end_time) VALUES (?,?,?)
 					""");
 			statement.setInt(1, getDuration());
+			statement.setTimestamp(2, new Timestamp(startTime));
+			statement.setTimestamp(3, new Timestamp(endTime));
 			statement.executeUpdate();
+
+			final int totalBotScore = getBotSession().getScoreCard().getTotalScore();
+			final int totalHumanScore = getHumanSession().getScoreCard().getTotalScore();
+			final boolean playerWin = totalHumanScore > totalBotScore;
 			for (PlayerSession playerSession : playerSessions) {
-				playerSession.save(connection);
+				playerSession.save(connection, (playerSession == getHumanSession()) == playerWin);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

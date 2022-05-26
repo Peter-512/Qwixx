@@ -22,10 +22,12 @@ DROP TABLE IF EXISTS player;
 
 CREATE TABLE game_session
 (
-    duration INT NOT NULL,
-    game_id  INT GENERATED ALWAYS AS IDENTITY
+    game_id    INT GENERATED ALWAYS AS IDENTITY
         CONSTRAINT game_session_pk
-            PRIMARY KEY
+            PRIMARY KEY,
+    duration   INT       NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time   TIMESTAMP NOT NULL
 );
 
 CREATE TABLE player
@@ -47,7 +49,8 @@ CREATE TABLE player_session
     player_id      INT
         CONSTRAINT player_session_player_player_id_fk
             REFERENCES player,
-    starting_first BOOL NOT NULL
+    starting_first BOOL    NOT NULL,
+    is_win         BOOLEAN NOT NULL
 );
 
 CREATE TABLE turn

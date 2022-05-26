@@ -62,25 +62,26 @@ public class PlayerSession {
 		activePlayer = !activePlayer;
 	}
 
-	public void save(Connection connection) {
+	public void save(Connection connection, boolean playerWin) {
 		try {
 			int playerID = player.save(connection);
 
 			PreparedStatement statement;
 			if (playerID != 0) {
 				statement = connection.prepareStatement("""
-						INSERT INTO player_session (game_id, starting_first, player_id)
-						VALUES (CURRVAL('game_session_game_id_seq'), ?, ?)
+						INSERT INTO player_session (game_id, starting_first, is_win, player_id)
+						VALUES (CURRVAL('game_session_game_id_seq'), ?, ?, ?)
 						""");
-				statement.setInt(2, playerID);
+				statement.setInt(3, playerID);
 			} else {
 				statement = connection.prepareStatement("""
-						INSERT INTO player_session (game_id, starting_first, player_id)
-						VALUES (CURRVAL('game_session_game_id_seq'), ?, CURRVAL('player_player_id_seq'))
+						INSERT INTO player_session (game_id, starting_first, is_win, player_id)
+						VALUES (CURRVAL('game_session_game_id_seq'), ?, ?, CURRVAL('player_player_id_seq'))
 						""");
 			}
-			boolean startingPlayer = (turns.size() % 2 == 1) != activePlayer;
+			boolean startingPlayer = (turns.size() % 2 == 0) != activePlayer;
 			statement.setBoolean(1, startingPlayer);
+			statement.setBoolean(2, playerWin);
 			statement.executeUpdate();
 
 			scoreCard.save(connection);
