@@ -14,26 +14,16 @@ public class AI extends BotSession {
 		if (numberFields.isEmpty()) {
 			return null;
 		}
-		NumberField numberField = numberFields.get(0);
-		// compute distance to previous crossed out nf and save in variable min
+		final NumberField numberField = findMinDistNumberField(numberFields);
 		int minDist = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
-		for (NumberField nf : numberFields) {
-			// compute distance to previous crossed out nf
-			int dist = nf.getRow().getAmountOfNumberFieldsBefore(nf.getIndex());
-			// check if it's lower than min
-			if (dist < minDist) {
-				// if it is, set numberField to nf
-				minDist = dist;
-				numberField = nf;
-			}
-		}
 		// if min bigger than 2, return null
 		// else return numberField
 		if (getScoreCard().getAmountOfPenalties() < 3 && minDist < 3) {
 			Row row = numberField.getRow();
 			row.disableNumberFieldsBefore(numberField.getIndex());
-			if (numberField == row.getLast()) {
+			if (numberField.isLast()) {
 				row.setLocked();
+				
 			}
 			return numberField;
 		} else return null;
@@ -45,10 +35,26 @@ public class AI extends BotSession {
 		if (publicNumberFields.isEmpty()) {
 			return null;
 		}
-		NumberField numberField = publicNumberFields.get(0);
-		// compute distance to previous crossed out nf and save in variable min
+		final NumberField numberField = findMinDistNumberField(publicNumberFields);
 		int minDist = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
-		for (NumberField nf : publicNumberFields) {
+		// if min bigger than 2, return null
+		// else return numberField
+		if (minDist < 3) {
+			Row row = numberField.getRow();
+			row.disableNumberFieldsBefore(numberField.getIndex());
+			if (numberField.isLast()) {
+				row.setLocked();
+			}
+			return numberField;
+		}
+		return null;
+	}
+
+	private NumberField findMinDistNumberField(ArrayList<NumberField> numberFields) {
+		// compute distance to previous crossed out nf and save in variable min
+		NumberField numberField = numberFields.get(0);
+		int minDist = numberField.getRow().getAmountOfNumberFieldsBefore(numberField.getIndex());
+		for (NumberField nf : numberFields) {
 			// compute distance to previous crossed out nf
 			int dist = nf.getRow().getAmountOfNumberFieldsBefore(nf.getIndex());
 			// check if it's lower than min
@@ -58,17 +64,7 @@ public class AI extends BotSession {
 				numberField = nf;
 			}
 		}
-		// if min bigger than 2, return null
-		// else return numberField
-		if (minDist < 3) {
-			Row row = numberField.getRow();
-			row.disableNumberFieldsBefore(numberField.getIndex());
-			if (numberField == row.getLast()) {
-				row.setLocked();
-			}
-			return numberField;
-		}
-		return null;
+		return numberField;
 	}
 
 }
