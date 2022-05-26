@@ -10,18 +10,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class EndScreenView extends BorderPane {
-	Text text;
+	Text whoWonText;
 	Button button;
 	LineChart<Number, Number> chart;
 
-	public EndScreenView(boolean playerWon) {
-		initializeNodes(playerWon);
+	public EndScreenView() {
+		initializeNodes();
 		layoutNodes();
 	}
 
-	private void initializeNodes(boolean playerWon) {
-		text = playerWon ? new Text("You won!") : new Text("You lost!");
-		text.setFont(new Font(70));
+	private void initializeNodes() {
+		whoWonText = new Text();
+		whoWonText.setFont(new Font(70));
 
 		NumberAxis xAxis = new NumberAxis();
 		xAxis.setLabel("Turns");
@@ -37,8 +37,8 @@ public class EndScreenView extends BorderPane {
 	}
 
 	private void layoutNodes() {
-		setTop(text);
-		setAlignment(text, Pos.CENTER);
+		setTop(whoWonText);
+		setAlignment(whoWonText, Pos.CENTER);
 		setCenter(chart);
 		setBottom(button);
 		setAlignment(button, Pos.CENTER);
@@ -50,7 +50,11 @@ public class EndScreenView extends BorderPane {
 		return button;
 	}
 
-	public LineChart<Number, Number> getChart() {
+	Text getWhoWonText() {
+		return whoWonText;
+	}
+
+	LineChart<Number, Number> getChart() {
 		return chart;
 	}
 }

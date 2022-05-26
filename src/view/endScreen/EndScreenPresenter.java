@@ -49,6 +49,10 @@ public class EndScreenPresenter {
 				}
 			}
 		}
+		final int botScore = model.getGameSession().getPlayerSessions()[0].getScoreCard().getTotalScore();
+		final int playerScore = model.getGameSession().getPlayerSessions()[1].getScoreCard().getTotalScore();
+		boolean playerWon = playerScore > botScore;
+		view.getWhoWonText().setText(playerWon ? "You won!" : "You lost!");
 	}
 
 
