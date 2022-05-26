@@ -15,6 +15,10 @@ public class NumberField {
 		this.index = index;
 	}
 
+	public boolean isLast() {
+		return getRow().getLast().equals(this);
+	}
+
 	public boolean isAvailable() {
 		return !(isDisabled() || isCrossed());
 	}
