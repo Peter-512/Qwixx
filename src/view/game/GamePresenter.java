@@ -4,11 +4,9 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
-import src.model.ColoredDie;
-import src.model.Game;
-import src.model.PlayerSession;
-import src.model.Turn;
+import src.model.*;
 import src.view.endScreen.EndScreenPresenter;
 import src.view.endScreen.EndScreenView;
 
@@ -155,6 +153,18 @@ public class GamePresenter {
 		});
 
 		//		Updating public dice
+		for (Color lockedRowColor : model.getGameSession().getBotSession().getScoreCard().getLockedRowColors()) {
+			final Label label = view.getDieByColor(lockedRowColor);
+			final Die d = model.getGameSession().getColoredDicePool().get(lockedRowColor);
+			if (d != null) {
+				model.getGameSession().getColoredDicePool().remove(d);
+			}
+			view.getDicePools().getChildren().remove(label);
+			view.getDieByColorMap().remove(lockedRowColor);
+			for (PlayerSession playerSession : model.getGameSession().getPlayerSessions()) {
+				playerSession.getScoreCard().getRow(lockedRowColor).setLocked();
+			}
+		}
 		for (int i = 0; i < model.getGameSession().getPublicDicePool().getDice().size(); i++) {
 			view.getPublicDice()[i].setText(String.valueOf(model.getGameSession()
 			                                                    .getPublicDicePool()
