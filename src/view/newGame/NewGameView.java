@@ -47,6 +47,7 @@ public class NewGameView extends BorderPane {
 		hBox.setSpacing(20);
 		options.setAlignment(Pos.CENTER);
 		options.setSpacing(20);
+		hardMode.setSelected(true);
 		setBottom(backButton);
 		setAlignment(backButton, Pos.CENTER);
 		setMargin(backButton, new Insets(10));
@@ -59,10 +60,6 @@ public class NewGameView extends BorderPane {
 
 	TextField getNameTextField() {
 		return nameTextField;
-	}
-
-	Label getNameLabel() {
-		return nameLabel;
 	}
 
 	Button getStartButton() {
