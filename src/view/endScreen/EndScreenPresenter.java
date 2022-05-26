@@ -36,8 +36,8 @@ public class EndScreenPresenter {
 			series.getData().add(new XYChart.Data<>(0, 0));
 			int cumPoints = 0;
 			for (Turn turn : playerSession.getTurns()) {
-				XYChart.Data<Number, Number> data = new XYChart.Data<>(turn.getTurnNumber(), cumPoints);
 				cumPoints += turn.getTotalPoints();
+				XYChart.Data<Number, Number> data = new XYChart.Data<>(turn.getTurnNumber(), cumPoints);
 				series.getData().add(data);
 			}
 			series.setName(playerSession.getPlayerName());
