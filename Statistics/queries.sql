@@ -97,6 +97,15 @@ FROM game_session
          JOIN score USING ( session_id );
 
 
+SELECT *
+FROM game_session
+         JOIN player_session USING ( game_id )
+         JOIN player USING ( player_id )
+         JOIN score USING ( session_id )
+         JOIN turn USING ( session_id )
+         JOIN action USING ( turn_id );
+
+
 SELECT name,
        REVERSE( LOWER( REPLACE( name, ' ', '' ) ) )                                    AS password,
        CASE WHEN name IN ( 'Peter', 'Nova', 'Brandon' ) THEN 'Admin' ELSE 'Player' END AS user_role
