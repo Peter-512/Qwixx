@@ -126,7 +126,7 @@ public class GameSession {
 		try (Connection connection = DriverManager.getConnection(
 				"jdbc:postgresql://localhost:5432/qwixx",
 				"postgres",
-				"anubis512")) {
+				"Student_1234")) {
 			PreparedStatement statement = connection.prepareStatement("""
 					INSERT INTO game_session(duration, start_time, end_time) VALUES (?,?,?)
 					""");
