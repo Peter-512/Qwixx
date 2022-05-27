@@ -51,12 +51,20 @@ public class Turn {
 		return turnDuration;
 	}
 
+	public float getTurnDurationInSeconds() {
+		return (float) turnDuration / 1000;
+	}
+
 	public Action getLastAction() {
 		return actions.getLast();
 	}
 
 	public int getTotalPoints() {
 		return actions.stream().reduce(0, (total, next) -> total + next.getPointsEarned(), Integer::sum);
+	}
+
+	public long getTotalActionsNumberOfActionsWhereNumberFieldsWhereCrossedOut() {
+		return actions.stream().filter(action -> !action.isPassedTurn() && action.getPointsEarned() != -5).count();
 	}
 
 	public int getTotalMissedNumbers() {

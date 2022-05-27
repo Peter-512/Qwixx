@@ -62,6 +62,32 @@ public class PlayerSession {
 		activePlayer = !activePlayer;
 	}
 
+	public int getTotalTurnDurations() {
+		return getTurns().stream()
+		                 .reduce(0, (total, current) -> total + current.getTurnDuration(), Integer::sum);
+	}
+
+	public float getAverageDurationPerTurn() {
+		return (float) getTotalTurnDurations() / getTurns().size();
+	}
+
+	public float getAveragePointsPerTurn() {
+		return (float) getScoreCard().getTotalScore() / getTurns().size();
+	}
+
+	public float getAverageNumbersMissedPerTurn() {
+		return (float) getTotalMissedNumbers() / getTotalNumberOfActionsWhereNumberfieldsWereCrossedOut();
+	}
+
+	public int getTotalNumberOfActionsWhereNumberfieldsWereCrossedOut() {
+		return getTurns().stream()
+		                 .reduce(0, (total, current) -> total + (int) current.getTotalActionsNumberOfActionsWhereNumberFieldsWhereCrossedOut(), Integer::sum);
+	}
+
+	private int getTotalMissedNumbers() {
+		return getTurns().stream().reduce(0, (total, current) -> total + current.getTotalMissedNumbers(), Integer::sum);
+	}
+
 	public void save(Connection connection, boolean playerWin) {
 		try {
 			int playerID = player.save(connection);
