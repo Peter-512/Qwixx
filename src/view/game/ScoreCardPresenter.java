@@ -54,13 +54,13 @@ public class ScoreCardPresenter {
 					if (numberField == numberField.getRow().getLast()) {
 						numberField.getRow().setLocked();
 						final Color color = numberField.getRow().getColor();
-						final Label dieLabel = parentPresenter.view.getDieByColor(color);
+						final Label dieLabel = parentPresenter.getView().getDieByColor(color);
 						final Die die = gameSession.getColoredDicePool().get(color);
 						if (die != null) {
 							gameSession.getColoredDicePool().remove(die);
 						}
-						parentPresenter.view.getDicePools().getChildren().remove(dieLabel);
-						parentPresenter.view.getDieByColorMap().remove(color);
+						parentPresenter.getView().getDicePools().getChildren().remove(dieLabel);
+						parentPresenter.getView().getDieByColorMap().remove(color);
 					}
 
 					model.getPlayerSession().takeAction(numbersMissed, rowScoreAfter - rowScoreBefore);

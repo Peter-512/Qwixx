@@ -14,9 +14,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class GamePresenter {
-	Game model;
-	GameView view;
-	ScoreCardPresenter[] scoreCardPresenters;
+	private final Game model;
+	private final GameView view;
+	private final ScoreCardPresenter[] scoreCardPresenters;
 
 	public GamePresenter(Game model, GameView view) {
 		this.model = model;
@@ -192,4 +192,7 @@ public class GamePresenter {
 		timeline.play();
 	}
 
+	GameView getView() {
+		return view;
+	}
 }
