@@ -90,13 +90,6 @@ WHERE name = 'Piet'
   AND points_earned != -5;
 
 
-SELECT game_id, name, total_score, is_win, start_time
-FROM game_session
-         JOIN player_session USING ( game_id )
-         JOIN player USING ( player_id )
-         JOIN score USING ( session_id );
-
-
 SELECT *
 FROM game_session
          JOIN player_session USING ( game_id )
@@ -106,7 +99,18 @@ FROM game_session
          JOIN action USING ( turn_id );
 
 
+-- USERS JSON
 SELECT name,
        REVERSE( LOWER( REPLACE( name, ' ', '' ) ) )                                    AS password,
        CASE WHEN name IN ( 'Peter', 'Nova', 'Brandon' ) THEN 'Admin' ELSE 'Player' END AS user_role
-FROM player;
+FROM player
+WHERE LENGTH( name ) > 3;
+
+
+-- GAMES JSON
+SELECT game_id, name, total_score, is_win, start_time
+FROM game_session
+         JOIN player_session USING ( game_id )
+         JOIN player USING ( player_id )
+         JOIN score USING ( session_id )
+WHERE LENGTH( name ) > 3;
